@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#075e3b">
+
+<title>Qur'an Centre | DIN Islamic AI</title>
+
+<style>
+:root{
+  --green:#075e3b;
+  --dark:#043d27;
+  --light:#f3f8f5;
+  --gold:#c9a227;
+  --text:#173b2b;
+  --muted:#687a70;
+  --white:#ffffff;
+  --border:#dceae3;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:var(--light);
+  color:var(--text);
+  line-height:1.6;
+}
+
+header{
+  background:linear-gradient(135deg,#043d27,#075e3b,#0b9460);
+  color:white;
+  text-align:center;
+  padding:30px 18px 35px;
+  border-radius:0 0 30px 30px;
+}
+
+.back{
+  display:inline-block;
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+  margin-bottom:18px;
+  opacity:.9;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:800;
+}
+
+.subtitle{
+  margin-top:6px;
+  font-size:14px;
+  opacity:.85;
+}
+
+.container{
+  max-width:1050px;
+  margin:auto;
+  padding:22px 15px 45px;
+}
+
+.intro{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 5px 17px rgba(0,0,0,.06);
+}
+
+.intro h2{
+  color:var(--green);
+  margin-bottom:6px;
+}
+
+.intro p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* SEARCH */
+
+.search-box{
+  position:relative;
+  margin-bottom:18px;
+}
+
+.search{
+  width:100%;
+  padding:16px 18px 16px 48px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:white;
+  font-size:16px;
+  outline:none;
+}
+
+.search:focus{
+  border-color:var(--green);
+}
+
+.search-icon{
+  position:absolute;
+  left:17px;
+  top:14px;
+  font-size:20px;
+}
+
+/* TOOLS */
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:24px;
+}
+
+.tool{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:14px 7px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.tool-icon{
+  display:block;
+  font-size:24px;
+}
+
+.tool span:last-child{
+  display:block;
+  margin-top:5px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--green);
+}
+
+/* SURAHS */
+
+.section-title{
+  color:var(--green);
+  margin-bottom:14px;
+}
+
+.surah-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:12px;
+}
+
+.surah{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  cursor:pointer;
+  text-align:left;
+  transition:.2s ease;
+}
+
+.surah:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.surah-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.number{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#e8f3ed;
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  flex-shrink:0;
+}
+
+.surah-name{
+  font-weight:800;
+  color:var(--green);
+}
+
+.arabic-name{
+  margin-left:auto;
+  font-size:20px;
+}
+
+.surah-meta{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.message{
+  display:none;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  margin-top:18px;
+  color:var(--muted);
+}
+
+/* PLAYER */
+
+.player{
+  position:sticky;
+  bottom:12px;
+  margin-top:28px;
+  background:rgba(4,61,39,.97);
+  color:white;
+  border-radius:20px;
+  padding:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,.22);
+}
+
+.player-title{
+  font-weight:800;
+  margin-bottom:9px;
+}
+
+.player-controls{
+  display:flex;
+  gap:8px;
+}
+
+.player button{
+  border:0;
+  border-radius:12px;
+  padding:10px 13px;
+  cursor:pointer;
+  background:white;
+  color:var(--green);
+  font-weight:700;
+}
+
+footer{
+  text-align:center;
+  padding:28px 15px;
+  background:var(--dark);
+  color:white;
+}
+
+footer small{
+  opacity:.7;
+}
+
+@media(max-width:650px){
+
+  .tools{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .surah-grid{
+    grid-template-columns:1fr;
+  }
+
+  .arabic-name{
+    font-size:18px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <a href="index.html" class="back">← Back to DIN Home</a>
+
+  <div class="logo">📖 Qur'an Centre</div>
+
+  <div class="subtitle">
+    Read • Listen • Learn • Memorise
+  </div>
+
+</header>
+
+<main class="container">
+
+  <section class="intro">
+
+    <h2>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</h2>
+
+    <p>
+      Welcome to the Qur'an Centre of DIN Islamic AI.
+      Search the Qur'an, explore Surahs, listen to recitation,
+      study translation and Tafsir, and build your memorisation journey.
+    </p>
+
+  </section>
+
+  <div class="search-box">
+
+    <span class="search-icon">🔎</span>
+
+    <input
+      id="surahSearch"
+      class="search"
+      type="text"
+      placeholder="Search Surah by name or number..."
+      onkeyup="searchSurahs()"
+    >
+
+  </div>
+
+  <div class="tools">
+
+    <div class="tool" onclick="feature('Audio Recitation')">
+      <span class="tool-icon">🎧</span>
+      <span>Audio</span>
+    </div>
+
+    <div class="tool" onclick="feature('Translation')">
+      <span class="tool-icon">🌍</span>
+      <span>Translation</span>
+    </div>
+
+    <div class="tool" onclick="feature('Tafsir')">
+      <span class="tool-icon">📚</span>
+      <span>Tafsir</span>
+    </div>
+
+    <div class="tool" onclick="feature('Bookmarks')">
+      <span class="tool-icon">🔖</span>
+      <span>Bookmarks</span>
+    </div>
+
+    <div class="tool" onclick="feature('Memorisation')">
+      <span class="tool-icon">🧠</span>
+      <span>Memorise</span>
+    </div>
+
+    <div class="tool" onclick="feature('Tajweed')">
+      <span class="tool-icon">🕌</span>
+      <span>Tajweed</span>
+    </div>
+
+    <div class="tool" onclick="feature('Khatm Planner')">
+      <span class="tool-icon">📅</span>
+      <span>Khatm Plan</span>
+    </div>
+
+    <div class="tool" onclick="feature('Daily Ayah')">
+      <span class="tool-icon">🌙</span>
+      <span>Daily Ayah</span>
+    </div>
+
+  </div>
+
+  <h2 class="section-title">Surahs</h2>
+
+  <div id="surahGrid" class="surah-grid">
+
+    <div class="surah" data-name="Al-Fatihah 1" onclick="selectSurah('Al-Fatihah')">
+      <div class="surah-top">
+        <div class="number">1</div>
+        <div class="surah-name">Al-Fatihah</div>
+        <div class="arabic-name">الفاتحة</div>
+      </div>
+      <div class="surah-meta">7 verses • Makki</div>
+    </div>
+
+    <div class="surah" data-name="Al-Baqarah 2" onclick="selectSurah('Al-Baqarah')">
+      <div class="surah-top">
+        <div class="number">2</div>
+        <div class="surah-name">Al-Baqarah</div>
+        <div class="arabic-name">البقرة</div>
+      </div>
+      <div class="surah-meta">286 verses • Madani</div>
+    </div>
+
+    <div class="surah" data-name="Ali Imran 3" onclick="selectSurah('Ali Imran')">
+      <div class="surah-top">
+        <div class="number">3</div>
+        <div class="surah-name">Ali 'Imran</div>
+        <div class="arabic-name">آل عمران</div>
+      </div>
+      <div class="surah-meta">200 verses • Madani</div>
+    </div>
+
+    <div class="surah" data-name="An-Nisa 4" onclick="selectSurah('An-Nisa')">
+      <div class="surah-top">
+        <div class="number">4</div>
+        <div class="surah-name">An-Nisa</div>
+        <div class="arabic-name">النساء</div>
+      </div>
+      <div class="surah-meta">176 verses • Madani</div>
+    </div>
+
+    <div class="surah" data-name="Al-Maidah 5" onclick="selectSurah('Al-Ma'idah')">
+      <div class="surah-top">
+        <div class="number">5</div>
+        <div class="surah-name">Al-Ma'idah</div>
+        <div class="arabic-name">المائدة</div>
+      </div>
+      <div class="surah-meta">120 verses • Madani</div>
+    </div>
+
+    <div class="surah" data-name="Al-Anam 6" onclick="selectSurah('Al-Anam')">
+      <div class="surah-top">
+        <div class="number">6</div>
+        <div class="surah-name">Al-An'am</div>
+        <div class="arabic-name">الأنعام</div>
+      </div>
+      <div class="surah-meta">165 verses • Makki</div>
+    </div>
+
+  </div>
+
+  <div id="message" class="message"></div>
+
+  <div class="player">
+
+    <div class="player-title" id="playerTitle">
+      🎧 Qur'an Audio — Select a Surah
+    </div>
+
+    <div class="player-controls">
+
+      <button onclick="audioMessage('Play')">▶ Play</button>
+
+      <button onclick="audioMessage('Pause')">⏸ Pause</button>
+
+      <button onclick="audioMessage('Stop')">⏹ Stop</button>
+
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+
+  <strong>🌙 DIN Islamic AI</strong>
+
+  <br>
+
+  <small>
+    Qur'an Centre • Created by Sanni Abdulmateen
+  </small>
+
+</footer>
+
+<script>
+
+function feature(name){
+
+  const message =
+    document.getElementById("message");
+
+  message.style.display = "block";
+
+  message.innerHTML =
+    "<strong>" + name + "</strong><br>" +
+    "This Qur'an Centre feature is planned for DIN. " +
+    "We will connect its reliable data or service during the next development stage.";
+
+  message.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+}
+
+function selectSurah(name){
+
+  document.getElementById("playerTitle").textContent =
+    "🎧 Qur'an Audio — " + name;
+
+  const message =
+    document.getElementById("message");
+
+  message.style.display = "block";
+
+  message.innerHTML =
+    "<strong>" + name + "</strong><br>" +
+    "The Surah reader and verified Qur'an audio will be connected here.";
+
+  message.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+}
+
+function audioMessage(action){
+
+  const message =
+    document.getElementById("message");
+
+  message.style.display = "block";
+
+  message.innerHTML =
+    "<strong>Audio: " + action + "</strong><br>" +
+    "The Qur'an audio player will be connected to a reliable recitation source.";
+
+}
+
+function searchSurahs(){
+
+  const query =
+    document
+      .getElementById("surahSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const surahs =
+    document.querySelectorAll(".surah");
+
+  let found = 0;
+
+  surahs.forEach(surah => {
+
+    const name =
+      surah
+        .getAttribute("data-name")
+        .toLowerCase();
+
+    if(name.includes(query)){
+
+      surah.style.display = "block";
+      found++;
+
+    }else{
+
+      surah.style.display = "none";
+
+    }
+
+  });
+
+  if(found === 0){
+
+    const message =
+      document.getElementById("message");
+
+    message.style.display = "block";
+
+    message.textContent =
+      "No Surah matched your search.";
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
