@@ -8,7 +8,6 @@
 <title>Qur'an Centre | DIN Islamic AI</title>
 
 <style>
-
 :root{
   --green:#075e3b;
   --dark:#043d27;
@@ -17,7 +16,7 @@
   --gold:#c9a227;
   --text:#173b2b;
   --muted:#687a70;
-  --white:#ffffff;
+  --white:#fff;
   --border:#dceae3;
 }
 
@@ -49,7 +48,7 @@ header{
   color:white;
   text-decoration:none;
   font-size:14px;
-  margin-bottom:17px;
+  margin-bottom:16px;
 }
 
 .logo{
@@ -59,7 +58,7 @@ header{
 
 .subtitle{
   font-size:14px;
-  opacity:.86;
+  opacity:.88;
   margin-top:5px;
 }
 
@@ -72,7 +71,28 @@ header{
 .container{
   max-width:1100px;
   margin:auto;
-  padding:20px 15px 45px;
+  padding:20px 15px 50px;
+}
+
+/* INTRO */
+
+.intro{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 5px 17px rgba(0,0,0,.06);
+}
+
+.intro h2{
+  color:var(--green);
+  margin-bottom:7px;
+}
+
+.intro p{
+  color:var(--muted);
+  font-size:14px;
 }
 
 /* SEARCH */
@@ -103,20 +123,20 @@ header{
   font-size:21px;
 }
 
-/* TOOLBAR */
+/* TOOLS */
 
 .toolbar{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:10px;
-  margin-bottom:24px;
+  margin-bottom:22px;
 }
 
 .tool{
   border:1px solid var(--border);
   background:white;
   border-radius:15px;
-  padding:13px 5px;
+  padding:12px 5px;
   text-align:center;
   cursor:pointer;
   color:var(--green);
@@ -126,32 +146,11 @@ header{
 
 .tool-icon{
   display:block;
-  font-size:23px;
+  font-size:22px;
   margin-bottom:4px;
 }
 
-/* INTRO */
-
-.intro{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:22px;
-  margin-bottom:20px;
-  box-shadow:0 5px 17px rgba(0,0,0,.06);
-}
-
-.intro h2{
-  color:var(--green);
-  margin-bottom:6px;
-}
-
-.intro p{
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* SURAH GRID */
+/* SURAH LIST */
 
 .section-title{
   color:var(--green);
@@ -185,8 +184,8 @@ header{
 }
 
 .number{
-  width:39px;
-  height:39px;
+  width:40px;
+  height:40px;
   border-radius:50%;
   background:#e7f2ec;
   color:var(--green);
@@ -206,16 +205,16 @@ header{
   font-weight:800;
 }
 
+.surah-meta{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
 .surah-arabic{
   margin-left:auto;
   font-size:21px;
   direction:rtl;
-}
-
-.surah-meta{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:7px;
 }
 
 /* READER */
@@ -234,7 +233,7 @@ header{
   text-align:center;
   border-bottom:1px solid var(--border);
   padding-bottom:17px;
-  margin-bottom:18px;
+  margin-bottom:12px;
 }
 
 .reader-number{
@@ -244,12 +243,13 @@ header{
 
 .reader-title{
   color:var(--green);
-  font-size:27px;
+  font-size:28px;
+  font-weight:800;
   margin:2px 0;
 }
 
 .reader-arabic{
-  font-size:28px;
+  font-size:30px;
   direction:rtl;
 }
 
@@ -259,15 +259,17 @@ header{
   margin-top:5px;
 }
 
+/* AYAH */
+
 .ayah{
   border-bottom:1px solid var(--border);
-  padding:20px 4px;
+  padding:22px 4px;
 }
 
 .ayah-number{
   display:inline-flex;
-  width:30px;
-  height:30px;
+  width:31px;
+  height:31px;
   border-radius:50%;
   align-items:center;
   justify-content:center;
@@ -275,40 +277,78 @@ header{
   color:var(--green);
   font-size:11px;
   font-weight:800;
-  margin-bottom:9px;
-}
-
-.ayah-arabic{
-  font-size:27px;
-  line-height:2;
-  direction:rtl;
-  text-align:right;
   margin-bottom:10px;
 }
 
-.ayah-translation{
-  color:#52655b;
-  font-size:15px;
+.ayah-arabic{
+  font-family:"Times New Roman",serif;
+  font-size:29px;
+  line-height:2.05;
+  direction:rtl;
+  text-align:right;
+  margin-bottom:13px;
 }
+
+.label{
+  color:var(--green);
+  font-weight:800;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-top:9px;
+}
+
+.ayah-transliteration{
+  color:#4c6257;
+  font-size:15px;
+  font-style:italic;
+  margin-top:2px;
+}
+
+.ayah-translation{
+  color:#263f32;
+  font-size:15px;
+  margin-top:2px;
+}
+
+.audio-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+.audio-row button,
+.reader-buttons button{
+  border:0;
+  border-radius:11px;
+  background:var(--green);
+  color:white;
+  padding:9px 12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.audio-row button.secondary,
+.reader-buttons button.secondary{
+  background:#e7f2ec;
+  color:var(--green);
+}
+
+/* READER CONTROLS */
 
 .reader-buttons{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
-  margin-top:20px;
+  margin-top:22px;
 }
 
-.reader-buttons button{
-  border:0;
-  border-radius:12px;
-  background:var(--green);
-  color:white;
-  padding:10px 13px;
-  font-weight:700;
-  cursor:pointer;
+.loading{
+  text-align:center;
+  padding:35px 10px;
+  color:var(--muted);
 }
-
-/* NOTICE */
 
 .notice{
   display:none;
@@ -317,16 +357,8 @@ header{
   color:#6a591c;
   padding:15px;
   border-radius:15px;
-  margin-top:15px;
+  margin-bottom:16px;
   font-size:13px;
-}
-
-/* LOADING */
-
-.loading{
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
 }
 
 /* FOOTER */
@@ -342,6 +374,8 @@ footer small{
   opacity:.7;
 }
 
+/* MOBILE */
+
 @media(max-width:650px){
 
   .toolbar{
@@ -353,11 +387,14 @@ footer small{
   }
 
   .ayah-arabic{
-    font-size:24px;
+    font-size:25px;
+  }
+
+  .reader{
+    padding:15px;
   }
 
 }
-
 </style>
 </head>
 
@@ -372,7 +409,7 @@ footer small{
   <div class="logo">📖 Qur'an Centre</div>
 
   <div class="subtitle">
-    Read • Listen • Learn • Memorise
+    Read • Understand • Listen • Memorise
   </div>
 
   <div class="creator">
@@ -390,9 +427,8 @@ footer small{
     </h2>
 
     <p>
-      Explore all 114 Surahs of the Noble Qur'an.
-      Search for a Surah, open the reader and access
-      Qur'an learning tools.
+      Explore all 114 Surahs of the Noble Qur'an with
+      Arabic text, transliteration and English translation.
     </p>
 
   </section>
@@ -405,7 +441,7 @@ footer small{
       id="search"
       class="search"
       type="search"
-      placeholder="Search the 114 Surahs..."
+      placeholder="Search Surahs by name or number..."
       oninput="filterSurahs()"
     >
 
@@ -413,44 +449,24 @@ footer small{
 
   <div class="toolbar">
 
-    <button class="tool" onclick="showNotice('Audio recitation will be connected to a reliable Qur’an audio service.')">
+    <button class="tool" onclick="showNotice('Choose a verse and use its Audio button to start recitation.')">
       <span class="tool-icon">🎧</span>
       Audio
     </button>
 
-    <button class="tool" onclick="showNotice('Translation options will be added to the reader.')">
+    <button class="tool" onclick="showNotice('English translation is displayed beneath each verse.')">
       <span class="tool-icon">🌍</span>
       Translation
     </button>
 
-    <button class="tool" onclick="showNotice('Verified Tafsir resources will be connected here.')">
+    <button class="tool" onclick="showNotice('Transliteration is displayed beneath the Arabic text.')">
+      <span class="tool-icon">🔤</span>
+      Transliteration
+    </button>
+
+    <button class="tool" onclick="showNotice('Tafsir will be added as a separate verified resource.')">
       <span class="tool-icon">📚</span>
       Tafsir
-    </button>
-
-    <button class="tool" onclick="showNotice('Bookmarks will allow you to save verses for later.')">
-      <span class="tool-icon">🔖</span>
-      Bookmarks
-    </button>
-
-    <button class="tool" onclick="showNotice('Memorisation mode will help users revise selected verses.')">
-      <span class="tool-icon">🧠</span>
-      Memorise
-    </button>
-
-    <button class="tool" onclick="showNotice('Tajweed learning tools will be added here.')">
-      <span class="tool-icon">🕌</span>
-      Tajweed
-    </button>
-
-    <button class="tool" onclick="showNotice('A Qur’an reading and Khatm planner will be added here.')">
-      <span class="tool-icon">📅</span>
-      Khatm Plan
-    </button>
-
-    <button class="tool" onclick="showNotice('Daily Ayah will provide a verse for reflection.')">
-      <span class="tool-icon">🌙</span>
-      Daily Ayah
     </button>
 
   </div>
@@ -474,7 +490,7 @@ footer small{
       <div id="readerArabic" class="reader-arabic"></div>
 
       <div id="readerStatus" class="reader-status">
-        Loading Qur'an...
+        Loading...
       </div>
 
     </div>
@@ -483,20 +499,16 @@ footer small{
 
     <div class="reader-buttons">
 
-      <button onclick="closeReader()">
-        ← Back to Surahs
+      <button onclick="previousSurah()">
+        ← Previous
       </button>
 
-      <button onclick="showNotice('Audio recitation will be connected here.')">
-        🎧 Audio
+      <button onclick="nextSurah()">
+        Next →
       </button>
 
-      <button onclick="showNotice('Bookmark functionality will be added here.')">
-        🔖 Bookmark
-      </button>
-
-      <button onclick="showNotice('Memorisation mode will be added here.')">
-        🧠 Memorise
+      <button onclick="closeReader()" class="secondary">
+        Back to Surahs
       </button>
 
     </div>
@@ -520,13 +532,21 @@ footer small{
 <script>
 
 /*
-  DIN QUR'AN CENTRE
+==========================================================
+DIN QUR'AN CENTRE
+==========================================================
 
-  The Surah catalogue below contains all 114 Surahs.
-  Qur'an verse data is requested from a dedicated Qur'an
-  data service instead of storing thousands of verses
-  directly inside this HTML file.
+Qur'an text, translation and transliteration are loaded
+from Al Quran Cloud's public REST API.
+
+The API is keyless and provides Qur'an text and editions.
+Translation editions are attributed to their translators.
+See:
+https://alquran.cloud/api
+==========================================================
 */
+
+/* 114 SURAH CATALOGUE */
 
 const surahs = [
 
@@ -647,22 +667,51 @@ const surahs = [
 
 ];
 
-const grid = document.getElementById("surahGrid");
+/*
+----------------------------------------------------------
+PAGE STATE
+----------------------------------------------------------
+*/
+
+let currentSurah = null;
+let currentAudio = null;
+
+/*
+----------------------------------------------------------
+RENDER SURAH LIST
+----------------------------------------------------------
+*/
+
+const grid =
+  document.getElementById("surahGrid");
 
 function renderSurahs(list){
 
   grid.innerHTML = "";
 
+  if(list.length === 0){
+
+    grid.innerHTML =
+      '<div class="loading">No Surah found.</div>';
+
+    return;
+
+  }
+
   list.forEach(surah => {
 
-    const card = document.createElement("div");
+    const card =
+      document.createElement("div");
 
     card.className = "surah";
 
     card.innerHTML = `
+
       <div class="surah-top">
 
-        <div class="number">${surah[0]}</div>
+        <div class="number">
+          ${surah[0]}
+        </div>
 
         <div class="surah-info">
 
@@ -681,6 +730,7 @@ function renderSurahs(list){
         </div>
 
       </div>
+
     `;
 
     card.addEventListener(
@@ -693,6 +743,12 @@ function renderSurahs(list){
   });
 
 }
+
+/*
+----------------------------------------------------------
+SEARCH
+----------------------------------------------------------
+*/
 
 function filterSurahs(){
 
@@ -718,7 +774,15 @@ function filterSurahs(){
 
 }
 
+/*
+----------------------------------------------------------
+OPEN SURAH
+----------------------------------------------------------
+*/
+
 async function openSurah(surah){
+
+  currentSurah = surah;
 
   const reader =
     document.getElementById("reader");
@@ -745,10 +809,10 @@ async function openSurah(surah){
     surah[2];
 
   document.getElementById("readerStatus").textContent =
-    "Loading Qur'an text...";
+    "Loading Arabic, transliteration and translation...";
 
   container.innerHTML =
-    '<div class="loading">📖 Loading verses...</div>';
+    '<div class="loading">📖 Loading Qur\'an...</div>';
 
   reader.scrollIntoView({
     behavior:"smooth",
@@ -758,74 +822,179 @@ async function openSurah(surah){
   try{
 
     /*
-      Qur'an.com API
+      Request three editions together:
 
-      This requests the Surah's Arabic text.
-      If the external service is unavailable,
-      DIN shows a clear message instead of
-      inventing Qur'an text.
+      1. Arabic Uthmani
+      2. Saheeh International English
+      3. English transliteration
     */
 
+    const url =
+      "https://api.alquran.cloud/v1/surah/" +
+      surah[0] +
+      "/editions/quran-uthmani,en.sahih,en.transliteration";
+
     const response =
-      await fetch(
-        "https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=" +
-        surah[0]
-      );
+      await fetch(url);
 
     if(!response.ok){
-      throw new Error("Qur'an service unavailable");
+      throw new Error(
+        "Qur'an API returned " +
+        response.status
+      );
     }
 
-    const data =
+    const result =
       await response.json();
 
-    const verses =
-      data.verses || [];
+    const editions =
+      result.data || [];
 
-    if(verses.length === 0){
-      throw new Error("No verses returned");
+    const arabic =
+      editions.find(
+        edition =>
+          edition.edition &&
+          (
+            edition.edition.identifier ===
+            "quran-uthmani"
+          )
+      );
+
+    const translation =
+      editions.find(
+        edition =>
+          edition.edition &&
+          (
+            edition.edition.identifier ===
+            "en.sahih"
+          )
+      );
+
+    const transliteration =
+      editions.find(
+        edition =>
+          edition.edition &&
+          (
+            edition.edition.identifier ===
+            "en.transliteration"
+          )
+      );
+
+    if(!arabic){
+      throw new Error(
+        "Arabic Qur'an edition unavailable."
+      );
     }
+
+    const arabicAyahs =
+      arabic.ayahs || [];
+
+    const translationAyahs =
+      translation
+        ? translation.ayahs || []
+        : [];
+
+    const transliterationAyahs =
+      transliteration
+        ? transliteration.ayahs || []
+        : [];
 
     container.innerHTML = "";
 
-    verses.forEach(verse => {
+    arabicAyahs.forEach(
+      (ayah,index) => {
 
-      const ayah =
-        document.createElement("div");
+        const translationText =
+          translationAyahs[index]
+            ? translationAyahs[index].text
+            : "Translation unavailable.";
 
-      ayah.className = "ayah";
+        const transliterationText =
+          transliterationAyahs[index]
+            ? transliterationAyahs[index].text
+            : "Transliteration unavailable.";
 
-      ayah.innerHTML = `
+        const div =
+          document.createElement("div");
 
-        <div class="ayah-number">
-          ${verse.verse_number}
-        </div>
+        div.className = "ayah";
 
-        <div class="ayah-arabic">
-          ${escapeHtml(verse.text_uthmani || "")}
-        </div>
+        div.innerHTML = `
 
-        <div class="ayah-translation">
-          Translation will be connected here.
-        </div>
+          <div class="ayah-number">
+            ${ayah.numberInSurah}
+          </div>
 
-      `;
+          <div class="ayah-arabic">
+            ${escapeHtml(
+              ayah.text || ""
+            )}
+          </div>
 
-      container.appendChild(ayah);
+          <div class="label">
+            Transliteration
+          </div>
 
-    });
+          <div class="ayah-transliteration">
+            ${escapeHtml(
+              transliterationText
+            )}
+          </div>
+
+          <div class="label">
+            English Translation
+          </div>
+
+          <div class="ayah-translation">
+            ${escapeHtml(
+              translationText
+            )}
+          </div>
+
+          <div class="audio-row">
+
+            <button
+              onclick="playAyah(${ayah.number})">
+              ▶️ Listen
+            </button>
+
+            <button
+              class="secondary"
+              onclick="stopAudio()">
+              ⏹ Stop
+            </button>
+
+            <button
+              class="secondary"
+              onclick="showNotice('Bookmark feature will be connected next.')">
+              🔖 Bookmark
+            </button>
+
+          </div>
+
+        `;
+
+        container.appendChild(div);
+
+      }
+    );
 
     document.getElementById("readerStatus").textContent =
-      surah[4] + " • " + surah[3] + " verses";
+      surah[4] +
+      " • " +
+      surah[3] +
+      " verses • Arabic + Transliteration + English";
 
   }catch(error){
+
+    console.error(error);
 
     container.innerHTML = `
 
       <div class="loading">
 
         <strong>
-          Qur'an text could not be loaded right now.
+          We couldn't load the Qur'an content.
         </strong>
 
         <br><br>
@@ -833,29 +1002,154 @@ async function openSurah(surah){
         Please check your internet connection
         and try again.
 
+        <br><br>
+
+        <button
+          onclick="openSurah(currentSurah)"
+          style="
+            border:0;
+            border-radius:10px;
+            padding:10px 15px;
+            background:#075e3b;
+            color:white;
+            font-weight:700;
+          ">
+          Try Again
+        </button>
+
       </div>
 
     `;
 
     document.getElementById("readerStatus").textContent =
-      "Unable to connect to the Qur'an data service.";
+      "Qur'an data service unavailable.";
 
   }
 
 }
 
-function escapeHtml(text){
+/*
+----------------------------------------------------------
+AUDIO
+----------------------------------------------------------
 
-  const div =
-    document.createElement("div");
+Uses Al Quran Cloud's audio CDN with the
+Mishary Alafasy recitation.
 
-  div.textContent = text;
+The ayah number is the global Qur'an ayah number.
+----------------------------------------------------------
+*/
 
-  return div.innerHTML;
+function playAyah(globalAyahNumber){
+
+  stopAudio();
+
+  const audioUrl =
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/" +
+    globalAyahNumber +
+    ".mp3";
+
+  currentAudio =
+    new Audio(audioUrl);
+
+  currentAudio.play().catch(
+    () => {
+
+      showNotice(
+        "Audio could not start. Please tap Listen again."
+      );
+
+    }
+  );
 
 }
 
+function stopAudio(){
+
+  if(currentAudio){
+
+    currentAudio.pause();
+
+    currentAudio.currentTime = 0;
+
+    currentAudio = null;
+
+  }
+
+}
+
+/*
+----------------------------------------------------------
+PREVIOUS / NEXT SURAH
+----------------------------------------------------------
+*/
+
+function previousSurah(){
+
+  if(!currentSurah){
+    return;
+  }
+
+  const index =
+    surahs.findIndex(
+      s => s[0] === currentSurah[0]
+    );
+
+  if(index > 0){
+
+    openSurah(
+      surahs[index - 1]
+    );
+
+  }else{
+
+    showNotice(
+      "This is the first Surah."
+    );
+
+  }
+
+}
+
+function nextSurah(){
+
+  if(!currentSurah){
+    return;
+  }
+
+  const index =
+    surahs.findIndex(
+      s => s[0] === currentSurah[0]
+    );
+
+  if(
+    index >= 0 &&
+    index < surahs.length - 1
+  ){
+
+    openSurah(
+      surahs[index + 1]
+    );
+
+  }else{
+
+    showNotice(
+      "This is the last Surah."
+    );
+
+  }
+
+}
+
+/*
+----------------------------------------------------------
+CLOSE READER
+----------------------------------------------------------
+*/
+
 function closeReader(){
+
+  stopAudio();
 
   document.getElementById("reader").style.display =
     "none";
@@ -873,14 +1167,22 @@ function closeReader(){
 
 }
 
+/*
+----------------------------------------------------------
+NOTICE
+----------------------------------------------------------
+*/
+
 function showNotice(text){
 
   const notice =
     document.getElementById("notice");
 
-  notice.style.display = "block";
+  notice.style.display =
+    "block";
 
-  notice.textContent = text;
+  notice.textContent =
+    text;
 
   notice.scrollIntoView({
     behavior:"smooth",
@@ -889,7 +1191,32 @@ function showNotice(text){
 
 }
 
-/* Display all 114 Surahs immediately */
+/*
+----------------------------------------------------------
+SECURITY / TEXT DISPLAY
+----------------------------------------------------------
+
+Escape returned text before inserting it into HTML.
+----------------------------------------------------------
+*/
+
+function escapeHtml(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text == null ? "" : String(text);
+
+  return div.innerHTML;
+
+}
+
+/*
+----------------------------------------------------------
+START
+----------------------------------------------------------
+*/
 
 renderSurahs(surahs);
 
