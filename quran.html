@@ -8,9 +8,11 @@
 <title>Qur'an Centre | DIN Islamic AI</title>
 
 <style>
+
 :root{
   --green:#075e3b;
   --dark:#043d27;
+  --green2:#0b9460;
   --light:#f3f8f5;
   --gold:#c9a227;
   --text:#173b2b;
@@ -33,10 +35,12 @@ body{
 }
 
 header{
-  background:linear-gradient(135deg,#043d27,#075e3b,#0b9460);
+  background:
+    radial-gradient(circle at top right,rgba(255,255,255,.14),transparent 35%),
+    linear-gradient(135deg,var(--dark),var(--green),var(--green2));
   color:white;
   text-align:center;
-  padding:30px 18px 35px;
+  padding:28px 15px 34px;
   border-radius:0 0 30px 30px;
 }
 
@@ -45,26 +49,88 @@ header{
   color:white;
   text-decoration:none;
   font-size:14px;
-  margin-bottom:18px;
-  opacity:.9;
+  margin-bottom:17px;
 }
 
 .logo{
   font-size:30px;
-  font-weight:800;
+  font-weight:850;
 }
 
 .subtitle{
-  margin-top:6px;
   font-size:14px;
-  opacity:.85;
+  opacity:.86;
+  margin-top:5px;
+}
+
+.creator{
+  font-size:12px;
+  opacity:.72;
+  margin-top:5px;
 }
 
 .container{
-  max-width:1050px;
+  max-width:1100px;
   margin:auto;
-  padding:22px 15px 45px;
+  padding:20px 15px 45px;
 }
+
+/* SEARCH */
+
+.search-wrap{
+  position:relative;
+  margin-bottom:18px;
+}
+
+.search{
+  width:100%;
+  padding:16px 18px 16px 48px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:white;
+  font-size:16px;
+  outline:none;
+}
+
+.search:focus{
+  border-color:var(--green2);
+}
+
+.search-icon{
+  position:absolute;
+  left:17px;
+  top:13px;
+  font-size:21px;
+}
+
+/* TOOLBAR */
+
+.toolbar{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:24px;
+}
+
+.tool{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:15px;
+  padding:13px 5px;
+  text-align:center;
+  cursor:pointer;
+  color:var(--green);
+  font-weight:700;
+  font-size:12px;
+}
+
+.tool-icon{
+  display:block;
+  font-size:23px;
+  margin-bottom:4px;
+}
+
+/* INTRO */
 
 .intro{
   background:white;
@@ -85,70 +151,11 @@ header{
   font-size:14px;
 }
 
-/* SEARCH */
-
-.search-box{
-  position:relative;
-  margin-bottom:18px;
-}
-
-.search{
-  width:100%;
-  padding:16px 18px 16px 48px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  background:white;
-  font-size:16px;
-  outline:none;
-}
-
-.search:focus{
-  border-color:var(--green);
-}
-
-.search-icon{
-  position:absolute;
-  left:17px;
-  top:14px;
-  font-size:20px;
-}
-
-/* TOOLS */
-
-.tools{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-bottom:24px;
-}
-
-.tool{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px 7px;
-  text-align:center;
-  cursor:pointer;
-}
-
-.tool-icon{
-  display:block;
-  font-size:24px;
-}
-
-.tool span:last-child{
-  display:block;
-  margin-top:5px;
-  font-size:11px;
-  font-weight:700;
-  color:var(--green);
-}
-
-/* SURAHS */
+/* SURAH GRID */
 
 .section-title{
   color:var(--green);
-  margin-bottom:14px;
+  margin:18px 0 13px;
 }
 
 .surah-grid{
@@ -161,9 +168,8 @@ header{
   background:white;
   border:1px solid var(--border);
   border-radius:18px;
-  padding:16px;
+  padding:15px;
   cursor:pointer;
-  text-align:left;
   transition:.2s ease;
 }
 
@@ -175,14 +181,14 @@ header{
 .surah-top{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:11px;
 }
 
 .number{
-  width:38px;
-  height:38px;
+  width:39px;
+  height:39px;
   border-radius:50%;
-  background:#e8f3ed;
+  background:#e7f2ec;
   color:var(--green);
   display:flex;
   align-items:center;
@@ -191,70 +197,145 @@ header{
   flex-shrink:0;
 }
 
-.surah-name{
-  font-weight:800;
-  color:var(--green);
+.surah-info{
+  min-width:0;
 }
 
-.arabic-name{
+.surah-name{
+  color:var(--green);
+  font-weight:800;
+}
+
+.surah-arabic{
   margin-left:auto;
-  font-size:20px;
+  font-size:21px;
+  direction:rtl;
 }
 
 .surah-meta{
-  margin-top:8px;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:7px;
+}
+
+/* READER */
+
+.reader{
+  display:none;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+  margin-top:20px;
+  box-shadow:0 5px 17px rgba(0,0,0,.06);
+}
+
+.reader-header{
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  padding-bottom:17px;
+  margin-bottom:18px;
+}
+
+.reader-number{
   color:var(--muted);
   font-size:12px;
 }
 
-.message{
-  display:none;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:20px;
-  margin-top:18px;
+.reader-title{
+  color:var(--green);
+  font-size:27px;
+  margin:2px 0;
+}
+
+.reader-arabic{
+  font-size:28px;
+  direction:rtl;
+}
+
+.reader-status{
   color:var(--muted);
+  font-size:13px;
+  margin-top:5px;
 }
 
-/* PLAYER */
-
-.player{
-  position:sticky;
-  bottom:12px;
-  margin-top:28px;
-  background:rgba(4,61,39,.97);
-  color:white;
-  border-radius:20px;
-  padding:15px;
-  box-shadow:0 10px 30px rgba(0,0,0,.22);
+.ayah{
+  border-bottom:1px solid var(--border);
+  padding:20px 4px;
 }
 
-.player-title{
+.ayah-number{
+  display:inline-flex;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  align-items:center;
+  justify-content:center;
+  background:#e7f2ec;
+  color:var(--green);
+  font-size:11px;
   font-weight:800;
   margin-bottom:9px;
 }
 
-.player-controls{
-  display:flex;
-  gap:8px;
+.ayah-arabic{
+  font-size:27px;
+  line-height:2;
+  direction:rtl;
+  text-align:right;
+  margin-bottom:10px;
 }
 
-.player button{
+.ayah-translation{
+  color:#52655b;
+  font-size:15px;
+}
+
+.reader-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+
+.reader-buttons button{
   border:0;
   border-radius:12px;
+  background:var(--green);
+  color:white;
   padding:10px 13px;
-  cursor:pointer;
-  background:white;
-  color:var(--green);
   font-weight:700;
+  cursor:pointer;
 }
 
-footer{
+/* NOTICE */
+
+.notice{
+  display:none;
+  background:#fff9e5;
+  border:1px solid #eadca9;
+  color:#6a591c;
+  padding:15px;
+  border-radius:15px;
+  margin-top:15px;
+  font-size:13px;
+}
+
+/* LOADING */
+
+.loading{
   text-align:center;
-  padding:28px 15px;
+  padding:30px;
+  color:var(--muted);
+}
+
+/* FOOTER */
+
+footer{
   background:var(--dark);
   color:white;
+  text-align:center;
+  padding:28px 15px;
 }
 
 footer small{
@@ -263,7 +344,7 @@ footer small{
 
 @media(max-width:650px){
 
-  .tools{
+  .toolbar{
     grid-template-columns:repeat(2,1fr);
   }
 
@@ -271,11 +352,12 @@ footer small{
     grid-template-columns:1fr;
   }
 
-  .arabic-name{
-    font-size:18px;
+  .ayah-arabic{
+    font-size:24px;
   }
 
 }
+
 </style>
 </head>
 
@@ -283,12 +365,18 @@ footer small{
 
 <header>
 
-  <a href="index.html" class="back">← Back to DIN Home</a>
+  <a href="index.html" class="back">
+    ← Back to DIN Home
+  </a>
 
   <div class="logo">📖 Qur'an Centre</div>
 
   <div class="subtitle">
     Read • Listen • Learn • Memorise
+  </div>
+
+  <div class="creator">
+    Created by Sanni Abdulmateen
   </div>
 
 </header>
@@ -297,153 +385,123 @@ footer small{
 
   <section class="intro">
 
-    <h2>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</h2>
+    <h2>
+      بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+    </h2>
 
     <p>
-      Welcome to the Qur'an Centre of DIN Islamic AI.
-      Search the Qur'an, explore Surahs, listen to recitation,
-      study translation and Tafsir, and build your memorisation journey.
+      Explore all 114 Surahs of the Noble Qur'an.
+      Search for a Surah, open the reader and access
+      Qur'an learning tools.
     </p>
 
   </section>
 
-  <div class="search-box">
+  <div class="search-wrap">
 
     <span class="search-icon">🔎</span>
 
     <input
-      id="surahSearch"
+      id="search"
       class="search"
-      type="text"
-      placeholder="Search Surah by name or number..."
-      onkeyup="searchSurahs()"
+      type="search"
+      placeholder="Search the 114 Surahs..."
+      oninput="filterSurahs()"
     >
 
   </div>
 
-  <div class="tools">
+  <div class="toolbar">
 
-    <div class="tool" onclick="feature('Audio Recitation')">
+    <button class="tool" onclick="showNotice('Audio recitation will be connected to a reliable Qur’an audio service.')">
       <span class="tool-icon">🎧</span>
-      <span>Audio</span>
-    </div>
+      Audio
+    </button>
 
-    <div class="tool" onclick="feature('Translation')">
+    <button class="tool" onclick="showNotice('Translation options will be added to the reader.')">
       <span class="tool-icon">🌍</span>
-      <span>Translation</span>
-    </div>
+      Translation
+    </button>
 
-    <div class="tool" onclick="feature('Tafsir')">
+    <button class="tool" onclick="showNotice('Verified Tafsir resources will be connected here.')">
       <span class="tool-icon">📚</span>
-      <span>Tafsir</span>
-    </div>
+      Tafsir
+    </button>
 
-    <div class="tool" onclick="feature('Bookmarks')">
+    <button class="tool" onclick="showNotice('Bookmarks will allow you to save verses for later.')">
       <span class="tool-icon">🔖</span>
-      <span>Bookmarks</span>
-    </div>
+      Bookmarks
+    </button>
 
-    <div class="tool" onclick="feature('Memorisation')">
+    <button class="tool" onclick="showNotice('Memorisation mode will help users revise selected verses.')">
       <span class="tool-icon">🧠</span>
-      <span>Memorise</span>
-    </div>
+      Memorise
+    </button>
 
-    <div class="tool" onclick="feature('Tajweed')">
+    <button class="tool" onclick="showNotice('Tajweed learning tools will be added here.')">
       <span class="tool-icon">🕌</span>
-      <span>Tajweed</span>
-    </div>
+      Tajweed
+    </button>
 
-    <div class="tool" onclick="feature('Khatm Planner')">
+    <button class="tool" onclick="showNotice('A Qur’an reading and Khatm planner will be added here.')">
       <span class="tool-icon">📅</span>
-      <span>Khatm Plan</span>
-    </div>
+      Khatm Plan
+    </button>
 
-    <div class="tool" onclick="feature('Daily Ayah')">
+    <button class="tool" onclick="showNotice('Daily Ayah will provide a verse for reflection.')">
       <span class="tool-icon">🌙</span>
-      <span>Daily Ayah</span>
-    </div>
+      Daily Ayah
+    </button>
 
   </div>
 
-  <h2 class="section-title">Surahs</h2>
+  <div id="notice" class="notice"></div>
 
-  <div id="surahGrid" class="surah-grid">
+  <h2 class="section-title" id="surahHeading">
+    All 114 Surahs
+  </h2>
 
-    <div class="surah" data-name="Al-Fatihah 1" onclick="selectSurah('Al-Fatihah')">
-      <div class="surah-top">
-        <div class="number">1</div>
-        <div class="surah-name">Al-Fatihah</div>
-        <div class="arabic-name">الفاتحة</div>
+  <div id="surahGrid" class="surah-grid"></div>
+
+  <section id="reader" class="reader">
+
+    <div class="reader-header">
+
+      <div id="readerNumber" class="reader-number"></div>
+
+      <div id="readerTitle" class="reader-title"></div>
+
+      <div id="readerArabic" class="reader-arabic"></div>
+
+      <div id="readerStatus" class="reader-status">
+        Loading Qur'an...
       </div>
-      <div class="surah-meta">7 verses • Makki</div>
-    </div>
-
-    <div class="surah" data-name="Al-Baqarah 2" onclick="selectSurah('Al-Baqarah')">
-      <div class="surah-top">
-        <div class="number">2</div>
-        <div class="surah-name">Al-Baqarah</div>
-        <div class="arabic-name">البقرة</div>
-      </div>
-      <div class="surah-meta">286 verses • Madani</div>
-    </div>
-
-    <div class="surah" data-name="Ali Imran 3" onclick="selectSurah('Ali Imran')">
-      <div class="surah-top">
-        <div class="number">3</div>
-        <div class="surah-name">Ali 'Imran</div>
-        <div class="arabic-name">آل عمران</div>
-      </div>
-      <div class="surah-meta">200 verses • Madani</div>
-    </div>
-
-    <div class="surah" data-name="An-Nisa 4" onclick="selectSurah('An-Nisa')">
-      <div class="surah-top">
-        <div class="number">4</div>
-        <div class="surah-name">An-Nisa</div>
-        <div class="arabic-name">النساء</div>
-      </div>
-      <div class="surah-meta">176 verses • Madani</div>
-    </div>
-
-    <div class="surah" data-name="Al-Maidah 5" onclick="selectSurah('Al-Ma'idah')">
-      <div class="surah-top">
-        <div class="number">5</div>
-        <div class="surah-name">Al-Ma'idah</div>
-        <div class="arabic-name">المائدة</div>
-      </div>
-      <div class="surah-meta">120 verses • Madani</div>
-    </div>
-
-    <div class="surah" data-name="Al-Anam 6" onclick="selectSurah('Al-Anam')">
-      <div class="surah-top">
-        <div class="number">6</div>
-        <div class="surah-name">Al-An'am</div>
-        <div class="arabic-name">الأنعام</div>
-      </div>
-      <div class="surah-meta">165 verses • Makki</div>
-    </div>
-
-  </div>
-
-  <div id="message" class="message"></div>
-
-  <div class="player">
-
-    <div class="player-title" id="playerTitle">
-      🎧 Qur'an Audio — Select a Surah
-    </div>
-
-    <div class="player-controls">
-
-      <button onclick="audioMessage('Play')">▶ Play</button>
-
-      <button onclick="audioMessage('Pause')">⏸ Pause</button>
-
-      <button onclick="audioMessage('Stop')">⏹ Stop</button>
 
     </div>
 
-  </div>
+    <div id="ayahContainer"></div>
+
+    <div class="reader-buttons">
+
+      <button onclick="closeReader()">
+        ← Back to Surahs
+      </button>
+
+      <button onclick="showNotice('Audio recitation will be connected here.')">
+        🎧 Audio
+      </button>
+
+      <button onclick="showNotice('Bookmark functionality will be added here.')">
+        🔖 Bookmark
+      </button>
+
+      <button onclick="showNotice('Memorisation mode will be added here.')">
+        🧠 Memorise
+      </button>
+
+    </div>
+
+  </section>
 
 </main>
 
@@ -461,106 +519,379 @@ footer small{
 
 <script>
 
-function feature(name){
+/*
+  DIN QUR'AN CENTRE
 
-  const message =
-    document.getElementById("message");
+  The Surah catalogue below contains all 114 Surahs.
+  Qur'an verse data is requested from a dedicated Qur'an
+  data service instead of storing thousands of verses
+  directly inside this HTML file.
+*/
 
-  message.style.display = "block";
+const surahs = [
 
-  message.innerHTML =
-    "<strong>" + name + "</strong><br>" +
-    "This Qur'an Centre feature is planned for DIN. " +
-    "We will connect its reliable data or service during the next development stage.";
+[1,"Al-Fatihah","الفاتحة",7,"Makki"],
+[2,"Al-Baqarah","البقرة",286,"Madani"],
+[3,"Ali 'Imran","آل عمران",200,"Madani"],
+[4,"An-Nisa","النساء",176,"Madani"],
+[5,"Al-Ma'idah","المائدة",120,"Madani"],
+[6,"Al-An'am","الأنعام",165,"Makki"],
+[7,"Al-A'raf","الأعراف",206,"Makki"],
+[8,"Al-Anfal","الأنفال",75,"Madani"],
+[9,"At-Tawbah","التوبة",129,"Madani"],
+[10,"Yunus","يونس",109,"Makki"],
+[11,"Hud","هود",123,"Makki"],
+[12,"Yusuf","يوسف",111,"Makki"],
+[13,"Ar-Ra'd","الرعد",43,"Madani"],
+[14,"Ibrahim","إبراهيم",52,"Makki"],
+[15,"Al-Hijr","الحجر",99,"Makki"],
+[16,"An-Nahl","النحل",128,"Makki"],
+[17,"Al-Isra","الإسراء",111,"Makki"],
+[18,"Al-Kahf","الكهف",110,"Makki"],
+[19,"Maryam","مريم",98,"Makki"],
+[20,"Ta-Ha","طه",135,"Makki"],
+[21,"Al-Anbiya","الأنبياء",112,"Makki"],
+[22,"Al-Hajj","الحج",78,"Madani"],
+[23,"Al-Mu'minun","المؤمنون",118,"Makki"],
+[24,"An-Nur","النور",64,"Madani"],
+[25,"Al-Furqan","الفرقان",77,"Makki"],
+[26,"Ash-Shu'ara","الشعراء",227,"Makki"],
+[27,"An-Naml","النمل",93,"Makki"],
+[28,"Al-Qasas","القصص",88,"Makki"],
+[29,"Al-Ankabut","العنكبوت",69,"Makki"],
+[30,"Ar-Rum","الروم",60,"Makki"],
+[31,"Luqman","لقمان",34,"Makki"],
+[32,"As-Sajdah","السجدة",30,"Makki"],
+[33,"Al-Ahzab","الأحزاب",73,"Madani"],
+[34,"Saba","سبأ",54,"Makki"],
+[35,"Fatir","فاطر",45,"Makki"],
+[36,"Ya-Sin","يس",83,"Makki"],
+[37,"As-Saffat","الصافات",182,"Makki"],
+[38,"Sad","ص",88,"Makki"],
+[39,"Az-Zumar","الزمر",75,"Makki"],
+[40,"Ghafir","غافر",85,"Makki"],
+[41,"Fussilat","فصلت",54,"Makki"],
+[42,"Ash-Shura","الشورى",53,"Makki"],
+[43,"Az-Zukhruf","الزخرف",89,"Makki"],
+[44,"Ad-Dukhan","الدخان",59,"Makki"],
+[45,"Al-Jathiyah","الجاثية",37,"Makki"],
+[46,"Al-Ahqaf","الأحقاف",35,"Makki"],
+[47,"Muhammad","محمد",38,"Madani"],
+[48,"Al-Fath","الفتح",29,"Madani"],
+[49,"Al-Hujurat","الحجرات",18,"Madani"],
+[50,"Qaf","ق",45,"Makki"],
+[51,"Adh-Dhariyat","الذاريات",60,"Makki"],
+[52,"At-Tur","الطور",49,"Makki"],
+[53,"An-Najm","النجم",62,"Makki"],
+[54,"Al-Qamar","القمر",55,"Makki"],
+[55,"Ar-Rahman","الرحمن",78,"Madani"],
+[56,"Al-Waqi'ah","الواقعة",96,"Makki"],
+[57,"Al-Hadid","الحديد",29,"Madani"],
+[58,"Al-Mujadilah","المجادلة",22,"Madani"],
+[59,"Al-Hashr","الحشر",24,"Madani"],
+[60,"Al-Mumtahanah","الممتحنة",13,"Madani"],
+[61,"As-Saff","الصف",14,"Madani"],
+[62,"Al-Jumu'ah","الجمعة",11,"Madani"],
+[63,"Al-Munafiqun","المنافقون",11,"Madani"],
+[64,"At-Taghabun","التغابن",18,"Madani"],
+[65,"At-Talaq","الطلاق",12,"Madani"],
+[66,"At-Tahrim","التحريم",12,"Madani"],
+[67,"Al-Mulk","الملك",30,"Makki"],
+[68,"Al-Qalam","القلم",52,"Makki"],
+[69,"Al-Haqqah","الحاقة",52,"Makki"],
+[70,"Al-Ma'arij","المعارج",44,"Makki"],
+[71,"Nuh","نوح",28,"Makki"],
+[72,"Al-Jinn","الجن",28,"Makki"],
+[73,"Al-Muzzammil","المزمل",20,"Makki"],
+[74,"Al-Muddaththir","المدثر",56,"Makki"],
+[75,"Al-Qiyamah","القيامة",40,"Makki"],
+[76,"Al-Insan","الإنسان",31,"Madani"],
+[77,"Al-Mursalat","المرسلات",50,"Makki"],
+[78,"An-Naba","النبأ",40,"Makki"],
+[79,"An-Nazi'at","النازعات",46,"Makki"],
+[80,"Abasa","عبس",42,"Makki"],
+[81,"At-Takwir","التكوير",29,"Makki"],
+[82,"Al-Infitar","الانفطار",19,"Makki"],
+[83,"Al-Mutaffifin","المطففين",36,"Makki"],
+[84,"Al-Inshiqaq","الانشقاق",25,"Makki"],
+[85,"Al-Buruj","البروج",22,"Makki"],
+[86,"At-Tariq","الطارق",17,"Makki"],
+[87,"Al-A'la","الأعلى",19,"Makki"],
+[88,"Al-Ghashiyah","الغاشية",26,"Makki"],
+[89,"Al-Fajr","الفجر",30,"Makki"],
+[90,"Al-Balad","البلد",20,"Makki"],
+[91,"Ash-Shams","الشمس",15,"Makki"],
+[92,"Al-Layl","الليل",21,"Makki"],
+[93,"Ad-Duha","الضحى",11,"Makki"],
+[94,"Ash-Sharh","الشرح",8,"Makki"],
+[95,"At-Tin","التين",8,"Makki"],
+[96,"Al-Alaq","العلق",19,"Makki"],
+[97,"Al-Qadr","القدر",5,"Makki"],
+[98,"Al-Bayyinah","البينة",8,"Madani"],
+[99,"Az-Zalzalah","الزلزلة",8,"Madani"],
+[100,"Al-Adiyat","العاديات",11,"Makki"],
+[101,"Al-Qari'ah","القارعة",11,"Makki"],
+[102,"At-Takathur","التكاثر",8,"Makki"],
+[103,"Al-Asr","العصر",3,"Makki"],
+[104,"Al-Humazah","الهمزة",9,"Makki"],
+[105,"Al-Fil","الفيل",5,"Makki"],
+[106,"Quraysh","قريش",4,"Makki"],
+[107,"Al-Ma'un","الماعون",7,"Makki"],
+[108,"Al-Kawthar","الكوثر",3,"Makki"],
+[109,"Al-Kafirun","الكافرون",6,"Makki"],
+[110,"An-Nasr","النصر",3,"Madani"],
+[111,"Al-Masad","المسد",5,"Makki"],
+[112,"Al-Ikhlas","الإخلاص",4,"Makki"],
+[113,"Al-Falaq","الفلق",5,"Makki"],
+[114,"An-Nas","الناس",6,"Makki"]
 
-  message.scrollIntoView({
-    behavior:"smooth",
-    block:"center"
+];
+
+const grid = document.getElementById("surahGrid");
+
+function renderSurahs(list){
+
+  grid.innerHTML = "";
+
+  list.forEach(surah => {
+
+    const card = document.createElement("div");
+
+    card.className = "surah";
+
+    card.innerHTML = `
+      <div class="surah-top">
+
+        <div class="number">${surah[0]}</div>
+
+        <div class="surah-info">
+
+          <div class="surah-name">
+            ${surah[1]}
+          </div>
+
+          <div class="surah-meta">
+            ${surah[4]} • ${surah[3]} verses
+          </div>
+
+        </div>
+
+        <div class="surah-arabic">
+          ${surah[2]}
+        </div>
+
+      </div>
+    `;
+
+    card.addEventListener(
+      "click",
+      () => openSurah(surah)
+    );
+
+    grid.appendChild(card);
+
   });
 
 }
 
-function selectSurah(name){
-
-  document.getElementById("playerTitle").textContent =
-    "🎧 Qur'an Audio — " + name;
-
-  const message =
-    document.getElementById("message");
-
-  message.style.display = "block";
-
-  message.innerHTML =
-    "<strong>" + name + "</strong><br>" +
-    "The Surah reader and verified Qur'an audio will be connected here.";
-
-  message.scrollIntoView({
-    behavior:"smooth",
-    block:"center"
-  });
-
-}
-
-function audioMessage(action){
-
-  const message =
-    document.getElementById("message");
-
-  message.style.display = "block";
-
-  message.innerHTML =
-    "<strong>Audio: " + action + "</strong><br>" +
-    "The Qur'an audio player will be connected to a reliable recitation source.";
-
-}
-
-function searchSurahs(){
+function filterSurahs(){
 
   const query =
     document
-      .getElementById("surahSearch")
+      .getElementById("search")
       .value
       .toLowerCase()
       .trim();
 
-  const surahs =
-    document.querySelectorAll(".surah");
+  const results =
+    surahs.filter(surah => {
 
-  let found = 0;
+      return (
+        String(surah[0]).includes(query) ||
+        surah[1].toLowerCase().includes(query) ||
+        surah[2].includes(query)
+      );
 
-  surahs.forEach(surah => {
+    });
 
-    const name =
-      surah
-        .getAttribute("data-name")
-        .toLowerCase();
+  renderSurahs(results);
 
-    if(name.includes(query)){
+}
 
-      surah.style.display = "block";
-      found++;
+async function openSurah(surah){
 
-    }else{
+  const reader =
+    document.getElementById("reader");
 
-      surah.style.display = "none";
+  const heading =
+    document.getElementById("surahHeading");
 
-    }
+  const container =
+    document.getElementById("ayahContainer");
 
+  reader.style.display = "block";
+
+  heading.style.display = "none";
+
+  grid.style.display = "none";
+
+  document.getElementById("readerNumber").textContent =
+    "Surah " + surah[0];
+
+  document.getElementById("readerTitle").textContent =
+    surah[1];
+
+  document.getElementById("readerArabic").textContent =
+    surah[2];
+
+  document.getElementById("readerStatus").textContent =
+    "Loading Qur'an text...";
+
+  container.innerHTML =
+    '<div class="loading">📖 Loading verses...</div>';
+
+  reader.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
   });
 
-  if(found === 0){
+  try{
 
-    const message =
-      document.getElementById("message");
+    /*
+      Qur'an.com API
 
-    message.style.display = "block";
+      This requests the Surah's Arabic text.
+      If the external service is unavailable,
+      DIN shows a clear message instead of
+      inventing Qur'an text.
+    */
 
-    message.textContent =
-      "No Surah matched your search.";
+    const response =
+      await fetch(
+        "https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=" +
+        surah[0]
+      );
+
+    if(!response.ok){
+      throw new Error("Qur'an service unavailable");
+    }
+
+    const data =
+      await response.json();
+
+    const verses =
+      data.verses || [];
+
+    if(verses.length === 0){
+      throw new Error("No verses returned");
+    }
+
+    container.innerHTML = "";
+
+    verses.forEach(verse => {
+
+      const ayah =
+        document.createElement("div");
+
+      ayah.className = "ayah";
+
+      ayah.innerHTML = `
+
+        <div class="ayah-number">
+          ${verse.verse_number}
+        </div>
+
+        <div class="ayah-arabic">
+          ${escapeHtml(verse.text_uthmani || "")}
+        </div>
+
+        <div class="ayah-translation">
+          Translation will be connected here.
+        </div>
+
+      `;
+
+      container.appendChild(ayah);
+
+    });
+
+    document.getElementById("readerStatus").textContent =
+      surah[4] + " • " + surah[3] + " verses";
+
+  }catch(error){
+
+    container.innerHTML = `
+
+      <div class="loading">
+
+        <strong>
+          Qur'an text could not be loaded right now.
+        </strong>
+
+        <br><br>
+
+        Please check your internet connection
+        and try again.
+
+      </div>
+
+    `;
+
+    document.getElementById("readerStatus").textContent =
+      "Unable to connect to the Qur'an data service.";
 
   }
 
 }
+
+function escapeHtml(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+
+}
+
+function closeReader(){
+
+  document.getElementById("reader").style.display =
+    "none";
+
+  document.getElementById("surahHeading").style.display =
+    "block";
+
+  document.getElementById("surahGrid").style.display =
+    "grid";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+function showNotice(text){
+
+  const notice =
+    document.getElementById("notice");
+
+  notice.style.display = "block";
+
+  notice.textContent = text;
+
+  notice.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+}
+
+/* Display all 114 Surahs immediately */
+
+renderSurahs(surahs);
 
 </script>
 
