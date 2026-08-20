@@ -11,12 +11,13 @@
 :root{
   --green:#075e3b;
   --dark:#043d27;
+  --green2:#0b9460;
   --light:#f3f8f5;
   --gold:#c9a227;
   --text:#173b2b;
   --muted:#687a70;
   --white:#ffffff;
-  --border:#dfebe5;
+  --border:#dceae3;
 }
 
 *{
@@ -40,47 +41,46 @@ body{
 
 header{
   background:
-    radial-gradient(circle at top right,rgba(255,255,255,.12),transparent 30%),
-    linear-gradient(135deg,#032f20,#075e3b,#0b9460);
+    radial-gradient(circle at top right,rgba(255,255,255,.13),transparent 32%),
+    linear-gradient(135deg,var(--dark),var(--green),var(--green2));
   color:white;
-  padding:34px 18px 42px;
   text-align:center;
-  border-radius:0 0 36px 36px;
-  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  padding:35px 18px 42px;
+  border-radius:0 0 34px 34px;
+  box-shadow:0 10px 30px rgba(0,0,0,.16);
 }
 
 .logo{
   font-size:36px;
-  font-weight:800;
+  font-weight:850;
+  letter-spacing:-1px;
 }
 
 .tagline{
   margin-top:7px;
   font-size:15px;
-  opacity:.94;
+  opacity:.93;
 }
 
 .creator{
   margin-top:7px;
   font-size:13px;
-  opacity:.82;
+  opacity:.78;
 }
 
 .ai-button{
   display:block;
-  max-width:460px;
+  max-width:470px;
   margin:24px auto 0;
   padding:17px 20px;
+  border-radius:18px;
   background:white;
   color:var(--green);
-  border-radius:18px;
   text-decoration:none;
-  font-weight:800;
   font-size:18px;
-  box-shadow:0 8px 25px rgba(0,0,0,.2);
+  font-weight:800;
+  box-shadow:0 9px 26px rgba(0,0,0,.22);
 }
-
-/* MAIN */
 
 .container{
   width:min(1150px,100%);
@@ -97,9 +97,9 @@ header{
 
 .search{
   width:100%;
-  padding:16px 18px 16px 48px;
   border:1px solid var(--border);
   border-radius:18px;
+  padding:16px 18px 16px 48px;
   background:white;
   font-size:16px;
   outline:none;
@@ -107,22 +107,22 @@ header{
 }
 
 .search:focus{
-  border-color:#0b9460;
+  border-color:var(--green2);
 }
 
 .search-icon{
   position:absolute;
   left:17px;
-  top:14px;
-  font-size:21px;
+  top:13px;
+  font-size:22px;
 }
 
-/* QUICK ACTIONS */
+/* QUICK ACCESS */
 
 .quick-title{
+  color:var(--green);
   font-size:20px;
   margin:12px 0;
-  color:var(--green);
 }
 
 .quick-grid{
@@ -136,7 +136,7 @@ header{
   background:white;
   border:1px solid var(--border);
   border-radius:16px;
-  padding:14px 8px;
+  padding:14px 7px;
   text-align:center;
   text-decoration:none;
   color:var(--text);
@@ -149,28 +149,27 @@ header{
   margin-bottom:5px;
 }
 
-.quick span:last-child{
+.quick-label{
   font-size:11px;
-  font-weight:700;
+  font-weight:750;
 }
 
 /* DAILY CARD */
 
 .daily{
-  background:
-    linear-gradient(135deg,rgba(7,94,59,.97),rgba(11,148,96,.94));
+  background:linear-gradient(135deg,var(--green),var(--green2));
   color:white;
   border-radius:24px;
   padding:25px 20px;
   margin-bottom:30px;
-  box-shadow:0 8px 22px rgba(0,0,0,.12);
+  box-shadow:0 8px 23px rgba(0,0,0,.12);
 }
 
 .daily-label{
   font-size:12px;
   text-transform:uppercase;
   letter-spacing:1px;
-  opacity:.8;
+  opacity:.78;
 }
 
 .daily h2{
@@ -180,10 +179,10 @@ header{
 
 .daily p{
   font-size:14px;
-  opacity:.94;
+  opacity:.92;
 }
 
-/* PRAYER PREVIEW */
+/* PRAYER */
 
 .prayer{
   background:white;
@@ -198,7 +197,6 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
 }
 
 .prayer h2{
@@ -207,8 +205,9 @@ header{
 }
 
 .location{
-  font-size:12px;
   color:var(--muted);
+  font-size:12px;
+  margin-top:2px;
 }
 
 .prayer-row{
@@ -221,27 +220,27 @@ header{
 .prayer-item{
   background:#f3f8f5;
   border-radius:14px;
-  padding:12px 5px;
+  padding:12px 4px;
   text-align:center;
 }
 
 .prayer-item strong{
   display:block;
-  font-size:12px;
   color:var(--green);
+  font-size:12px;
 }
 
 .prayer-item span{
-  font-size:12px;
   color:var(--muted);
+  font-size:12px;
 }
 
-/* FEATURE SECTION */
+/* FEATURES */
 
 .section-title{
   text-align:center;
   color:var(--green);
-  font-size:26px;
+  font-size:27px;
   margin-bottom:20px;
 }
 
@@ -252,6 +251,8 @@ header{
 }
 
 .card{
+  position:relative;
+  display:block;
   background:white;
   border:1px solid var(--border);
   border-radius:21px;
@@ -265,8 +266,12 @@ header{
 }
 
 .card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-4px);
   box-shadow:0 11px 25px rgba(0,0,0,.12);
+}
+
+.featured{
+  border:2px solid rgba(201,162,39,.28);
 }
 
 .icon{
@@ -285,34 +290,15 @@ header{
   font-size:12px;
 }
 
-/* SPECIAL CARDS */
-
-.card.featured{
-  border:2px solid rgba(201,162,39,.35);
-}
-
-.card.new{
-  position:relative;
-}
-
 .badge{
   position:absolute;
   top:9px;
   right:9px;
   background:var(--gold);
   color:white;
-  font-size:9px;
+  font-size:8px;
   padding:3px 7px;
   border-radius:20px;
-}
-
-/* NO RESULTS */
-
-.no-results{
-  display:none;
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
 }
 
 /* FOOTER */
@@ -322,7 +308,6 @@ footer{
   color:white;
   text-align:center;
   padding:32px 15px;
-  margin-top:25px;
 }
 
 .footer-brand{
@@ -337,9 +322,9 @@ footer{
 }
 
 .footer-note{
-  margin-top:12px;
+  margin-top:10px;
   font-size:12px;
-  opacity:.7;
+  opacity:.68;
 }
 
 /* MOBILE */
@@ -352,10 +337,6 @@ footer{
 
   .quick-grid{
     grid-template-columns:repeat(2,1fr);
-  }
-
-  .prayer-row{
-    grid-template-columns:repeat(5,1fr);
   }
 
   .grid{
@@ -377,7 +358,7 @@ footer{
 
 }
 
-@media(max-width:380px){
+@media(max-width:390px){
 
   .prayer-item{
     padding:9px 2px;
@@ -406,7 +387,7 @@ footer{
     Created by Sanni Abdulmateen
   </div>
 
-  <a href="#" class="ai-button" onclick="openAI();return false;">
+  <a href="#" class="ai-button" onclick="showMessage('DIN AI will be connected to the AI service.');return false;">
     🤖 Ask DIN AI
   </a>
 
@@ -417,41 +398,43 @@ footer{
   <!-- SEARCH -->
 
   <div class="search-wrap">
+
     <span class="search-icon">🔎</span>
 
     <input
       id="searchBox"
       class="search"
-      type="text"
-      placeholder="Search Qur'an, Salah, Arabic, Prophets..."
-      onkeyup="searchFeatures()"
+      type="search"
+      placeholder="Search DIN features..."
+      oninput="searchFeatures()"
     >
+
   </div>
 
-  <!-- QUICK ACTIONS -->
+  <!-- QUICK ACCESS -->
 
   <h2 class="quick-title">Quick Access</h2>
 
   <div class="quick-grid">
 
-    <a class="quick" href="#" onclick="comingSoon('Qur’an');return false;">
+    <a class="quick" href="quran.html">
       <span class="quick-icon">📖</span>
-      <span>Qur'an</span>
+      <span class="quick-label">Qur'an</span>
     </a>
 
-    <a class="quick" href="#" onclick="comingSoon('Adhan & Prayer Times');return false;">
+    <a class="quick" href="#adhan" onclick="showMessage('Adhan & Prayer Times will be connected next.');return false;">
       <span class="quick-icon">🔔</span>
-      <span>Adhan</span>
+      <span class="quick-label">Adhan</span>
     </a>
 
-    <a class="quick" href="#" onclick="comingSoon('Tasbih');return false;">
+    <a class="quick" href="#tasbih" onclick="showMessage('Digital Tasbih will be built next.');return false;">
       <span class="quick-icon">📿</span>
-      <span>Tasbih</span>
+      <span class="quick-label">Tasbih</span>
     </a>
 
-    <a class="quick" href="#" onclick="comingSoon('Dua & Dhikr');return false;">
+    <a class="quick" href="#dua" onclick="showMessage('Dhikr & Dua Centre will be built next.');return false;">
       <span class="quick-icon">🤲</span>
-      <span>Dua</span>
+      <span class="quick-label">Dua</span>
     </a>
 
   </div>
@@ -460,26 +443,28 @@ footer{
 
   <section class="daily">
 
-    <div class="daily-label">Today's Reminder</div>
+    <div class="daily-label">Daily Deen</div>
 
     <h2>🌙 Make today a day of remembrance</h2>
 
     <p>
       Read Qur'an, remember Allah, learn something beneficial
-      and strive to make your worship better.
+      and strive to improve your worship.
     </p>
 
   </section>
 
   <!-- PRAYER PREVIEW -->
 
-  <section class="prayer">
+  <section class="prayer" id="adhan">
 
     <div class="prayer-head">
 
       <div>
-        <h2>🕌 Prayer Times</h2>
-        <div class="location">Location & calculation settings coming soon</div>
+        <h2>🕌 Prayer Times & Adhan</h2>
+        <div class="location">
+          Automatic location and accurate prayer calculations will be connected here.
+        </div>
       </div>
 
       <span>🔔</span>
@@ -521,174 +506,366 @@ footer{
 
   <div class="grid" id="featureGrid">
 
-    <a class="card featured" data-name="AI Intelligence Islamic Assistant" href="#" onclick="openAI();return false;">
+    <!-- AI -->
+
+    <a class="card featured"
+       data-name="AI Artificial Intelligence Ask DIN"
+       href="#"
+       onclick="showMessage('DIN AI will be connected to the AI service.');return false;">
+
       <div class="icon">🤖</div>
-      <h3>AI & Intelligence</h3>
-      <p>Ask, learn, study and explore Islam with DIN.</p>
+      <h3>Ask DIN AI</h3>
+      <p>Ask questions, learn and explore Islamic knowledge.</p>
+
     </a>
 
-<a class="card featured" data-name="Quran Qur'an Audio Tafsir Translation Memorisation" href="quran.html"></a>
+    <!-- QURAN — DIRECT LINK -->
+
+    <a class="card featured"
+       data-name="Quran Qur'an Audio Tafsir Translation Memorisation"
+       href="quran.html">
+
       <div class="icon">📖</div>
       <h3>Qur'an</h3>
-      <p>Read, listen, search, study, memorise and learn Tajweed.</p>
+      <p>Read, listen, study, memorise and learn Tajweed.</p>
+
     </a>
 
-    <a class="card featured new" data-name="Adhan Prayer Times Notifications" href="#" onclick="comingSoon('Adhan & Prayer Times');return false;">
+    <!-- ADHAN -->
+
+    <a class="card featured"
+       data-name="Adhan Prayer Times Notifications Salah"
+       href="#adhan"
+       onclick="showMessage('Adhan, accurate prayer times, countdowns and notifications will be built here.');return false;">
+
       <span class="badge">IMPORTANT</span>
+
       <div class="icon">🔔</div>
+
       <h3>Adhan & Prayer Times</h3>
+
       <p>Prayer times, Adhan, countdowns and notifications.</p>
+
     </a>
 
-    <a class="card featured new" data-name="Voice Assistant Voice AI Speech" href="#" onclick="comingSoon('DIN Voice Assistant');return false;">
+    <!-- VOICE -->
+
+    <a class="card featured"
+       data-name="Voice Assistant Voice AI Speech Talk DIN"
+       href="#"
+       onclick="showMessage('DIN Voice Assistant will be connected when the voice service is added.');return false;">
+
       <span class="badge">NEW</span>
+
       <div class="icon">🎙️</div>
+
       <h3>DIN Voice Assistant</h3>
-      <p>Talk to DIN and learn through voice.</p>
+
+      <p>Talk to DIN and learn through your voice.</p>
+
     </a>
 
-    <a class="card" data-name="Salah Prayer Wudu Qiblah" href="#" onclick="comingSoon('Salah Centre');return false;">
+    <!-- SALAH -->
+
+    <a class="card"
+       data-name="Salah Prayer Wudu Qiblah"
+       href="#"
+       onclick="showMessage('Salah Centre will contain Wudu, Qiblah, prayer guides and Salah learning.');return false;">
+
       <div class="icon">🕌</div>
       <h3>Salah</h3>
-      <p>Prayer learning, Wudu, Qiblah and prayer guidance.</p>
+      <p>Prayer learning, Wudu, Qiblah and guidance.</p>
+
     </a>
 
-    <a class="card" data-name="Dhikr Dua Adhkar Morning Evening" href="#" onclick="comingSoon('Dhikr & Dua');return false;">
-      <div class="icon">📿</div>
+    <!-- DHIKR -->
+
+    <a class="card"
+       data-name="Dhikr Dua Adhkar Morning Evening"
+       id="dua"
+       href="#"
+       onclick="showMessage('Dhikr & Dua Centre will contain a large verified library of adhkar and duas.');return false;">
+
+      <div class="icon">🤲</div>
       <h3>Dhikr & Dua</h3>
-      <p>Morning, evening and daily adhkar with sources.</p>
+      <p>Daily, morning, evening and special adhkar.</p>
+
     </a>
 
-    <a class="card" data-name="Tasbih Counter Dhikr Streak" href="#" onclick="comingSoon('Digital Tasbih');return false;">
+    <!-- TASBIH -->
+
+    <a class="card"
+       data-name="Tasbih Counter Dhikr Streak"
+       id="tasbih"
+       href="#"
+       onclick="showMessage('Digital Tasbih will include counters, targets, history and streaks.');return false;">
+
       <div class="icon">📿</div>
       <h3>Tasbih</h3>
       <p>Digital counter, targets, history and streaks.</p>
+
     </a>
 
-    <a class="card" data-name="Arabic Academy Teacher Grammar Vocabulary" href="#" onclick="comingSoon('Arabic Academy');return false;">
+    <!-- ARABIC -->
+
+    <a class="card"
+       data-name="Arabic Academy Arabic Teacher Grammar Vocabulary"
+       href="#"
+       onclick="showMessage('Arabic Academy will teach reading, vocabulary, grammar, conversation and advanced Arabic.');return false;">
+
       <div class="icon">🇸🇦</div>
       <h3>Arabic Academy</h3>
-      <p>Learn Arabic from alphabet to advanced studies.</p>
+      <p>Learn Arabic from beginner to advanced level.</p>
+
     </a>
 
-    <a class="card" data-name="Prophets Stories Biography Seerah" href="#" onclick="comingSoon('Prophets Library');return false;">
+    <!-- PROPHETS -->
+
+    <a class="card"
+       data-name="Prophets Stories Biography Seerah"
+       href="#"
+       onclick="showMessage('Prophets Library will contain detailed, carefully sourced biographies and lessons.');return false;">
+
       <div class="icon">📚</div>
       <h3>Prophets</h3>
-      <p>Detailed biographies, stories, lessons and references.</p>
+      <p>Detailed stories, biographies and lessons.</p>
+
     </a>
 
-    <a class="card" data-name="Sahabah Companions Biography" href="#" onclick="comingSoon('Sahabah Library');return false;">
+    <!-- SAHABAH -->
+
+    <a class="card"
+       data-name="Sahabah Companions Biography"
+       href="#"
+       onclick="showMessage('Sahabah Library will contain detailed biographies and lessons.');return false;">
+
       <div class="icon">👥</div>
       <h3>Sahabah</h3>
-      <p>Detailed lives, achievements and lessons.</p>
+      <p>Lives, achievements and lessons from the Companions.</p>
+
     </a>
 
-    <a class="card" data-name="Sahabiyyahs Women Companions Biography" href="#" onclick="comingSoon('Sahabiyyahs Library');return false;">
+    <!-- SAHABIYYAHS -->
+
+    <a class="card"
+       data-name="Sahabiyyahs Female Companions Women"
+       href="#"
+       onclick="showMessage('Sahabiyyahs Library will contain detailed biographies and lessons.');return false;">
+
       <div class="icon">👩</div>
       <h3>Sahabiyyahs</h3>
       <p>Stories and biographies of the female Companions.</p>
+
     </a>
 
-    <a class="card" data-name="Islamic History Civilization Scholars" href="#" onclick="comingSoon('Islamic History');return false;">
+    <!-- HISTORY -->
+
+    <a class="card"
+       data-name="Islamic History Civilization Scholars"
+       href="#"
+       onclick="showMessage('Islamic History will cover civilizations, scholars, events and timelines.');return false;">
+
       <div class="icon">🏛️</div>
       <h3>Islamic History</h3>
-      <p>Islamic civilization, scholars and historical events.</p>
+      <p>Civilization, scholars, events and historical lessons.</p>
+
     </a>
 
-    <a class="card" data-name="Islamic Education Courses Quiz Exams Revision" href="#" onclick="comingSoon('Islamic Education');return false;">
+    <!-- EDUCATION -->
+
+    <a class="card"
+       data-name="Islamic Education Courses Quiz Exams Revision"
+       href="#"
+       onclick="showMessage('Islamic Education will contain courses, quizzes, examinations and revision tools.');return false;">
+
       <div class="icon">📝</div>
       <h3>Islamic Education</h3>
-      <p>Courses, quizzes, exams, homework and revision.</p>
+      <p>Courses, quizzes, exams, lessons and revision.</p>
+
     </a>
 
-    <a class="card" data-name="Children Kids Islamic Learning Stories" href="#" onclick="comingSoon('Children Centre');return false;">
+    <!-- CHILDREN -->
+
+    <a class="card"
+       data-name="Children Kids Islamic Learning Stories"
+       href="#"
+       onclick="showMessage('Children Centre will provide age-appropriate Islamic learning and stories.');return false;">
+
       <div class="icon">👶</div>
       <h3>Children</h3>
-      <p>Age-appropriate stories, lessons, Qur'an and quizzes.</p>
+      <p>Stories, Qur'an, lessons, games and quizzes.</p>
+
     </a>
 
-    <a class="card" data-name="Women Women's Centre Family Parenting" href="#" onclick="comingSoon('Women’s Centre');return false;">
+    <!-- WOMEN -->
+
+    <a class="card"
+       data-name="Women Women's Centre Family Parenting"
+       href="#"
+       onclick="showMessage('Women’s Centre will provide Islamic learning and family education resources.');return false;">
+
       <div class="icon">🧕</div>
       <h3>Women's Centre</h3>
-      <p>Islamic learning, family education and women's history.</p>
+      <p>Learning, family education and women's history.</p>
+
     </a>
 
-    <a class="card" data-name="Hajj Umrah Makkah Pilgrimage" href="#" onclick="comingSoon('Hajj & Umrah');return false;">
+    <!-- HAJJ -->
+
+    <a class="card"
+       data-name="Hajj Umrah Makkah Pilgrimage"
+       href="#"
+       onclick="showMessage('Hajj & Umrah Centre will contain step-by-step guides, rituals, duas and checklists.');return false;">
+
       <div class="icon">🕋</div>
       <h3>Hajj & Umrah</h3>
-      <p>Step-by-step guides, rituals, duas and checklists.</p>
+      <p>Guides, rituals, duas and pilgrimage planning.</p>
+
     </a>
 
-    <a class="card" data-name="Ramadan Fasting Taraweeh Laylatul Qadr" href="#" onclick="comingSoon('Ramadan Centre');return false;">
+    <!-- RAMADAN -->
+
+    <a class="card"
+       data-name="Ramadan Fasting Taraweeh Laylatul Qadr"
+       href="#"
+       onclick="showMessage('Ramadan Centre will contain fasting tools, Qur’an plans and Ramadan resources.');return false;">
+
       <div class="icon">🌙</div>
       <h3>Ramadan</h3>
       <p>Fasting, Qur'an plans, Taraweeh and Ramadan tools.</p>
+
     </a>
 
-    <a class="card" data-name="Zakah Zakat Calculator Wealth" href="#" onclick="comingSoon('Zakah Centre');return false;">
+    <!-- ZAKAH -->
+
+    <a class="card"
+       data-name="Zakah Zakat Calculator Wealth"
+       href="#"
+       onclick="showMessage('Zakah Centre will include education and a carefully designed calculator.');return false;">
+
       <div class="icon">💰</div>
       <h3>Zakah</h3>
       <p>Learn about Zakah and calculate eligible amounts.</p>
+
     </a>
 
-    <a class="card" data-name="Islamic Media Videos Audio Lessons" href="#" onclick="comingSoon('Islamic Media');return false;">
+    <!-- MEDIA -->
+
+    <a class="card"
+       data-name="Islamic Media Videos Audio Lectures"
+       href="#"
+       onclick="showMessage('Islamic Media will bring together appropriate educational videos, audio and lectures.');return false;">
+
       <div class="icon">🎥</div>
       <h3>Islamic Media</h3>
-      <p>Islamic videos, lessons, lectures and educational media.</p>
+      <p>Videos, lectures, audio and educational media.</p>
+
     </a>
 
-    <a class="card" data-name="Islamic Tools Calendar Hijri Qiblah Converter" href="#" onclick="comingSoon('Islamic Tools');return false;">
+    <!-- TOOLS -->
+
+    <a class="card"
+       data-name="Islamic Tools Calendar Hijri Qiblah"
+       href="#"
+       onclick="showMessage('Islamic Tools will contain Hijri calendar, Qiblah and useful calculators.');return false;">
+
       <div class="icon">🗓️</div>
       <h3>Islamic Tools</h3>
-      <p>Hijri calendar, converters, Qiblah and useful tools.</p>
+      <p>Hijri calendar, Qiblah and useful tools.</p>
+
     </a>
 
-    <a class="card" data-name="Muslim Life Travel Mosque Halal" href="#" onclick="comingSoon('Muslim Life');return false;">
+    <!-- MUSLIM LIFE -->
+
+    <a class="card"
+       data-name="Muslim Life Travel Mosque Halal"
+       href="#"
+       onclick="showMessage('Muslim Life will provide practical resources for everyday Muslim life.');return false;">
+
       <div class="icon">🌍</div>
       <h3>Muslim Life</h3>
       <p>Travel, mosques, halal information and guidance.</p>
+
     </a>
 
-    <a class="card" data-name="My Deen Journey Personal Progress Goals" href="#" onclick="comingSoon('My Deen Journey');return false;">
+    <!-- DEEN JOURNEY -->
+
+    <a class="card"
+       data-name="My Deen Journey Progress Goals"
+       href="#"
+       onclick="showMessage('My Deen Journey will track learning, Qur’an, Salah, goals and progress.');return false;">
+
       <div class="icon">👤</div>
       <h3>My Deen Journey</h3>
-      <p>Personal goals, progress, Qur'an, Salah and learning.</p>
+      <p>Goals, learning progress, Qur'an and worship tracking.</p>
+
     </a>
 
-    <a class="card" data-name="Achievements Badges Points Streak Challenges" href="#" onclick="comingSoon('Achievements');return false;">
+    <!-- ACHIEVEMENTS -->
+
+    <a class="card"
+       data-name="Achievements Badges Points Streak Challenges"
+       href="#"
+       onclick="showMessage('Achievements will include points, badges, levels and challenges.');return false;">
+
       <div class="icon">🏆</div>
       <h3>Achievements</h3>
       <p>Points, badges, levels, streaks and challenges.</p>
+
     </a>
 
-    <a class="card" data-name="Islamic Institutions School Teacher Student" href="#" onclick="comingSoon('Islamic Institutions');return false;">
+    <!-- INSTITUTIONS -->
+
+    <a class="card"
+       data-name="Islamic Institutions Schools Teachers Students"
+       href="#"
+       onclick="showMessage('Islamic Institutions will provide tools for teachers, students, classes and schools.');return false;">
+
       <div class="icon">🏫</div>
       <h3>Islamic Institutions</h3>
       <p>Tools for teachers, students, classes and schools.</p>
+
     </a>
 
-    <a class="card" data-name="Premium Subscription Family Student Organization" href="#" onclick="comingSoon('Premium');return false;">
+    <!-- PREMIUM -->
+
+    <a class="card"
+       data-name="Premium Subscription Family Student Organization"
+       href="#"
+       onclick="showMessage('Premium plans can be added after the core DIN features are working.');return false;">
+
       <div class="icon">💳</div>
       <h3>Premium</h3>
-      <p>Future student, family, school and organization plans.</p>
+      <p>Future family, student, school and organization plans.</p>
+
     </a>
 
-    <a class="card" data-name="App Technology Mobile Notifications" href="#" onclick="comingSoon('App & Technology');return false;">
+    <!-- APP -->
+
+    <a class="card"
+       data-name="App Technology Mobile Notifications"
+       href="#"
+       onclick="showMessage('DIN mobile app and notification technology will be developed after the core web platform.');return false;">
+
       <div class="icon">📱</div>
       <h3>App & Technology</h3>
-      <p>Mobile apps, notifications, accounts and technology.</p>
+      <p>Mobile apps, accounts and notifications.</p>
+
     </a>
 
-    <a class="card" data-name="Islamic Accuracy Sources Hadith Verification Safety" href="#" onclick="comingSoon('Islamic Accuracy');return false;">
+    <!-- ACCURACY -->
+
+    <a class="card"
+       data-name="Islamic Accuracy Sources Verification Safety"
+       href="#"
+       onclick="showMessage('DIN will use source-aware Islamic content and clear verification practices.');return false;">
+
       <div class="icon">🛡️</div>
       <h3>Islamic Accuracy</h3>
-      <p>Sources, verification and responsible Islamic answers.</p>
+      <p>Sources, verification and responsible answers.</p>
+
     </a>
 
-  </div>
-
-  <div id="noResults" class="no-results">
-    🔎 No feature found. Try another search.
   </div>
 
 </main>
@@ -715,59 +892,39 @@ footer{
 
 <script>
 
-function comingSoon(feature){
+function showMessage(text){
 
-  alert(
-    feature +
-    " is part of DIN Islamic AI. " +
-    "We will build and activate this module step by step."
-  );
-
-}
-
-function openAI(){
-
-  alert(
-    "DIN AI is ready to be connected to the AI service. " +
-    "The AI connection will be activated when the API service is available."
-  );
+  alert(text);
 
 }
 
 function searchFeatures(){
 
-  const search =
-    document.getElementById("searchBox")
-    .value
-    .toLowerCase()
-    .trim();
+  const query =
+    document
+      .getElementById("searchBox")
+      .value
+      .toLowerCase()
+      .trim();
 
   const cards =
     document.querySelectorAll(".card");
 
-  let visible = 0;
-
   cards.forEach(card => {
 
-    const name =
-      card.getAttribute("data-name")
-      .toLowerCase();
+    const searchable =
+      (
+        card.getAttribute("data-name") ||
+        card.innerText
+      ).toLowerCase();
 
-    if(name.includes(search)){
-
-      card.style.display = "block";
-      visible++;
-
+    if(searchable.includes(query)){
+      card.style.display="block";
     }else{
-
-      card.style.display = "none";
-
+      card.style.display="none";
     }
 
   });
-
-  document.getElementById("noResults").style.display =
-    visible === 0 ? "block" : "none";
 
 }
 
