@@ -19,6 +19,12 @@
   --white:#fff;
   --border:#dceae3;
   --active:#e8f6ee;
+  --blue:#4050ff;
+  --red:#dd0008;
+  --purple:#9400a8;
+  --orange:#ff7e1e;
+  --card:#ffffff;
+  --shadow:0 5px 18px rgba(0,0,0,.06);
 }
 
 *{
@@ -27,15 +33,38 @@
   padding:0;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   background:var(--light);
   color:var(--text);
   line-height:1.65;
+  transition:.25s;
 }
 
-button,select,input{
+body.dark{
+  --light:#101714;
+  --text:#e7f2ec;
+  --muted:#aebeb6;
+  --white:#18211d;
+  --card:#18211d;
+  --border:#2d4036;
+  --active:#203d2f;
+  --shadow:0 5px 18px rgba(0,0,0,.25);
+}
+
+button,
+select,
+input,
+textarea{
   font-family:inherit;
+}
+
+button{
+  cursor:pointer;
 }
 
 header{
@@ -46,6 +75,7 @@ header{
   text-align:center;
   padding:25px 15px 34px;
   border-radius:0 0 30px 30px;
+  position:relative;
 }
 
 .back{
@@ -72,6 +102,20 @@ header{
   margin-top:4px;
 }
 
+.header-actions{
+  position:absolute;
+  right:15px;
+  top:15px;
+}
+
+.header-actions button{
+  border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.12);
+  color:white;
+  border-radius:10px;
+  padding:8px 10px;
+}
+
 .container{
   max-width:1100px;
   margin:auto;
@@ -79,16 +123,16 @@ header{
 }
 
 .intro{
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:22px;
   padding:22px;
   margin-bottom:18px;
-  box-shadow:0 5px 18px rgba(0,0,0,.06);
+  box-shadow:var(--shadow);
 }
 
 .intro h2{
-  color:var(--green);
+  color:var(--green2);
   direction:rtl;
   margin-bottom:7px;
 }
@@ -96,6 +140,78 @@ header{
 .intro p{
   color:var(--muted);
   font-size:14px;
+}
+
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:15px;
+  text-align:center;
+}
+
+.stat-icon{
+  font-size:24px;
+}
+
+.stat-value{
+  color:var(--green2);
+  font-size:22px;
+  font-weight:850;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.goal-card{
+  background:linear-gradient(135deg,#075e3b,#0b9460);
+  color:white;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.goal-title{
+  font-weight:850;
+  margin-bottom:8px;
+}
+
+.goal-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.goal-row input{
+  width:100px;
+  padding:10px;
+  border:0;
+  border-radius:10px;
+  text-align:center;
+}
+
+.goal-progress{
+  margin-top:12px;
+  height:9px;
+  background:rgba(255,255,255,.25);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.goal-progress div{
+  height:100%;
+  width:0%;
+  background:white;
+  transition:.3s;
 }
 
 .search-wrap{
@@ -108,7 +224,8 @@ header{
   padding:16px 18px 16px 48px;
   border:1px solid var(--border);
   border-radius:17px;
-  background:white;
+  background:var(--card);
+  color:var(--text);
   font-size:16px;
   outline:none;
 }
@@ -126,19 +243,18 @@ header{
 
 .main-tabs{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
   margin-bottom:20px;
 }
 
 .main-tab{
   border:1px solid var(--border);
-  background:white;
-  color:var(--green);
+  background:var(--card);
+  color:var(--green2);
   border-radius:15px;
-  padding:13px 8px;
+  padding:12px 7px;
   font-weight:800;
-  cursor:pointer;
 }
 
 .main-tab.active{
@@ -155,7 +271,7 @@ header{
 }
 
 .section-title{
-  color:var(--green);
+  color:var(--green2);
   margin:18px 0 13px;
 }
 
@@ -166,17 +282,16 @@ header{
 }
 
 .surah{
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:18px;
   padding:15px;
-  cursor:pointer;
   transition:.2s;
 }
 
 .surah:hover{
   transform:translateY(-3px);
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  box-shadow:var(--shadow);
 }
 
 .surah-top{
@@ -200,10 +315,11 @@ header{
 
 .surah-info{
   min-width:0;
+  flex:1;
 }
 
 .surah-name{
-  color:var(--green);
+  color:var(--green2);
   font-weight:800;
 }
 
@@ -213,18 +329,39 @@ header{
 }
 
 .surah-arabic{
-  margin-left:auto;
   font-size:21px;
   direction:rtl;
 }
 
+.surah-actions{
+  display:flex;
+  gap:7px;
+  margin-top:12px;
+}
+
+.surah-actions button{
+  flex:1;
+  border:0;
+  border-radius:9px;
+  padding:8px;
+  background:var(--green);
+  color:white;
+  font-size:12px;
+  font-weight:700;
+}
+
+.surah-actions button.secondary{
+  background:#e7f2ec;
+  color:var(--green);
+}
+
 .reader{
   display:none;
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:22px;
   padding:20px;
-  box-shadow:0 5px 18px rgba(0,0,0,.06);
+  box-shadow:var(--shadow);
 }
 
 .reader-header{
@@ -240,7 +377,7 @@ header{
 }
 
 .reader-title{
-  color:var(--green);
+  color:var(--green2);
   font-size:29px;
   font-weight:850;
 }
@@ -263,8 +400,12 @@ header{
   margin-bottom:20px;
 }
 
+body.dark .audio-panel{
+  background:#1d3328;
+}
+
 .audio-title{
-  color:var(--green);
+  color:var(--green2);
   font-weight:850;
   margin-bottom:10px;
 }
@@ -275,12 +416,14 @@ header{
   gap:9px;
 }
 
-.audio-select{
+.audio-select,
+.tajweed-select,
+.settings-select{
   width:100%;
   padding:12px;
   border:1px solid var(--border);
   border-radius:11px;
-  background:white;
+  background:var(--card);
   color:var(--text);
 }
 
@@ -289,7 +432,6 @@ header{
   border:0;
   border-radius:11px;
   padding:12px;
-  cursor:pointer;
   background:var(--green);
   color:white;
   font-weight:750;
@@ -299,14 +441,14 @@ header{
   border:1px solid var(--border);
   border-radius:11px;
   padding:12px;
-  cursor:pointer;
-  background:white;
-  color:var(--green);
+  background:var(--card);
+  color:var(--green2);
   font-weight:750;
 }
 
 .gold-button{
   background:var(--gold);
+  color:white;
 }
 
 .progress-wrap{
@@ -325,6 +467,15 @@ header{
   font-size:11px;
 }
 
+.audio-speed{
+  display:flex;
+  gap:7px;
+  align-items:center;
+  margin-top:10px;
+  color:var(--muted);
+  font-size:12px;
+}
+
 .ayah{
   border-bottom:1px solid var(--border);
   padding:22px 4px;
@@ -336,6 +487,11 @@ header{
   border-radius:15px;
   padding-left:12px;
   padding-right:12px;
+}
+
+.ayah.memorised{
+  border-left:5px solid var(--green2);
+  padding-left:10px;
 }
 
 .ayah-number{
@@ -366,18 +522,26 @@ header{
   font-style:italic;
 }
 
+body.dark .ayah-transliteration{
+  color:#b4c5bc;
+}
+
 .ayah-translation{
-  color:#263f32;
+  color:var(--text);
   font-size:15px;
 }
 
 .label{
-  color:var(--green);
+  color:var(--green2);
   font-weight:800;
   font-size:11px;
   text-transform:uppercase;
   letter-spacing:.5px;
   margin-top:9px;
+}
+
+.hidden-content{
+  display:none;
 }
 
 .audio-row{
@@ -394,12 +558,16 @@ header{
   background:var(--green);
   color:white;
   font-weight:700;
-  cursor:pointer;
 }
 
 .audio-row .secondary{
   background:#e7f2ec;
   color:var(--green);
+}
+
+.audio-row .gold{
+  background:var(--gold);
+  color:white;
 }
 
 .reader-buttons{
@@ -416,8 +584,119 @@ header{
   background:var(--green);
   color:white;
   font-weight:700;
-  cursor:pointer;
 }
+
+.reader-tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.reader-tools button{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--green2);
+  border-radius:10px;
+  padding:9px 12px;
+  font-weight:700;
+}
+
+.bookmark-card,
+.note-card,
+.memory-card,
+.settings-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:12px;
+}
+
+.bookmark-card h3,
+.note-card h3,
+.memory-card h3,
+.settings-card h3{
+  color:var(--green2);
+}
+
+.note-area{
+  width:100%;
+  min-height:100px;
+  resize:vertical;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  margin-top:8px;
+  background:var(--card);
+  color:var(--text);
+}
+
+.note-save{
+  margin-top:8px;
+}
+
+.empty{
+  background:var(--card);
+  border:1px dashed var(--border);
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.memory-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.memory-mode{
+  background:var(--active);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+.memory-mode strong{
+  color:var(--green2);
+}
+
+.practice-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+  margin-top:18px;
+}
+
+.practice-question{
+  font-weight:800;
+  color:var(--green2);
+  margin-bottom:10px;
+}
+
+.practice-options{
+  display:grid;
+  gap:8px;
+}
+
+.practice-option{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:11px;
+  padding:11px;
+  text-align:left;
+}
+
+.practice-result{
+  margin-top:12px;
+  font-weight:700;
+}
+
+/* TAJWEED */
 
 .tajweed-hero{
   background:
@@ -446,16 +725,15 @@ header{
 }
 
 .level{
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:16px;
   padding:16px;
   text-align:center;
-  cursor:pointer;
 }
 
 .level strong{
-  color:var(--green);
+  color:var(--green2);
   display:block;
 }
 
@@ -466,15 +744,15 @@ header{
 }
 
 .rule-card{
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:18px;
   padding:17px;
-  box-shadow:0 4px 13px rgba(0,0,0,.04);
+  box-shadow:var(--shadow);
 }
 
 .rule-card h3{
-  color:var(--green);
+  color:var(--green2);
   margin-bottom:4px;
 }
 
@@ -490,7 +768,7 @@ header{
 }
 
 .tajweed-example{
-  background:#fff;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:18px;
   padding:18px;
@@ -513,7 +791,7 @@ header{
 }
 
 .legend-item{
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:12px;
   padding:10px;
@@ -536,39 +814,6 @@ header{
 .dot-ghunnah{background:#ff7e1e}
 .dot-iqlab{background:#26bffd}
 
-.practice-box{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-  margin-top:18px;
-}
-
-.practice-question{
-  font-weight:800;
-  color:var(--green);
-  margin-bottom:10px;
-}
-
-.practice-options{
-  display:grid;
-  gap:8px;
-}
-
-.practice-option{
-  border:1px solid var(--border);
-  background:#f8fbf9;
-  border-radius:11px;
-  padding:11px;
-  cursor:pointer;
-  text-align:left;
-}
-
-.practice-result{
-  margin-top:12px;
-  font-weight:700;
-}
-
 .notice{
   display:none;
   background:#fff9e5;
@@ -586,14 +831,26 @@ header{
   color:var(--muted);
 }
 
-.audio-ready{
-  color:var(--green);
+.settings-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.settings-row:last-child{
+  border-bottom:0;
+}
+
+.settings-row label{
   font-weight:700;
 }
 
-.audio-error{
-  color:#a34700;
-  font-weight:700;
+.range{
+  width:160px;
+  accent-color:var(--green);
 }
 
 footer{
@@ -607,10 +864,22 @@ footer small{
   opacity:.7;
 }
 
+@media(max-width:800px){
+
+  .dashboard{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .main-tabs{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
 @media(max-width:650px){
 
   .main-tabs{
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns:1fr 1fr;
   }
 
   .main-tab{
@@ -625,12 +894,21 @@ footer small{
     grid-template-columns:1fr;
   }
 
+  .memory-controls{
+    grid-template-columns:1fr;
+  }
+
   .ayah-arabic{
     font-size:25px;
   }
 
   .reader{
     padding:15px;
+  }
+
+  .header-actions{
+    position:static;
+    margin-bottom:8px;
   }
 }
 </style>
@@ -639,6 +917,10 @@ footer small{
 <body>
 
 <header>
+
+<div class="header-actions">
+<button onclick="toggleDarkMode()" id="darkButton">🌙</button>
+</div>
 
 <a href="index.html" class="back">
 ← Back to DIN Islamic AI
@@ -666,11 +948,82 @@ Created by Sanni Abdulmateen
 
 <p>
 Explore the Noble Qur'an with Arabic text,
-English translation, transliteration, recitation
-and a complete Tajweed learning centre.
+English translation, transliteration, recitation,
+Tajweed learning and memorisation tools.
 </p>
 
 </section>
+
+
+<!-- DASHBOARD -->
+
+<section class="dashboard">
+
+<div class="stat">
+<div class="stat-icon">📖</div>
+<div class="stat-value" id="statSurahs">114</div>
+<div class="stat-label">Surahs</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">🔖</div>
+<div class="stat-value" id="statBookmarks">0</div>
+<div class="stat-label">Bookmarks</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">🧠</div>
+<div class="stat-value" id="statMemorised">0</div>
+<div class="stat-label">Memorised Ayahs</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">📝</div>
+<div class="stat-value" id="statNotes">0</div>
+<div class="stat-label">Notes</div>
+</div>
+
+</section>
+
+
+<!-- DAILY GOAL -->
+
+<section class="goal-card">
+
+<div class="goal-title">
+🎯 Daily Memorisation Goal
+</div>
+
+<div class="goal-row">
+
+<span>Ayahs today:</span>
+
+<strong id="todayCount">0</strong>
+
+<span>/</span>
+
+<input
+id="dailyGoal"
+type="number"
+min="1"
+max="100"
+value="5"
+onchange="saveDailyGoal()">
+
+<button
+class="secondary-button"
+onclick="resetDailyProgress()">
+Reset
+</button>
+
+</div>
+
+<div class="goal-progress">
+<div id="goalBar"></div>
+</div>
+
+</section>
+
 
 <div class="main-tabs">
 
@@ -685,13 +1038,27 @@ onclick="showSection('tajweedSection',this)">
 </button>
 
 <button class="main-tab"
-onclick="showSection('readerSection',this)">
-🎧 Reader
+onclick="showSection('memorySection',this)">
+🧠 Memorise
+</button>
+
+<button class="main-tab"
+onclick="showSection('bookmarkSection',this)">
+🔖 Saved
+</button>
+
+<button class="main-tab"
+onclick="showSection('settingsSection',this)">
+⚙️ Settings
 </button>
 
 </div>
 
+
 <div id="notice" class="notice"></div>
+
+
+<!-- QURAN -->
 
 <section id="quranSection" class="section active">
 
@@ -712,9 +1079,18 @@ oninput="filterSurahs()">
 All 114 Surahs
 </h2>
 
-<div id="surahGrid" class="surah-grid"></div>
+<div id="surahGrid" class="surah-grid">
+
+<div class="loading">
+Loading Surahs...
+</div>
+
+</div>
 
 </section>
+
+
+<!-- TAJWEED -->
 
 <section id="tajweedSection" class="section">
 
@@ -737,23 +1113,30 @@ Choose Your Level
 
 <div class="level"
 onclick="showNotice('Beginner lessons: Arabic letters, Makharij, basic rules and correct pronunciation.')">
+
 <strong>🌱 Beginner</strong>
 Learn the foundations
+
 </div>
 
 <div class="level"
 onclick="showNotice('Intermediate lessons: Noon Sakinah, Tanween, Meem Sakinah, Madd and Qalqalah.')">
+
 <strong>📘 Intermediate</strong>
 Build your skills
+
 </div>
 
 <div class="level"
 onclick="showNotice('Advanced lessons: detailed application, stopping rules, articulation and advanced recitation.')">
+
 <strong>🏆 Advanced</strong>
 Master Tajweed
+
 </div>
 
 </div>
+
 
 <h2 class="section-title">
 Core Tajweed Rules
@@ -765,8 +1148,8 @@ Core Tajweed Rules
 <h3>Qalqalah — قلقلة</h3>
 <div class="rule-arabic">ق ط ب ج د</div>
 <p>
-A slight echo or bouncing sound when one of
-the Qalqalah letters carries a suitable Sukoon.
+A slight echo or bouncing sound when one
+of the Qalqalah letters carries Sukoon.
 </p>
 </div>
 
@@ -784,7 +1167,7 @@ or Tanween before the designated letters.
 <div class="rule-arabic">نْ + ب</div>
 <p>
 Noon Sakinah or Tanween changes toward a
-Meem sound before the letter Baa.
+Meem sound before Baa.
 </p>
 </div>
 
@@ -800,8 +1183,7 @@ Assimilation accompanied by nasal resonance.
 <h3>Idgham without Ghunnah</h3>
 <div class="rule-arabic">ل ر</div>
 <p>
-Assimilation into Laam or Raa without
-nasal resonance.
+Assimilation into Laam or Raa without Ghunnah.
 </p>
 </div>
 
@@ -827,8 +1209,7 @@ Idgham Shafawi.
 <h3>Ghunnah — غنة</h3>
 <div class="rule-arabic">نّ مّ</div>
 <p>
-A nasal sound held for the prescribed duration
-in applicable cases.
+A nasal sound held for the prescribed duration.
 </p>
 </div>
 
@@ -836,8 +1217,7 @@ in applicable cases.
 <h3>Madd — مد</h3>
 <div class="rule-arabic">ا و ي</div>
 <p>
-Learn the different types of Qur'anic
-elongation and their durations.
+Learn the different types of Qur'anic elongation.
 </p>
 </div>
 
@@ -862,12 +1242,12 @@ Sun letter in pronunciation.
 <h3>Hamzatul Wasl</h3>
 <div class="rule-arabic">ٱ</div>
 <p>
-Learn how the connecting Hamzah is treated
-when beginning or continuing recitation.
+Learn how the connecting Hamzah is treated.
 </p>
 </div>
 
 </div>
+
 
 <div class="tajweed-example">
 
@@ -878,44 +1258,47 @@ when beginning or continuing recitation.
 <div class="tajweed-legend">
 
 <div class="legend-item">
-<span class="dot dot-madd"></span>Madd
+<span class="dot dot-madd"></span>
+Madd
 </div>
 
 <div class="legend-item">
-<span class="dot dot-qalqalah"></span>Qalqalah
+<span class="dot dot-qalqalah"></span>
+Qalqalah
 </div>
 
 <div class="legend-item">
-<span class="dot dot-ikhfa"></span>Ikhfa
+<span class="dot dot-ikhfa"></span>
+Ikhfa
 </div>
 
 <div class="legend-item">
-<span class="dot dot-idgham"></span>Idgham
+<span class="dot dot-idgham"></span>
+Idgham
 </div>
 
 <div class="legend-item">
-<span class="dot dot-ghunnah"></span>Ghunnah
+<span class="dot dot-ghunnah"></span>
+Ghunnah
 </div>
 
 <div class="legend-item">
-<span class="dot dot-iqlab"></span>Iqlab
+<span class="dot dot-iqlab"></span>
+Iqlab
 </div>
 
 </div>
 
 <div class="example-arabic">
 
-<span style="color:#9400a8">
-مِنْ
-</span>
+<span style="color:#9400a8">مِنْ</span>
 
-<span>
-رَبِّهِمْ
-</span>
+<span>رَبِّهِمْ</span>
 
 </div>
 
 </div>
+
 
 <div class="practice-box">
 
@@ -943,13 +1326,13 @@ Iqlab
 
 <button
 class="practice-option"
-onclick="tajweedAnswer(false,'The rule is not Qalqalah. Qalqalah concerns specific letters carrying Sukoon.')">
+onclick="tajweedAnswer(false,'Qalqalah concerns the Qalqalah letters when they carry Sukoon.')">
 Qalqalah
 </button>
 
 <button
 class="practice-option"
-onclick="tajweedAnswer(false,'The rule is not Madd. Madd concerns elongation.')">
+onclick="tajweedAnswer(false,'Madd concerns elongation, not this Noon Sakinah rule.')">
 Madd
 </button>
 
@@ -960,6 +1343,225 @@ Madd
 </div>
 
 </section>
+
+
+<!-- MEMORISATION -->
+
+<section id="memorySection" class="section">
+
+<div class="memory-card">
+
+<h2 class="section-title">
+🧠 Qur'an Memorisation Centre
+</h2>
+
+<p>
+Use the reader to practise ayahs, hide the Arabic text,
+mark ayahs as memorised and monitor your progress.
+</p>
+
+<br>
+
+<div class="memory-controls">
+
+<button
+class="primary-button"
+onclick="startMemoryMode()">
+🧠 Start Memorisation Mode
+</button>
+
+<button
+class="secondary-button"
+onclick="showSection('quranSection',null)">
+📖 Choose a Surah
+</button>
+
+</div>
+
+</div>
+
+
+<div class="memory-card">
+
+<h3>📊 Your Memorisation Progress</h3>
+
+<br>
+
+<p>
+Memorised:
+<strong id="memoryTotal">0</strong> ayahs
+</p>
+
+<p>
+Practice completed today:
+<strong id="memoryToday">0</strong> ayahs
+</p>
+
+<p>
+Daily goal:
+<strong id="memoryGoal">5</strong> ayahs
+</p>
+
+<br>
+
+<button
+class="primary-button"
+onclick="clearMemoryProgress()">
+Reset Memorisation Data
+</button>
+
+</div>
+
+
+<div class="memory-card">
+
+<h3>💡 Memorisation Method</h3>
+
+<p>
+1. Select a Surah.
+<br>
+2. Listen to the ayah repeatedly.
+<br>
+3. Read the Arabic carefully.
+<br>
+4. Hide the Arabic and try to recite it.
+<br>
+5. Reveal the Arabic and check yourself.
+<br>
+6. Mark the ayah as memorised when confident.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- SAVED -->
+
+<section id="bookmarkSection" class="section">
+
+<h2 class="section-title">
+🔖 Bookmarks & 📝 Notes
+</h2>
+
+<div id="savedContainer">
+
+<div class="empty">
+No bookmarks or notes yet.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="settingsSection" class="section">
+
+<h2 class="section-title">
+⚙️ Reader Settings
+</h2>
+
+<div class="settings-card">
+
+<div class="settings-row">
+
+<label>
+Arabic Font Size
+</label>
+
+<input
+id="fontSizeRange"
+class="range"
+type="range"
+min="20"
+max="45"
+value="29"
+oninput="changeFontSize(this.value)">
+
+</div>
+
+
+<div class="settings-row">
+
+<label>
+Dark Mode
+</label>
+
+<button
+class="primary-button"
+onclick="toggleDarkMode()">
+🌙 Toggle
+</button>
+
+</div>
+
+
+<div class="settings-row">
+
+<label>
+Hide Arabic in Memorisation Mode
+</label>
+
+<button
+class="secondary-button"
+id="globalMemoryButton"
+onclick="toggleGlobalMemory()">
+Off
+</button>
+
+</div>
+
+
+<div class="settings-row">
+
+<label>
+Auto-scroll to playing Ayah
+</label>
+
+<button
+class="secondary-button"
+id="autoScrollButton"
+onclick="toggleAutoScroll()">
+On
+</button>
+
+</div>
+
+</div>
+
+
+<div class="settings-card">
+
+<h3>💾 Saved Data</h3>
+
+<p style="color:var(--muted);font-size:13px;margin-top:8px">
+Your bookmarks, notes, memorisation progress,
+daily goal and settings are stored in this browser
+using local device storage.
+</p>
+
+<br>
+
+<button
+class="primary-button"
+onclick="exportData()">
+⬇️ Export My Data
+</button>
+
+<button
+class="secondary-button"
+onclick="clearAllData()">
+🗑️ Clear Saved Data
+</button>
+
+</div>
+
+</section>
+
+
+<!-- READER -->
 
 <section id="readerSection" class="section">
 
@@ -979,6 +1581,45 @@ Choose a Surah from the Qur'an tab.
 
 </div>
 
+
+<div class="reader-tools">
+
+<button onclick="toggleMemoryDisplay()">
+🧠 Hide/Show Arabic
+</button>
+
+<button onclick="bookmarkCurrentSurah()">
+🔖 Bookmark Surah
+</button>
+
+<button onclick="showNoteBox()">
+📝 Add Note
+</button>
+
+<button onclick="changeFontSize(prompt('Enter Arabic font size between 20 and 45:',getSavedFontSize()))">
+🔤 Font Size
+</button>
+
+</div>
+
+
+<div id="noteBox" style="display:none;margin-bottom:15px">
+
+<textarea
+id="surahNote"
+class="note-area"
+placeholder="Write your personal note about this Surah...">
+</textarea>
+
+<button
+class="primary-button note-save"
+onclick="saveSurahNote()">
+💾 Save Note
+</button>
+
+</div>
+
+
 <div class="audio-panel">
 
 <div class="audio-title">
@@ -992,7 +1633,9 @@ id="reciterSelect"
 class="audio-select"
 onchange="changeReciter()">
 
-<option>Loading verified reciters...</option>
+<option>
+Loading reciters...
+</option>
 
 </select>
 
@@ -1023,9 +1666,32 @@ onclick="toggleRepeat()">
 
 </div>
 
-<div id="reciterStatus" class="reader-status">
-Connecting to the Qur'an audio service...
+
+<div
+id="reciterStatus"
+class="reader-status">
+Loading reciters...
 </div>
+
+
+<div class="audio-speed">
+
+<span>Speed:</span>
+
+<select
+id="audioSpeed"
+onchange="changeAudioSpeed()">
+
+<option value="0.75">0.75×</option>
+<option value="1" selected>1×</option>
+<option value="1.25">1.25×</option>
+<option value="1.5">1.5×</option>
+<option value="2">2×</option>
+
+</select>
+
+</div>
+
 
 <div class="progress-wrap">
 
@@ -1035,8 +1701,7 @@ class="progress"
 type="range"
 min="0"
 max="100"
-value="0"
-disabled>
+value="0">
 
 <div class="progress-text">
 
@@ -1054,6 +1719,7 @@ Ready
 
 </div>
 
+
 <div id="ayahContainer">
 
 <div class="loading">
@@ -1061,6 +1727,7 @@ Open a Surah from the Qur'an tab.
 </div>
 
 </div>
+
 
 <div class="reader-buttons">
 
@@ -1084,6 +1751,7 @@ Next Surah →
 
 </main>
 
+
 <footer>
 
 <strong>🌙 DIN Islamic AI</strong>
@@ -1091,18 +1759,96 @@ Next Surah →
 <br>
 
 <small>
-Qur'an Centre • Tajweed Learning • Created by Sanni Abdulmateen
+Qur'an Centre • Tajweed Learning • Memorisation Centre
+• Created by Sanni Abdulmateen
 </small>
 
 </footer>
 
+
 <script>
 
 /* =========================================================
-   SURAH DATABASE
+   STORAGE
 ========================================================= */
 
-const surahs = [
+const STORAGE_KEY="din_quran_centre_v3";
+
+let savedData={
+  bookmarks:[],
+  notes:[],
+  memorised:[],
+  practiceToday:[],
+  dailyGoal:5,
+  darkMode:false,
+  fontSize:29,
+  hideArabic:false,
+  autoScroll:true,
+  reciter:"ar.alafasy"
+};
+
+function loadData(){
+
+  try{
+
+    const stored=
+      localStorage.getItem(STORAGE_KEY);
+
+    if(stored){
+
+      savedData={
+        ...savedData,
+        ...JSON.parse(stored)
+      };
+
+    }
+
+  }catch(error){
+
+    console.warn("Storage unavailable",error);
+
+  }
+
+}
+
+function saveData(){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(savedData)
+    );
+
+  }catch(error){
+
+    console.warn("Could not save data",error);
+
+  }
+
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let surahs=[];
+let currentSurah=null;
+let currentAyahs=[];
+let currentAudio=null;
+let audioIndex=-1;
+let repeatSurah=false;
+let selectedReciter=null;
+let reciters=[];
+let memoryMode=false;
+
+
+/* =========================================================
+   FALLBACK SURAH DATA
+========================================================= */
+
+const fallbackSurahs=[
 
 [1,"Al-Fatihah","الفاتحة",7,"Makki"],
 [2,"Al-Baqarah","البقرة",286,"Madani"],
@@ -1223,658 +1969,288 @@ const surahs = [
 
 
 /* =========================================================
-   AUDIO STATE
-========================================================= */
-
-let currentSurah = null;
-let currentAyahs = [];
-let currentAudio = null;
-let audioIndex = -1;
-let repeatSurah = false;
-
-let audioEditions = [];
-let selectedReciter = null;
-
-
-/* =========================================================
-   SHOW SECTION
+   SECTION NAVIGATION
 ========================================================= */
 
 function showSection(id,button){
 
-  document.querySelectorAll(".section")
+  document
+    .querySelectorAll(".section")
     .forEach(section=>{
       section.classList.remove("active");
     });
 
-  const target=document.getElementById(id);
+  const section=document.getElementById(id);
 
-  if(target){
-    target.classList.add("active");
+  if(section){
+    section.classList.add("active");
   }
 
-  document.querySelectorAll(".main-tab")
+  document
+    .querySelectorAll(".main-tab")
     .forEach(tab=>{
       tab.classList.remove("active");
     });
 
   if(button){
+
     button.classList.add("active");
+
   }else{
 
-    const matching=[
-      ...document.querySelectorAll(".main-tab")
-    ].find(tab=>
-      tab.getAttribute("onclick") &&
-      tab.getAttribute("onclick").includes(id)
-    );
+    const matching=
+      [...document.querySelectorAll(".main-tab")]
+      .find(tab=>
+        tab.getAttribute("onclick") &&
+        tab.getAttribute("onclick").includes(id)
+      );
 
     if(matching){
       matching.classList.add("active");
     }
+
+  }
+
+  if(id==="bookmarkSection"){
+    renderSaved();
+  }
+
+  if(id==="memorySection"){
+    updateDashboard();
   }
 
   if(id==="readerSection"){
-    document.getElementById("reader").style.display="block";
+
+    const reader=document.getElementById("reader");
+
+    if(reader){
+      reader.style.display="block";
+    }
+
   }
+
 }
 
 
 /* =========================================================
-   LOAD REAL AUDIO EDITIONS
+   LOAD SURAH LIST
 ========================================================= */
 
-async function loadAudioEditions(){
+async function loadSurahs(){
+
+  try{
+
+    const response=
+      await fetch(
+        "https://api.alquran.cloud/v1/surah"
+      );
+
+    if(!response.ok){
+      throw new Error("Surah API failed");
+    }
+
+    const result=await response.json();
+
+    const data=result.data||[];
+
+    if(data.length===114){
+
+      surahs=data.map(s=>[
+        s.number,
+        s.englishName,
+        s.name,
+        s.numberOfAyahs,
+        s.revelationType
+      ]);
+
+    }else{
+
+      surahs=fallbackSurahs;
+
+    }
+
+  }catch(error){
+
+    console.warn(error);
+
+    surahs=fallbackSurahs;
+
+  }
+
+  renderSurahs(surahs);
+
+  document.getElementById("statSurahs")
+    .textContent=surahs.length;
+
+}
+
+
+/* =========================================================
+   LOAD LIVE RECITERS
+========================================================= */
+
+async function loadReciters(){
 
   const select=
     document.getElementById("reciterSelect");
 
-  const status=
-    document.getElementById("reciterStatus");
-
-  select.innerHTML=
-    "<option>Loading verified reciters...</option>";
-
-  status.textContent=
-    "Checking available Qur'an audio editions...";
-
   try{
 
     const response=
       await fetch(
-        "https://api.alquran.cloud/v1/edition/format/audio"
+        "https://api.alquran.cloud/v1/edition?format=audio"
       );
 
     if(!response.ok){
-      throw new Error(
-        "Audio edition API returned "+
-        response.status
-      );
+      throw new Error("Reciter API failed");
     }
 
-    const json=
-      await response.json();
+    const result=await response.json();
 
-    const editions=
-      Array.isArray(json.data)
-      ? json.data
-      : [];
+    const editions=result.data||[];
+
+    reciters=
+      editions.filter(e=>
+        e.format==="audio" &&
+        e.type==="versebyverse" &&
+        e.language==="ar"
+      );
 
     /*
-      Only Arabic recitations are wanted.
-      We also remove duplicate identifiers.
+      Keep only editions that have usable identifiers.
     */
 
-    const unique=
-      new Map();
-
-    editions.forEach(edition=>{
-
-      if(
-        !edition ||
-        !edition.identifier
-      ){
-        return;
-      }
-
-      if(
-        edition.language &&
-        edition.language!=="ar"
-      ){
-        return;
-      }
-
-      if(
-        edition.format &&
-        edition.format!=="audio"
-      ){
-        return;
-      }
-
-      unique.set(
-        edition.identifier,
-        edition
+    reciters=
+      reciters.filter(e=>
+        e.identifier &&
+        e.name
       );
+
+    /*
+      Put Alafasy first when available.
+    */
+
+    reciters.sort((a,b)=>{
+
+      if(a.identifier==="ar.alafasy") return -1;
+
+      if(b.identifier==="ar.alafasy") return 1;
+
+      return a.name.localeCompare(b.name);
 
     });
 
-    audioEditions=
-      [...unique.values()];
+  }catch(error){
+
+    console.warn(error);
 
     /*
-      Prefer the well-known reciters first.
-      Other real audio editions remain available.
+      Reliable fallback choices.
     */
 
-    const preferredOrder=[
-      "ar.alafasy",
-      "ar.husary",
-      "ar.minshawi",
-      "ar.minshawimujawwad",
-      "ar.sudais",
-      "ar.shuraim",
-      "ar.abdulbasit",
-      "ar.abdulbasitmujawwad",
-      "ar.ajamy",
-      "ar.muhammadayoub",
-      "ar.hudhaify",
-      "ar.muhammadjibreel",
-      "ar.parhizgar"
+    reciters=[
+
+      {
+        identifier:"ar.alafasy",
+        name:"Mishary Rashid Alafasy",
+        bitrate:128
+      },
+
+      {
+        identifier:"ar.husary",
+        name:"Mahmoud Khalil Al-Husary",
+        bitrate:128
+      },
+
+      {
+        identifier:"ar.minshawi",
+        name:"Mohamed Siddiq Al-Minshawi",
+        bitrate:128
+      },
+
+      {
+        identifier:"ar.sudais",
+        name:"Abdul Rahman Al-Sudais",
+        bitrate:192
+      },
+
+      {
+        identifier:"ar.shuraim",
+        name:"Saud Al-Shuraim",
+        bitrate:128
+      },
+
+      {
+        identifier:"ar.abdulbasit",
+        name:"Abdul Basit Abdul Samad",
+        bitrate:192
+      }
+
     ];
 
-    audioEditions.sort((a,b)=>{
-
-      const ai=
-        preferredOrder.indexOf(a.identifier);
-
-      const bi=
-        preferredOrder.indexOf(b.identifier);
-
-      const av=
-        ai===-1
-        ? 999
-        : ai;
-
-      const bv=
-        bi===-1
-        ? 999
-        : bi;
-
-      return av-bv;
-
-    });
-
-    select.innerHTML="";
-
-    audioEditions.forEach(edition=>{
-
-      const option=
-        document.createElement("option");
-
-      option.value=
-        edition.identifier;
-
-      option.textContent=
-        getEditionName(edition);
-
-      select.appendChild(option);
-
-    });
-
-    /*
-      Restore previously selected reciter.
-    */
-
-    const saved=
-      localStorage.getItem(
-        "din_quran_reciter"
-      );
-
-    const savedExists=
-      audioEditions.some(
-        e=>e.identifier===saved
-      );
-
-    if(savedExists){
-
-      selectedReciter=
-        audioEditions.find(
-          e=>e.identifier===saved
-        );
-
-    }else{
-
-      selectedReciter=
-        audioEditions.find(
-          e=>e.identifier==="ar.alafasy"
-        ) ||
-        audioEditions[0];
-
-    }
-
-    if(selectedReciter){
-
-      select.value=
-        selectedReciter.identifier;
-
-      status.innerHTML=
-        '<span class="audio-ready">✓ '+
-        audioEditions.length+
-        ' verified audio reciters available.</span>';
-
-    }else{
-
-      throw new Error(
-        "No Arabic audio editions found."
-      );
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    select.innerHTML=
-      '<option value="">Unable to load reciters</option>';
-
-    status.innerHTML=
-      '<span class="audio-error">⚠️ Could not load the reciter list. Check your internet connection and try again.</span>';
-
   }
+
+  renderReciters();
 
 }
 
 
 /* =========================================================
-   RECITER NAME
+   RENDER RECITERS
 ========================================================= */
 
-function getEditionName(edition){
+function renderReciters(){
 
-  if(edition.name){
+  const select=
+    document.getElementById("reciterSelect");
 
-    return edition.name;
-  }
+  select.innerHTML="";
 
-  if(edition.englishName){
+  reciters.forEach(reciter=>{
 
-    return edition.englishName;
-  }
+    const option=
+      document.createElement("option");
 
-  if(edition.identifier){
+    option.value=
+      reciter.identifier;
 
-    return edition.identifier;
-  }
+    option.textContent=
+      reciter.name;
 
-  return "Qur'an Reciter";
-
-}
-
-
-/* =========================================================
-   FIND AUDIO BITRATE
-========================================================= */
-
-async function getAvailableBitrates(editionId){
-
-  /*
-    The CDN supports these bitrate values.
-    Different editions can have different availability.
-  */
-
-  const possible=[
-    192,
-    128,
-    64,
-    48,
-    40,
-    32
-  ];
-
-  /*
-    We first use the CDN information file.
-    If the structure changes or cannot be read,
-    the player falls back to testing the known
-    bitrate options through the audio element.
-  */
-
-  try{
-
-    const response=
-      await fetch(
-        "https://cdn.islamic.network/quran/info/by-surah/info.json",
-        {
-          cache:"no-store"
-        }
-      );
-
-    if(response.ok){
-
-      const info=
-        await response.json();
-
-      const found=
-        findEditionInfo(
-          info,
-          editionId
-        );
-
-      if(found){
-
-        const detected=
-          extractBitrates(found);
-
-        if(detected.length){
-
-          return detected;
-        }
-
-      }
-
-    }
-
-  }catch(error){
-
-    console.warn(
-      "Could not read CDN bitrate information.",
-      error
-    );
-
-  }
-
-  /*
-    Safe fallback order.
-  */
-
-  return possible;
-}
-
-
-/* =========================================================
-   SEARCH CDN INFO RECURSIVELY
-========================================================= */
-
-function findEditionInfo(value,editionId){
-
-  if(!value){
-    return null;
-  }
-
-  if(Array.isArray(value)){
-
-    for(const item of value){
-
-      const result=
-        findEditionInfo(
-          item,
-          editionId
-        );
-
-      if(result){
-        return result;
-      }
-
-    }
-
-    return null;
-  }
-
-  if(typeof value==="object"){
-
-    if(
-      value.identifier===editionId ||
-      value.edition===editionId ||
-      value.id===editionId
-    ){
-
-      return value;
-    }
-
-    for(const key of Object.keys(value)){
-
-      const result=
-        findEditionInfo(
-          value[key],
-          editionId
-        );
-
-      if(result){
-        return result;
-      }
-
-    }
-
-  }
-
-  return null;
-}
-
-
-/* =========================================================
-   EXTRACT BITRATES
-========================================================= */
-
-function extractBitrates(info){
-
-  const valid=[
-    192,
-    128,
-    64,
-    48,
-    40,
-    32
-  ];
-
-  const found=[];
-
-  function scan(value){
-
-    if(value==null){
-      return;
-    }
-
-    if(typeof value==="number"){
-
-      if(valid.includes(value)){
-        found.push(value);
-      }
-
-      return;
-    }
-
-    if(typeof value==="string"){
-
-      const match=
-        value.match(
-          /\b(192|128|64|48|40|32)\b/
-        );
-
-      if(match){
-
-        const number=
-          Number(match[1]);
-
-        if(valid.includes(number)){
-          found.push(number);
-        }
-
-      }
-
-      return;
-    }
-
-    if(Array.isArray(value)){
-
-      value.forEach(scan);
-
-      return;
-    }
-
-    if(typeof value==="object"){
-
-      Object.entries(value)
-        .forEach(([key,val])=>{
-
-          const keyNumber=
-            Number(key);
-
-          if(valid.includes(keyNumber)){
-            found.push(keyNumber);
-          }
-
-          scan(val);
-
-        });
-
-    }
-
-  }
-
-  scan(info);
-
-  return[
-    ...new Set(found)
-  ].sort((a,b)=>b-a);
-
-}
-
-
-/* =========================================================
-   TEST AUDIO URL
-========================================================= */
-
-function testAudioUrl(url){
-
-  return new Promise(resolve=>{
-
-    const audio=
-      document.createElement("audio");
-
-    let finished=false;
-
-    const done=(result)=>{
-
-      if(finished){
-        return;
-      }
-
-      finished=true;
-
-      audio.removeAttribute("src");
-      audio.load();
-
-      resolve(result);
-
-    };
-
-    audio.preload="metadata";
-
-    audio.onloadedmetadata=
-      ()=>done(true);
-
-    audio.oncanplay=
-      ()=>done(true);
-
-    audio.onerror=
-      ()=>done(false);
-
-    setTimeout(
-      ()=>done(false),
-      9000
-    );
-
-    audio.src=url;
+    select.appendChild(option);
 
   });
 
-}
-
-
-/* =========================================================
-   FIND WORKING BITRATE
-========================================================= */
-
-async function findWorkingBitrate(
-  editionId,
-  surahNumber
-){
-
-  const candidates=
-    await getAvailableBitrates(
-      editionId
+  let savedReciter=
+    reciters.find(
+      r=>r.identifier===savedData.reciter
     );
 
-  /*
-    Try each bitrate until one actually works.
-    This is the important correction.
-  */
+  if(!savedReciter){
+    savedReciter=
+      reciters.find(
+        r=>r.identifier==="ar.alafasy"
+      )||reciters[0];
+  }
 
-  for(const bitrate of candidates){
+  if(savedReciter){
 
-    const url=
-      buildSurahAudioUrl(
-        bitrate,
-        editionId,
-        surahNumber
-      );
+    selectedReciter=savedReciter;
 
-    const works=
-      await testAudioUrl(url);
+    select.value=
+      selectedReciter.identifier;
 
-    if(works){
+    savedData.reciter=
+      selectedReciter.identifier;
 
-      return bitrate;
-    }
+    saveData();
 
   }
 
-  return null;
-
-}
-
-
-/* =========================================================
-   BUILD WHOLE SURAH URL
-========================================================= */
-
-function buildSurahAudioUrl(
-  bitrate,
-  editionId,
-  surahNumber
-){
-
-  return(
-    "https://cdn.islamic.network/quran/audio-surah/"+
-    bitrate+
-    "/"+
-    encodeURIComponent(editionId)+
-    "/"+
-    surahNumber+
-    ".mp3"
-  );
-
-}
-
-
-/* =========================================================
-   BUILD AYAH URL
-========================================================= */
-
-function buildAyahAudioUrl(
-  bitrate,
-  editionId,
-  globalAyahNumber
-){
-
-  return(
-    "https://cdn.islamic.network/quran/audio/"+
-    bitrate+
-    "/"+
-    encodeURIComponent(editionId)+
-    "/"+
-    globalAyahNumber+
-    ".mp3"
-  );
+  document.getElementById("reciterStatus")
+    .textContent=
+    reciters.length+
+    " reciter choices available.";
 
 }
 
@@ -1893,7 +2269,7 @@ function renderSurahs(list){
   if(!list.length){
 
     grid.innerHTML=
-      '<div class="loading">No Surah found.</div>';
+      '<div class="empty">No Surah found.</div>';
 
     return;
 
@@ -1905,6 +2281,11 @@ function renderSurahs(list){
       document.createElement("div");
 
     card.className="surah";
+
+    const isBookmarked=
+      savedData.bookmarks.some(
+        b=>b.surah===surah[0]
+      );
 
     card.innerHTML=`
 
@@ -1921,7 +2302,8 @@ function renderSurahs(list){
           </div>
 
           <div class="surah-meta">
-            ${surah[4]} • ${surah[3]} verses
+            ${escapeHtml(surah[4])}
+            • ${surah[3]} verses
           </div>
 
         </div>
@@ -1932,10 +2314,28 @@ function renderSurahs(list){
 
       </div>
 
-    `;
+      <div class="surah-actions">
 
-    card.onclick=
-      ()=>openSurah(surah);
+        <button
+          onclick="openSurahByNumber(${surah[0]})">
+          📖 Read
+        </button>
+
+        <button
+          class="secondary"
+          onclick="quickPlaySurah(${surah[0]})">
+          ▶️ Play
+        </button>
+
+        <button
+          class="secondary"
+          onclick="toggleSurahBookmark(${surah[0]})">
+          ${isBookmarked?"🔖 Saved":"🔖 Save"}
+        </button>
+
+      </div>
+
+    `;
 
     grid.appendChild(card);
 
@@ -1959,13 +2359,18 @@ function filterSurahs(){
   const results=
     surahs.filter(surah=>
 
-      String(surah[0]).includes(query) ||
+      String(surah[0]).includes(query)
+
+      ||
 
       surah[1]
         .toLowerCase()
-        .includes(query) ||
+        .includes(query)
 
-      surah[2].includes(query)
+      ||
+
+      surah[2]
+        .includes(query)
 
     );
 
@@ -1978,18 +2383,29 @@ function filterSurahs(){
    OPEN SURAH
 ========================================================= */
 
+function openSurahByNumber(number){
+
+  const surah=
+    surahs.find(s=>s[0]===number);
+
+  if(surah){
+    openSurah(surah);
+  }
+
+}
+
+
 async function openSurah(surah){
 
   stopAudio();
 
   currentSurah=surah;
+
   currentAyahs=[];
+
   audioIndex=-1;
 
-  showSection(
-    "readerSection",
-    null
-  );
+  showSection("readerSection",null);
 
   const reader=
     document.getElementById("reader");
@@ -2020,6 +2436,8 @@ async function openSurah(surah){
     .textContent=
     "0 / "+surah[3];
 
+  loadExistingNote();
+
   reader.scrollIntoView({
     behavior:"smooth",
     block:"start"
@@ -2036,60 +2454,49 @@ async function openSurah(surah){
       await fetch(url);
 
     if(!response.ok){
-
       throw new Error(
         "API error "+response.status
       );
-
     }
 
     const result=
       await response.json();
 
-    const editions=
-      result.data || [];
+    const editions=result.data||[];
 
     const arabic=
       editions.find(e=>
         e.edition &&
-        e.edition.identifier===
-        "quran-uthmani"
+        e.edition.identifier==="quran-uthmani"
       );
 
     const translation=
       editions.find(e=>
         e.edition &&
-        e.edition.identifier===
-        "en.sahih"
+        e.edition.identifier==="en.sahih"
       );
 
     const transliteration=
       editions.find(e=>
         e.edition &&
-        e.edition.identifier===
-        "en.transliteration"
+        e.edition.identifier==="en.transliteration"
       );
 
     if(!arabic){
-
       throw new Error(
         "Arabic edition unavailable"
       );
-
     }
 
     currentAyahs=
-      (arabic.ayahs || [])
+      (arabic.ayahs||[])
       .map((ayah,index)=>({
 
-        globalNumber:
-          ayah.number,
+        globalNumber:ayah.number,
 
-        numberInSurah:
-          ayah.numberInSurah,
+        numberInSurah:ayah.numberInSurah,
 
-        arabic:
-          ayah.text || "",
+        arabic:ayah.text||"",
 
         translation:
           translation &&
@@ -2164,10 +2571,26 @@ function renderAyahs(){
     const div=
       document.createElement("div");
 
-    div.className="ayah";
+    const key=
+      getAyahKey(
+        currentSurah[0],
+        ayah.numberInSurah
+      );
+
+    const memorised=
+      savedData.memorised.includes(key);
+
+    div.className=
+      "ayah"+
+      (memorised?" memorised":"");
 
     div.id=
       "ayah-"+index;
+
+    const arabicClass=
+      savedData.hideArabic
+      ? "ayah-arabic hidden-content"
+      : "ayah-arabic";
 
     div.innerHTML=`
 
@@ -2175,7 +2598,9 @@ function renderAyahs(){
         ${ayah.numberInSurah}
       </div>
 
-      <div class="ayah-arabic">
+      <div
+        class="${arabicClass}"
+        data-arabic="true">
         ${escapeHtml(ayah.arabic)}
       </div>
 
@@ -2208,6 +2633,24 @@ function renderAyahs(){
           ▶️ Play From Here
         </button>
 
+        <button
+          class="gold"
+          onclick="toggleAyahBookmark(${index})">
+          ${isAyahBookmarked(index)?"🔖 Saved":"🔖 Bookmark"}
+        </button>
+
+        <button
+          class="secondary"
+          onclick="toggleMemorised(${index})">
+          ${memorised?"✅ Memorised":"🧠 Mark Memorised"}
+        </button>
+
+        <button
+          class="secondary"
+          onclick="repeatAyah(${index})">
+          🔁 Repeat Ayah
+        </button>
+
       </div>
 
     `;
@@ -2216,12 +2659,847 @@ function renderAyahs(){
 
   });
 
+  applyFontSize(savedData.fontSize);
+
 }
 
 
 /* =========================================================
-   CHANGE RECITER
+   AYAH KEYS
 ========================================================= */
+
+function getAyahKey(surah,ayah){
+
+  return surah+":"+ayah;
+
+}
+
+
+/* =========================================================
+   BOOKMARKS
+========================================================= */
+
+function isAyahBookmarked(index){
+
+  if(!currentSurah || !currentAyahs[index]){
+    return false;
+  }
+
+  const key=
+    getAyahKey(
+      currentSurah[0],
+      currentAyahs[index].numberInSurah
+    );
+
+  return savedData.bookmarks.some(
+    b=>b.key===key
+  );
+
+}
+
+
+function toggleAyahBookmark(index){
+
+  if(!currentSurah || !currentAyahs[index]){
+    return;
+  }
+
+  const ayah=currentAyahs[index];
+
+  const key=
+    getAyahKey(
+      currentSurah[0],
+      ayah.numberInSurah
+    );
+
+  const existing=
+    savedData.bookmarks.findIndex(
+      b=>b.key===key
+    );
+
+  if(existing>=0){
+
+    savedData.bookmarks.splice(existing,1);
+
+    showNotice("Bookmark removed.");
+
+  }else{
+
+    savedData.bookmarks.push({
+
+      key:key,
+
+      type:"ayah",
+
+      surah:currentSurah[0],
+
+      surahName:currentSurah[1],
+
+      ayah:ayah.numberInSurah,
+
+      arabic:ayah.arabic,
+
+      translation:ayah.translation,
+
+      created:new Date().toISOString()
+
+    });
+
+    showNotice("Ayah bookmarked.");
+
+  }
+
+  saveData();
+
+  renderAyahs();
+
+  updateDashboard();
+
+}
+
+
+function toggleSurahBookmark(number){
+
+  const surah=
+    surahs.find(s=>s[0]===number);
+
+  if(!surah){
+    return;
+  }
+
+  const existing=
+    savedData.bookmarks.findIndex(
+      b=>b.type==="surah" &&
+      b.surah===number
+    );
+
+  if(existing>=0){
+
+    savedData.bookmarks.splice(existing,1);
+
+    showNotice("Surah bookmark removed.");
+
+  }else{
+
+    savedData.bookmarks.push({
+
+      key:"surah:"+number,
+
+      type:"surah",
+
+      surah:number,
+
+      surahName:surah[1],
+
+      created:new Date().toISOString()
+
+    });
+
+    showNotice("Surah bookmarked.");
+
+  }
+
+  saveData();
+
+  renderSurahs(
+    document.getElementById("search").value
+      ? surahs.filter(s=>
+        String(s[0]).includes(
+          document.getElementById("search").value
+        )
+      )
+      : surahs
+  );
+
+  updateDashboard();
+
+}
+
+
+function bookmarkCurrentSurah(){
+
+  if(currentSurah){
+
+    toggleSurahBookmark(
+      currentSurah[0]
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function showNoteBox(){
+
+  const box=
+    document.getElementById("noteBox");
+
+  box.style.display=
+    box.style.display==="none"
+    ? "block"
+    : "none";
+
+}
+
+
+function saveSurahNote(){
+
+  if(!currentSurah){
+    return;
+  }
+
+  const textarea=
+    document.getElementById("surahNote");
+
+  const text=
+    textarea.value.trim();
+
+  if(!text){
+    showNotice("Please write a note first.");
+    return;
+  }
+
+  const existing=
+    savedData.notes.find(
+      n=>n.surah===currentSurah[0]
+    );
+
+  if(existing){
+
+    existing.text=text;
+
+    existing.updated=
+      new Date().toISOString();
+
+  }else{
+
+    savedData.notes.push({
+
+      surah:currentSurah[0],
+
+      surahName:currentSurah[1],
+
+      text:text,
+
+      created:new Date().toISOString(),
+
+      updated:new Date().toISOString()
+
+    });
+
+  }
+
+  saveData();
+
+  updateDashboard();
+
+  showNotice("Your note has been saved.");
+
+}
+
+
+function loadExistingNote(){
+
+  const textarea=
+    document.getElementById("surahNote");
+
+  if(!textarea || !currentSurah){
+    return;
+  }
+
+  const note=
+    savedData.notes.find(
+      n=>n.surah===currentSurah[0]
+    );
+
+  textarea.value=
+    note ? note.text : "";
+
+}
+
+
+/* =========================================================
+   MEMORISATION
+========================================================= */
+
+function toggleMemorised(index){
+
+  if(!currentSurah || !currentAyahs[index]){
+    return;
+  }
+
+  const key=
+    getAyahKey(
+      currentSurah[0],
+      currentAyahs[index].numberInSurah
+    );
+
+  const existing=
+    savedData.memorised.indexOf(key);
+
+  if(existing>=0){
+
+    savedData.memorised.splice(existing,1);
+
+    showNotice("Ayah removed from memorised list.");
+
+  }else{
+
+    savedData.memorised.push(key);
+
+    addTodayPractice(key);
+
+    showNotice("Ayah marked as memorised.");
+
+  }
+
+  saveData();
+
+  renderAyahs();
+
+  updateDashboard();
+
+}
+
+
+function addTodayPractice(key){
+
+  const today=
+    new Date().toISOString().slice(0,10);
+
+  const exists=
+    savedData.practiceToday.find(
+      x=>x.date===today && x.key===key
+    );
+
+  if(!exists){
+
+    savedData.practiceToday.push({
+
+      date:today,
+
+      key:key
+
+    });
+
+  }
+
+}
+
+
+function toggleMemoryDisplay(){
+
+  savedData.hideArabic=
+    !savedData.hideArabic;
+
+  saveData();
+
+  renderAyahs();
+
+  updateMemoryButton();
+
+}
+
+
+function toggleGlobalMemory(){
+
+  savedData.hideArabic=
+    !savedData.hideArabic;
+
+  saveData();
+
+  updateMemoryButton();
+
+  if(currentAyahs.length){
+    renderAyahs();
+  }
+
+}
+
+
+function startMemoryMode(){
+
+  memoryMode=true;
+
+  savedData.hideArabic=true;
+
+  saveData();
+
+  updateMemoryButton();
+
+  showNotice(
+    "Memorisation mode started. Arabic text is hidden."
+  );
+
+  if(currentSurah){
+    renderAyahs();
+    showSection("readerSection",null);
+  }else{
+
+    showSection("quranSection",null);
+
+    showNotice(
+      "Choose a Surah to begin memorisation."
+    );
+
+  }
+
+}
+
+
+function clearMemoryProgress(){
+
+  if(
+    !confirm(
+      "Are you sure you want to clear all memorisation progress?"
+    )
+  ){
+    return;
+  }
+
+  savedData.memorised=[];
+
+  savedData.practiceToday=[];
+
+  saveData();
+
+  updateDashboard();
+
+  if(currentAyahs.length){
+    renderAyahs();
+  }
+
+  showNotice("Memorisation progress cleared.");
+
+}
+
+
+/* =========================================================
+   DAILY GOAL
+========================================================= */
+
+function saveDailyGoal(){
+
+  const input=
+    document.getElementById("dailyGoal");
+
+  let goal=
+    parseInt(input.value,10);
+
+  if(!goal || goal<1){
+    goal=1;
+  }
+
+  if(goal>100){
+    goal=100;
+  }
+
+  savedData.dailyGoal=goal;
+
+  input.value=goal;
+
+  saveData();
+
+  updateDashboard();
+
+}
+
+
+function resetDailyProgress(){
+
+  const today=
+    new Date().toISOString().slice(0,10);
+
+  savedData.practiceToday=
+    savedData.practiceToday.filter(
+      x=>x.date!==today
+    );
+
+  saveData();
+
+  updateDashboard();
+
+  showNotice("Today's practice has been reset.");
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+  const today=
+    new Date().toISOString().slice(0,10);
+
+  const todayCount=
+    savedData.practiceToday.filter(
+      x=>x.date===today
+    ).length;
+
+  const total=
+    savedData.memorised.length;
+
+  document.getElementById("statBookmarks")
+    .textContent=
+    savedData.bookmarks.length;
+
+  document.getElementById("statMemorised")
+    .textContent=total;
+
+  document.getElementById("statNotes")
+    .textContent=
+    savedData.notes.length;
+
+  document.getElementById("todayCount")
+    .textContent=todayCount;
+
+  document.getElementById("memoryTotal")
+    .textContent=total;
+
+  document.getElementById("memoryToday")
+    .textContent=todayCount;
+
+  document.getElementById("memoryGoal")
+    .textContent=savedData.dailyGoal;
+
+  document.getElementById("dailyGoal")
+    .value=savedData.dailyGoal;
+
+  const percent=
+    Math.min(
+      100,
+      (todayCount/savedData.dailyGoal)*100
+    );
+
+  document.getElementById("goalBar")
+    .style.width=
+    percent+"%";
+
+}
+
+
+/* =========================================================
+   SAVED PAGE
+========================================================= */
+
+function renderSaved(){
+
+  const container=
+    document.getElementById("savedContainer");
+
+  let html="";
+
+  if(savedData.bookmarks.length){
+
+    html+=`
+      <h3 class="section-title">
+        🔖 Bookmarks
+      </h3>
+    `;
+
+    savedData.bookmarks
+      .slice()
+      .reverse()
+      .forEach((bookmark,index)=>{
+
+        if(bookmark.type==="surah"){
+
+          html+=`
+
+          <div class="bookmark-card">
+
+            <h3>
+              📖 ${escapeHtml(bookmark.surahName)}
+            </h3>
+
+            <p>
+              Surah ${bookmark.surah}
+            </p>
+
+            <br>
+
+            <button
+              class="primary-button"
+              onclick="openSurahByNumber(${bookmark.surah})">
+              Open Surah
+            </button>
+
+            <button
+              class="secondary-button"
+              onclick="removeBookmark('${escapeAttribute(bookmark.key)}')">
+              Remove
+            </button>
+
+          </div>
+
+          `;
+
+        }else{
+
+          html+=`
+
+          <div class="bookmark-card">
+
+            <h3>
+              📖 ${escapeHtml(bookmark.surahName)}
+              — Ayah ${bookmark.ayah}
+            </h3>
+
+            <div
+              style="direction:rtl;font-size:24px;margin:10px 0">
+              ${escapeHtml(bookmark.arabic)}
+            </div>
+
+            <p>
+              ${escapeHtml(bookmark.translation)}
+            </p>
+
+            <br>
+
+            <button
+              class="primary-button"
+              onclick="openAyahBookmark('${escapeAttribute(bookmark.key)}')">
+              Open Ayah
+            </button>
+
+            <button
+              class="secondary-button"
+              onclick="removeBookmark('${escapeAttribute(bookmark.key)}')">
+              Remove
+            </button>
+
+          </div>
+
+          `;
+
+        }
+
+      });
+
+  }
+
+
+  if(savedData.notes.length){
+
+    html+=`
+      <h3 class="section-title">
+        📝 Personal Notes
+      </h3>
+    `;
+
+    savedData.notes
+      .slice()
+      .reverse()
+      .forEach(note=>{
+
+        html+=`
+
+        <div class="note-card">
+
+          <h3>
+            ${escapeHtml(note.surahName)}
+          </h3>
+
+          <p style="margin-top:8px">
+            ${escapeHtml(note.text)}
+          </p>
+
+          <br>
+
+          <button
+            class="primary-button"
+            onclick="openSurahByNumber(${note.surah})">
+            Open Surah
+          </button>
+
+          <button
+            class="secondary-button"
+            onclick="deleteNote(${note.surah})">
+            Delete Note
+          </button>
+
+        </div>
+
+        `;
+
+      });
+
+  }
+
+
+  if(!html){
+
+    html=`
+      <div class="empty">
+        🔖 No bookmarks or notes yet.
+        <br><br>
+        Open a Surah and save an ayah or write a note.
+      </div>
+    `;
+
+  }
+
+  container.innerHTML=html;
+
+}
+
+
+function removeBookmark(key){
+
+  savedData.bookmarks=
+    savedData.bookmarks.filter(
+      b=>b.key!==key
+    );
+
+  saveData();
+
+  renderSaved();
+
+  updateDashboard();
+
+  if(currentAyahs.length){
+    renderAyahs();
+  }
+
+}
+
+
+function openAyahBookmark(key){
+
+  const bookmark=
+    savedData.bookmarks.find(
+      b=>b.key===key
+    );
+
+  if(!bookmark){
+    return;
+  }
+
+  openSurahByNumber(bookmark.surah);
+
+  setTimeout(()=>{
+
+    const index=
+      currentAyahs.findIndex(
+        a=>a.numberInSurah===bookmark.ayah
+      );
+
+    if(index>=0){
+
+      const element=
+        document.getElementById(
+          "ayah-"+index
+        );
+
+      if(element){
+
+        element.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+
+        element.classList.add("playing");
+
+        setTimeout(()=>{
+          element.classList.remove("playing");
+        },2500);
+
+      }
+
+    }
+
+  },1200);
+
+}
+
+
+function deleteNote(surah){
+
+  savedData.notes=
+    savedData.notes.filter(
+      n=>n.surah!==surah
+    );
+
+  saveData();
+
+  renderSaved();
+
+  updateDashboard();
+
+}
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+function getReciterBitrate(){
+
+  if(!selectedReciter){
+    return 128;
+  }
+
+  /*
+    Al Quran Cloud supports several CDN bitrates.
+    Prefer an edition-provided bitrate when available.
+  */
+
+  const bitrate=
+    Number(
+      selectedReciter.bitrate ||
+      selectedReciter.bitRate ||
+      128
+    );
+
+  const allowed=
+    [192,128,64,48,40,32];
+
+  if(allowed.includes(bitrate)){
+    return bitrate;
+  }
+
+  return 128;
+
+}
+
+
+function getSurahAudioUrl(){
+
+  const bitrate=
+    getReciterBitrate();
+
+  return "https://cdn.islamic.network/quran/audio-surah/"+
+    bitrate+
+    "/"+
+    selectedReciter.identifier+
+    "/"+
+    currentSurah[0]+
+    ".mp3";
+
+}
+
+
+function getAyahAudioUrl(ayah){
+
+  const bitrate=
+    getReciterBitrate();
+
+  return "https://cdn.islamic.network/quran/audio/"+
+    bitrate+
+    "/"+
+    selectedReciter.identifier+
+    "/"+
+    ayah.globalNumber+
+    ".mp3";
+
+}
+
 
 function changeReciter(){
 
@@ -2230,116 +3508,59 @@ function changeReciter(){
       .value;
 
   const found=
-    audioEditions.find(
-      edition=>
-        edition.identifier===id
+    reciters.find(
+      r=>r.identifier===id
     );
 
   if(!found){
     return;
   }
 
-  stopAudio();
-
   selectedReciter=found;
 
-  localStorage.setItem(
-    "din_quran_reciter",
-    selectedReciter.identifier
-  );
+  savedData.reciter=id;
+
+  saveData();
+
+  stopAudio();
 
   document.getElementById("reciterStatus")
-    .innerHTML=
-    '<span class="audio-ready">✓ '+
-    escapeHtml(
-      getEditionName(selectedReciter)
-    )+
-    ' selected. The player will automatically find a working audio quality.</span>';
+    .textContent=
+    selectedReciter.name+
+    " selected.";
 
 }
 
 
-/* =========================================================
-   GET WORKING AUDIO QUALITY
-========================================================= */
+function quickPlaySurah(number){
 
-async function prepareAudio(){
+  openSurahByNumber(number);
+
+  setTimeout(()=>{
+
+    playWholeSurah();
+
+  },1000);
+
+}
+
+
+function playWholeSurah(){
+
+  if(!currentSurah){
+
+    showNotice(
+      "Please open a Surah first."
+    );
+
+    return;
+
+  }
 
   if(!selectedReciter){
 
     showNotice(
-      "Please select a reciter first."
-    );
-
-    return null;
-
-  }
-
-  if(!currentSurah){
-
-    showNotice(
-      "Please open a Surah first."
-    );
-
-    return null;
-
-  }
-
-  document.getElementById("audioNow")
-    .textContent=
-    "Checking audio quality...";
-
-  document.getElementById("reciterStatus")
-    .textContent=
-    "Finding a working audio stream for "+
-    getEditionName(selectedReciter)+
-    "...";
-
-  const bitrate=
-    await findWorkingBitrate(
-      selectedReciter.identifier,
-      currentSurah[0]
-    );
-
-  if(!bitrate){
-
-    document.getElementById("reciterStatus")
-      .innerHTML=
-      '<span class="audio-error">⚠️ No playable Surah audio was found for this reciter. Please choose another reciter.</span>';
-
-    showNotice(
-      "This reciter does not currently have a playable whole-Surah file available for this Surah."
-    );
-
-    return null;
-
-  }
-
-  document.getElementById("reciterStatus")
-    .innerHTML=
-    '<span class="audio-ready">✓ '+
-    escapeHtml(
-      getEditionName(selectedReciter)
-    )+
-    ' • '+
-    bitrate+
-    ' kbps • Ready</span>';
-
-  return bitrate;
-
-}
-
-
-/* =========================================================
-   PLAY WHOLE SURAH
-========================================================= */
-
-async function playWholeSurah(){
-
-  if(!currentSurah){
-
-    showNotice(
-      "Please open a Surah first."
+      "Please choose a reciter first."
     );
 
     return;
@@ -2348,26 +3569,28 @@ async function playWholeSurah(){
 
   stopAudio();
 
-  const bitrate=
-    await prepareAudio();
-
-  if(!bitrate){
-    return;
-  }
-
   const url=
-    buildSurahAudioUrl(
-      bitrate,
-      selectedReciter.identifier,
-      currentSurah[0]
-    );
+    getSurahAudioUrl();
 
   currentAudio=
-    new Audio();
+    new Audio(url);
 
   currentAudio.preload="auto";
 
-  currentAudio.src=url;
+  currentAudio.playbackRate=
+    Number(
+      document.getElementById("audioSpeed").value
+    );
+
+  document.getElementById("audioNow")
+    .textContent=
+    "Loading — "+
+    selectedReciter.name;
+
+  document.getElementById("audioCount")
+    .textContent=
+    currentSurah[3]+
+    " verses";
 
   currentAudio.addEventListener(
     "timeupdate",
@@ -2384,40 +3607,29 @@ async function playWholeSurah(){
     handleAudioError
   );
 
-  document.getElementById("audioNow")
-    .textContent=
-    "Loading — "+
-    getEditionName(selectedReciter);
+  currentAudio.play()
+    .then(()=>{
 
-  document.getElementById("audioCount")
-    .textContent=
-    "Whole Surah";
+      document.getElementById("audioNow")
+        .textContent=
+        "Playing — "+
+        selectedReciter.name;
 
-  try{
+      highlightAyah(0);
 
-    await currentAudio.play();
+    })
+    .catch(error=>{
 
-    document.getElementById("audioNow")
-      .textContent=
-      "Playing — "+
-      getEditionName(selectedReciter);
+      console.error(error);
 
-    highlightAyah(0);
+      showNotice(
+        "Tap Play Whole Surah again to start the recitation."
+      );
 
-  }catch(error){
-
-    console.error(error);
-
-    handleAudioError();
-
-  }
+    });
 
 }
 
-
-/* =========================================================
-   WHOLE SURAH END
-========================================================= */
 
 function handleWholeSurahEnded(){
 
@@ -2441,24 +3653,10 @@ function handleWholeSurahEnded(){
 }
 
 
-/* =========================================================
-   PLAY AYAH
-========================================================= */
-
-async function playAyah(index){
+function playAyah(index){
 
   if(!currentAyahs[index]){
     return;
-  }
-
-  if(!selectedReciter){
-
-    showNotice(
-      "Please select a reciter first."
-    );
-
-    return;
-
   }
 
   stopAudio();
@@ -2466,56 +3664,17 @@ async function playAyah(index){
   const ayah=
     currentAyahs[index];
 
-  const bitrates=
-    await getAvailableBitrates(
-      selectedReciter.identifier
-    );
-
-  let workingBitrate=null;
-
-  for(const bitrate of bitrates){
-
-    const url=
-      buildAyahAudioUrl(
-        bitrate,
-        selectedReciter.identifier,
-        ayah.globalNumber
-      );
-
-    const works=
-      await testAudioUrl(url);
-
-    if(works){
-
-      workingBitrate=bitrate;
-
-      break;
-
-    }
-
-  }
-
-  if(!workingBitrate){
-
-    showNotice(
-      "This Ayah audio could not be loaded for the selected reciter. Try another reciter."
-    );
-
-    return;
-
-  }
-
-  const url=
-    buildAyahAudioUrl(
-      workingBitrate,
-      selectedReciter.identifier,
-      ayah.globalNumber
-    );
-
   currentAudio=
-    new Audio(url);
+    new Audio(
+      getAyahAudioUrl(ayah)
+    );
 
   audioIndex=index;
+
+  currentAudio.playbackRate=
+    Number(
+      document.getElementById("audioSpeed").value
+    );
 
   highlightAyah(index);
 
@@ -2524,7 +3683,7 @@ async function playAyah(index){
     "Ayah "+
     ayah.numberInSurah+
     " — "+
-    getEditionName(selectedReciter);
+    selectedReciter.name;
 
   document.getElementById("audioCount")
     .textContent=
@@ -2541,14 +3700,25 @@ async function playAyah(index){
     "ended",
     ()=>{
 
+      document.getElementById("audioProgress")
+        .value=100;
+
       document.getElementById("audioNow")
         .textContent=
         "Ayah "+
         ayah.numberInSurah+
         " completed";
 
-      document.getElementById("audioProgress")
-        .value=100;
+      addTodayPractice(
+        getAyahKey(
+          currentSurah[0],
+          ayah.numberInSurah
+        )
+      );
+
+      saveData();
+
+      updateDashboard();
 
     }
   );
@@ -2559,37 +3729,29 @@ async function playAyah(index){
   );
 
   currentAudio.play()
-    .catch(error=>{
+    .catch(()=>{
 
-      console.error(error);
-
-      handleAudioError();
+      showNotice(
+        "Tap Listen again to start the audio."
+      );
 
     });
 
 }
 
 
-/* =========================================================
-   PLAY FROM HERE
-========================================================= */
-
-async function playFromHere(index){
-
-  if(!currentAyahs[index]){
-    return;
-  }
+function playFromHere(index){
 
   stopAudio();
 
   audioIndex=index;
 
-  await playAyahAndContinue(index);
+  playAyahAndContinue(index);
 
 }
 
 
-async function playAyahAndContinue(index){
+function playAyahAndContinue(index){
 
   if(!currentAyahs[index]){
     return;
@@ -2598,54 +3760,15 @@ async function playAyahAndContinue(index){
   const ayah=
     currentAyahs[index];
 
-  const bitrates=
-    await getAvailableBitrates(
-      selectedReciter.identifier
-    );
-
-  let workingBitrate=null;
-
-  for(const bitrate of bitrates){
-
-    const url=
-      buildAyahAudioUrl(
-        bitrate,
-        selectedReciter.identifier,
-        ayah.globalNumber
-      );
-
-    const works=
-      await testAudioUrl(url);
-
-    if(works){
-
-      workingBitrate=bitrate;
-
-      break;
-
-    }
-
-  }
-
-  if(!workingBitrate){
-
-    showNotice(
-      "The next Ayah could not be loaded. Try another reciter."
-    );
-
-    return;
-
-  }
-
-  const url=
-    buildAyahAudioUrl(
-      workingBitrate,
-      selectedReciter.identifier,
-      ayah.globalNumber
-    );
-
   currentAudio=
-    new Audio(url);
+    new Audio(
+      getAyahAudioUrl(ayah)
+    );
+
+  currentAudio.playbackRate=
+    Number(
+      document.getElementById("audioSpeed").value
+    );
 
   audioIndex=index;
 
@@ -2656,7 +3779,7 @@ async function playAyahAndContinue(index){
     "Ayah "+
     ayah.numberInSurah+
     " — "+
-    getEditionName(selectedReciter);
+    selectedReciter.name;
 
   document.getElementById("audioCount")
     .textContent=
@@ -2671,16 +3794,24 @@ async function playAyahAndContinue(index){
 
   currentAudio.addEventListener(
     "ended",
-    async ()=>{
+    ()=>{
+
+      addTodayPractice(
+        getAyahKey(
+          currentSurah[0],
+          ayah.numberInSurah
+        )
+      );
+
+      saveData();
+
+      updateDashboard();
 
       audioIndex++;
 
-      if(
-        audioIndex<
-        currentAyahs.length
-      ){
+      if(audioIndex<currentAyahs.length){
 
-        await playAyahAndContinue(
+        playAyahAndContinue(
           audioIndex
         );
 
@@ -2702,24 +3833,75 @@ async function playAyahAndContinue(index){
     handleAudioError
   );
 
-  try{
+  currentAudio.play()
+    .catch(()=>{
 
-    await currentAudio.play();
+      showNotice(
+        "Tap Play From Here again."
+      );
 
-  }catch(error){
-
-    console.error(error);
-
-    handleAudioError();
-
-  }
+    });
 
 }
 
 
-/* =========================================================
-   PAUSE / RESUME
-========================================================= */
+function repeatAyah(index){
+
+  stopAudio();
+
+  const ayah=
+    currentAyahs[index];
+
+  if(!ayah){
+    return;
+  }
+
+  currentAudio=
+    new Audio(
+      getAyahAudioUrl(ayah)
+    );
+
+  currentAudio.loop=true;
+
+  currentAudio.playbackRate=
+    Number(
+      document.getElementById("audioSpeed").value
+    );
+
+  highlightAyah(index);
+
+  document.getElementById("audioNow")
+    .textContent=
+    "Repeating Ayah "+
+    ayah.numberInSurah+
+    " — "+
+    selectedReciter.name;
+
+  document.getElementById("audioCount")
+    .textContent=
+    "Repeat";
+
+  currentAudio.addEventListener(
+    "timeupdate",
+    updateProgress
+  );
+
+  currentAudio.addEventListener(
+    "error",
+    handleAudioError
+  );
+
+  currentAudio.play()
+    .catch(()=>{
+
+      showNotice(
+        "Tap Repeat Ayah again to start."
+      );
+
+    });
+
+}
+
 
 function pauseResume(){
 
@@ -2735,22 +3917,12 @@ function pauseResume(){
 
   if(currentAudio.paused){
 
-    currentAudio.play()
-      .then(()=>{
+    currentAudio.play();
 
-        document.getElementById("audioNow")
-          .textContent=
-          "Playing — "+
-          getEditionName(selectedReciter);
-
-      })
-      .catch(error=>{
-
-        console.error(error);
-
-        handleAudioError();
-
-      });
+    document.getElementById("audioNow")
+      .textContent=
+      "Playing — "+
+      selectedReciter.name;
 
   }else{
 
@@ -2764,10 +3936,6 @@ function pauseResume(){
 
 }
 
-
-/* =========================================================
-   STOP
-========================================================= */
 
 function stopAudio(){
 
@@ -2791,20 +3959,15 @@ function stopAudio(){
     .value=0;
 
   document.getElementById("audioNow")
-    .textContent=
-    "Ready";
+    .textContent="Ready";
 
   document.getElementById("audioCount")
     .textContent=
     "0 / "+
-    (currentAyahs.length || 0);
+    (currentAyahs.length||0);
 
 }
 
-
-/* =========================================================
-   REPEAT
-========================================================= */
 
 function toggleRepeat(){
 
@@ -2819,19 +3982,13 @@ function toggleRepeat(){
 }
 
 
-/* =========================================================
-   PROGRESS
-========================================================= */
-
 function updateProgress(){
 
   if(
     !currentAudio ||
     !currentAudio.duration
   ){
-
     return;
-
   }
 
   document.getElementById("audioProgress")
@@ -2842,6 +3999,52 @@ function updateProgress(){
     )*100;
 
 }
+
+
+function changeAudioSpeed(){
+
+  if(!currentAudio){
+    return;
+  }
+
+  currentAudio.playbackRate=
+    Number(
+      document.getElementById("audioSpeed").value
+    );
+
+}
+
+
+/* =========================================================
+   AUDIO SEEK
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  const progress=
+    document.getElementById("audioProgress");
+
+  progress.addEventListener(
+    "input",
+    ()=>{
+
+      if(
+        currentAudio &&
+        currentAudio.duration
+      ){
+
+        currentAudio.currentTime=
+          (
+            progress.value/100
+          )*
+          currentAudio.duration;
+
+      }
+
+    }
+  );
+
+});
 
 
 /* =========================================================
@@ -2859,14 +4062,16 @@ function highlightAyah(index){
 
   if(element){
 
-    element.classList.add(
-      "playing"
-    );
+    element.classList.add("playing");
 
-    element.scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
+    if(savedData.autoScroll){
+
+      element.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+    }
 
   }
 
@@ -2878,9 +4083,7 @@ function removeHighlight(){
   document
     .querySelectorAll(".ayah.playing")
     .forEach(element=>{
-      element.classList.remove(
-        "playing"
-      );
+      element.classList.remove("playing");
     });
 
 }
@@ -2950,7 +4153,7 @@ function nextSurah(){
 
 
 /* =========================================================
-   TAJWEED PRACTICE
+   TAJWEED
 ========================================================= */
 
 function tajweedAnswer(correct,message){
@@ -2960,13 +4163,206 @@ function tajweedAnswer(correct,message){
       "practiceResult"
     );
 
-  result.textContent=
-    message;
+  result.textContent=message;
 
   result.style.color=
     correct
     ? "#075e3b"
     : "#a34700";
+
+}
+
+
+/* =========================================================
+   FONT SIZE
+========================================================= */
+
+function changeFontSize(value){
+
+  let size=
+    parseInt(value,10);
+
+  if(!size || size<20){
+    size=20;
+  }
+
+  if(size>45){
+    size=45;
+  }
+
+  savedData.fontSize=size;
+
+  saveData();
+
+  applyFontSize(size);
+
+  const range=
+    document.getElementById(
+      "fontSizeRange"
+    );
+
+  if(range){
+    range.value=size;
+  }
+
+}
+
+
+function applyFontSize(size){
+
+  document
+    .querySelectorAll(".ayah-arabic")
+    .forEach(element=>{
+      element.style.fontSize=
+        size+"px";
+    });
+
+}
+
+
+function getSavedFontSize(){
+
+  return savedData.fontSize;
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode(){
+
+  savedData.darkMode=
+    !savedData.darkMode;
+
+  document.body.classList.toggle(
+    "dark",
+    savedData.darkMode
+  );
+
+  saveData();
+
+  updateDarkButton();
+
+}
+
+
+function updateDarkButton(){
+
+  document.getElementById("darkButton")
+    .textContent=
+    savedData.darkMode
+    ? "☀️"
+    : "🌙";
+
+}
+
+
+/* =========================================================
+   AUTO SCROLL
+========================================================= */
+
+function toggleAutoScroll(){
+
+  savedData.autoScroll=
+    !savedData.autoScroll;
+
+  saveData();
+
+  updateAutoScrollButton();
+
+}
+
+
+function updateAutoScrollButton(){
+
+  document.getElementById(
+    "autoScrollButton"
+  ).textContent=
+    savedData.autoScroll
+    ? "On"
+    : "Off";
+
+}
+
+
+/* =========================================================
+   MEMORY BUTTON
+========================================================= */
+
+function updateMemoryButton(){
+
+  document.getElementById(
+    "globalMemoryButton"
+  ).textContent=
+    savedData.hideArabic
+    ? "On"
+    : "Off";
+
+}
+
+
+/* =========================================================
+   EXPORT DATA
+========================================================= */
+
+function exportData(){
+
+  const data=
+    JSON.stringify(
+      savedData,
+      null,
+      2
+    );
+
+  const blob=
+    new Blob(
+      [data],
+      {type:"application/json"}
+    );
+
+  const url=
+    URL.createObjectURL(blob);
+
+  const link=
+    document.createElement("a");
+
+  link.href=url;
+
+  link.download=
+    "din-quran-centre-data.json";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+
+  showNotice(
+    "Your Qur'an Centre data has been exported."
+  );
+
+}
+
+
+/* =========================================================
+   CLEAR DATA
+========================================================= */
+
+function clearAllData(){
+
+  if(
+    !confirm(
+      "This will delete bookmarks, notes, memorisation progress and settings. Continue?"
+    )
+  ){
+    return;
+  }
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+  location.reload();
 
 }
 
@@ -2993,7 +4389,7 @@ function showNotice(text){
 
       notice.style.display="none";
 
-    },6000);
+    },5000);
 
 }
 
@@ -3004,22 +4400,8 @@ function showNotice(text){
 
 function handleAudioError(){
 
-  if(currentAudio){
-
-    currentAudio.pause();
-
-  }
-
-  document.getElementById("audioNow")
-    .textContent=
-    "Audio could not be loaded";
-
-  document.getElementById("reciterStatus")
-    .innerHTML=
-    '<span class="audio-error">⚠️ The audio stream failed. Please choose another reciter and try again.</span>';
-
   showNotice(
-    "The audio could not be loaded. Please choose another reciter."
+    "This audio could not be loaded. Please try another reciter or check your internet connection."
   );
 
 }
@@ -3044,13 +4426,52 @@ function escapeHtml(text){
 }
 
 
+function escapeAttribute(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/'/g,"&#39;")
+    .replace(/"/g,"&quot;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+
 /* =========================================================
    INITIALIZE
 ========================================================= */
 
-renderSurahs(surahs);
+function initialize(){
 
-loadAudioEditions();
+  loadData();
+
+  document.body.classList.toggle(
+    "dark",
+    savedData.darkMode
+  );
+
+  updateDarkButton();
+
+  updateMemoryButton();
+
+  updateAutoScrollButton();
+
+  document.getElementById("fontSizeRange")
+    .value=savedData.fontSize;
+
+  document.getElementById("dailyGoal")
+    .value=savedData.dailyGoal;
+
+  updateDashboard();
+
+  loadSurahs();
+
+  loadReciters();
+
+}
+
+initialize();
 
 </script>
 
