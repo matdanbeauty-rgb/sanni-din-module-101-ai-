@@ -925,6 +925,187 @@ footer small{
   opacity:.7;
 }
 
+
+
+/* =========================================================
+   UPGRADED TAJWEED / TAFSIR UI
+========================================================= */
+
+.foundation-lesson{
+  cursor:default;
+}
+
+.lesson-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,.72);
+  padding:12px;
+  overflow:auto;
+}
+
+.lesson-modal.open{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.lesson-modal-panel{
+  width:min(900px,100%);
+  max-height:94vh;
+  overflow:auto;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:0 20px 70px rgba(0,0,0,.35);
+  padding:20px;
+}
+
+.lesson-modal-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.lesson-modal-header h2{
+  color:var(--green2);
+  margin-top:4px;
+}
+
+.lesson-progress{
+  height:9px;
+  background:var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.lesson-progress div{
+  height:100%;
+  width:12.5%;
+  background:var(--green2);
+  transition:.25s;
+}
+
+.lesson-page h3{
+  color:var(--green2);
+  margin-bottom:10px;
+  font-size:22px;
+}
+
+.lesson-page p,
+.lesson-page li{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.lesson-page ul{
+  padding-left:20px;
+  margin:10px 0;
+}
+
+.lesson-example{
+  background:var(--active);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:15px;
+  margin:14px 0;
+}
+
+.lesson-example .arabic{
+  direction:rtl;
+  text-align:center;
+  font-size:32px;
+  line-height:2;
+  font-family:"Times New Roman",serif;
+}
+
+.lesson-check{
+  margin-top:15px;
+  padding:14px;
+  border-left:4px solid var(--gold);
+  background:rgba(201,162,39,.08);
+  border-radius:10px;
+}
+
+.lesson-modal-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:20px;
+  padding-top:15px;
+  border-top:1px solid var(--border);
+}
+
+.tafsir-study-tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:15px;
+}
+
+.tafsir-verse-heading{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.tafsir-translation,
+.tafsir-explanation,
+.reflection-prompt{
+  margin-top:14px;
+  padding:13px;
+  border-radius:13px;
+  border:1px solid var(--border);
+}
+
+.tafsir-translation{
+  background:var(--active);
+}
+
+.tafsir-translation p,
+.tafsir-explanation p,
+.reflection-prompt p{
+  margin-top:5px;
+  color:var(--text);
+  font-size:14px;
+}
+
+.quiz-final{
+  text-align:center;
+}
+
+.quiz-score{
+  font-size:42px;
+  color:var(--green2);
+  font-weight:900;
+  margin:10px 0;
+}
+
+@media(max-width:650px){
+  .lesson-modal-panel{
+    padding:15px;
+    border-radius:18px;
+  }
+
+  .lesson-modal-header{
+    flex-direction:column;
+  }
+
+  .lesson-modal-header button{
+    align-self:flex-end;
+  }
+
+  .lesson-example .arabic{
+    font-size:27px;
+  }
+}
+
 @media(max-width:950px){
   .dashboard{
     grid-template-columns:repeat(3,1fr);
@@ -983,7 +1164,7 @@ footer small{
 <div class="logo">📖 Qur'an Centre</div>
 
 <div class="subtitle">
-Read • Listen • Understand • Study Tajweed • Tafsir • Memorise
+Read • Listen • Understand • Master Tajweed • Study Tafsir • Memorise • Quiz
 </div>
 
 <div class="creator">
@@ -1159,6 +1340,38 @@ oninput="handleSearch()">
 
 </div>
 
+<div class="feature-grid" style="margin-top:12px">
+
+  <div class="feature-card">
+    <strong>🎲 Random Ayah</strong>
+    <span>Open a surprise verse for study.</span>
+    <button class="secondary-button" style="margin-top:8px"
+      onclick="openRandomAyah()">Open</button>
+  </div>
+
+  <div class="feature-card">
+    <strong>🧠 Tafsir Challenge</strong>
+    <span>Test your understanding with 25 questions.</span>
+    <button class="secondary-button" style="margin-top:8px"
+      onclick="showSection('tafsirSection',null);startTafsirQuiz()">Start</button>
+  </div>
+
+  <div class="feature-card">
+    <strong>🎨 Tajweed Course</strong>
+    <span>Learn the foundations step by step.</span>
+    <button class="secondary-button" style="margin-top:8px"
+      onclick="showSection('tajweedSection',null);openTajweedLesson('foundation')">Learn</button>
+  </div>
+
+  <div class="feature-card">
+    <strong>🔥 Hifz Challenge</strong>
+    <span>Read, listen, hide and revise.</span>
+    <button class="secondary-button" style="margin-top:8px"
+      onclick="showSection('memorySection',null)">Open</button>
+  </div>
+
+</div>
+
 <h2 class="section-title">All 114 Surahs</h2>
 
 <div id="surahGrid" class="surah-grid">
@@ -1185,21 +1398,17 @@ Sifaat, Noon Sakinah, Meem Sakinah, Madd, Waqf and more.
 
 <div class="lesson-grid">
 
-<div class="lesson-card" onclick="toggleLesson(this)">
+<div class="lesson-card foundation-lesson">
 <div class="lesson-number">1</div>
 <h3>🌱 Foundations of Tajweed</h3>
-<div class="lesson-body">
-<p>
-Tajweed means giving every Arabic letter its proper
-articulation point and characteristics while observing
-the rules of Qur'anic recitation.
+<p style="color:var(--muted);font-size:13px">
+Start a complete beginner-friendly lesson with multiple pages,
+examples, checkpoints and a mini practice activity.
 </p>
-<br>
-<p>
-Study: Fathah, Kasrah, Dammah, Sukoon, Shaddah,
-Tanween, Madd letters and Hamzah.
-</p>
-</div>
+<button class="primary-button" style="margin-top:12px"
+  onclick="openTajweedLesson('foundation')">
+  📖 Open Full Foundation Lesson
+</button>
 </div>
 
 <div class="lesson-card" onclick="toggleLesson(this)">
@@ -2005,6 +2214,37 @@ onclick="showSection('quranSection',null)">
 
 </section>
 
+
+
+<!-- FULL TAJWEED LESSON MODAL -->
+<div id="tajweedLessonModal" class="lesson-modal" aria-hidden="true">
+  <div class="lesson-modal-panel">
+
+    <div class="lesson-modal-header">
+      <div>
+        <div class="tafsir-source">TAJWEED ACADEMY • FOUNDATION COURSE</div>
+        <h2 id="tajweedModalTitle">Foundations of Tajweed</h2>
+      </div>
+      <button class="secondary-button" onclick="closeTajweedLesson()">✕ Close</button>
+    </div>
+
+    <div class="lesson-progress">
+      <div id="tajweedProgressBar"></div>
+    </div>
+
+    <div id="tajweedModalContent"></div>
+
+    <div class="lesson-modal-actions">
+      <button class="secondary-button" id="tajweedPrev"
+        onclick="tajweedPrevious()">← Previous</button>
+      <span id="tajweedPageLabel">1 / 8</span>
+      <button class="primary-button" id="tajweedNext"
+        onclick="tajweedNext()">Next →</button>
+    </div>
+
+  </div>
+</div>
+
 </main>
 
 <footer>
@@ -2014,7 +2254,7 @@ onclick="showSection('quranSection',null)">
 <br>
 
 <small>
-Qur'an Centre • Tajweed Academy • Tafsir Centre • Memorisation
+Qur'an Centre • Tajweed Academy • English Tafsir • Hifz • Quizzes • Khatmah
 • Khatmah Planner • Created by Sanni Abdulmateen
 </small>
 
@@ -2028,6 +2268,8 @@ Qur'an Centre • Tajweed Academy • Tafsir Centre • Memorisation
 
 const API="https://api.alquran.cloud/v1";
 const CDN="https://cdn.islamic.network";
+const QURAN_COM_API="https://api.quran.com/api/v4";
+const REQUEST_TIMEOUT=9000;
 
 const STORAGE_KEY="din_quran_centre_v4";
 
@@ -2114,6 +2356,34 @@ function saveData(){
     console.warn("Could not save data",error);
 
   }
+
+}
+
+/* =========================================================
+   NETWORK HELPERS
+========================================================= */
+
+async function fetchWithTimeout(url,options={},timeout=REQUEST_TIMEOUT){
+
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeout);
+
+  try{
+    return await fetch(url,{
+      ...options,
+      signal:controller.signal
+    });
+  }finally{
+    clearTimeout(timer);
+  }
+
+}
+
+function stripHtml(text){
+
+  const div=document.createElement("div");
+  div.innerHTML=String(text||"");
+  return div.textContent||div.innerText||"";
 
 }
 
@@ -2392,94 +2662,80 @@ async function loadReciters(){
 
   const select=document.getElementById("reciterSelect");
 
+  if(select){
+    select.innerHTML='<option value="">Loading reciters…</option>';
+  }
+
+  /*
+    The old version could remain on "Loading reciters..." if the
+    edition endpoint stalled. We now use a timeout and a reliable
+    built-in list, then merge any live editions returned by the API.
+  */
+
+  const fallback=[
+    {identifier:"ar.alafasy",name:"Mishary Rashid Alafasy"},
+    {identifier:"ar.husary",name:"Mahmoud Khalil Al-Husary"},
+    {identifier:"ar.minshawi",name:"Mohamed Siddiq Al-Minshawi"},
+    {identifier:"ar.minshawimujawwad",name:"Al-Minshawi — Mujawwad"},
+    {identifier:"ar.sudais",name:"Abdul Rahman Al-Sudais"},
+    {identifier:"ar.shuraim",name:"Saud Al-Shuraim"},
+    {identifier:"ar.abdulbasit",name:"Abdul Basit Abdul Samad"},
+    {identifier:"ar.abdulbasitmujawwad",name:"Abdul Basit — Mujawwad"},
+    {identifier:"ar.ajamy",name:"Ahmed Al-Ajmy"},
+    {identifier:"ar.muhammadayoub",name:"Muhammad Ayyoub"},
+    {identifier:"ar.hudhaify",name:"Ali Al-Hudhaify"},
+    {identifier:"ar.muhammadjibreel",name:"Muhammad Jibreel"}
+  ];
+
+  reciters=[...fallback];
+
   try{
 
-    const response=await fetch(
+    const response=await fetchWithTimeout(
       `${API}/edition/format/audio`,
       {cache:"no-store"}
     );
 
-    if(!response.ok){
-      throw new Error("Audio edition API failed");
-    }
+    if(response.ok){
 
-    const result=await response.json();
+      const result=await response.json();
 
-    const editions=result.data||[];
-
-    /*
-      Keep Arabic audio editions.
-      Some editions may have language metadata in different forms,
-      so identifier prefix is also checked.
-    */
-
-    const allAudio=editions.filter(e=>
-      e &&
-      e.identifier &&
-      (
-        e.format==="audio" ||
-        e.type==="versebyverse" ||
-        e.type==="audio"
-      ) &&
-      (
-        e.language==="ar" ||
-        e.identifier.startsWith("ar.")
-      )
-    );
-
-    const preferred=[];
-
-    PREFERRED_RECITERS.forEach(id=>{
-
-      const found=allAudio.find(
-        e=>e.identifier===id
+      const allAudio=(result.data||[]).filter(e=>
+        e &&
+        e.identifier &&
+        (
+          e.format==="audio" ||
+          e.type==="versebyverse" ||
+          e.type==="audio"
+        ) &&
+        (
+          e.language==="ar" ||
+          e.identifier.startsWith("ar.")
+        )
       );
 
-      if(found) preferred.push(found);
+      const live=[];
 
-    });
+      PREFERRED_RECITERS.forEach(id=>{
+        const found=allAudio.find(e=>e.identifier===id);
+        if(found) live.push(found);
+      });
 
-    /*
-      Add additional Arabic reciters after the preferred list.
-    */
+      allAudio.forEach(e=>{
+        if(!live.some(x=>x.identifier===e.identifier)){
+          live.push(e);
+        }
+      });
 
-    allAudio.forEach(e=>{
-
-      if(!preferred.some(
-        x=>x.identifier===e.identifier
-      )){
-
-        preferred.push(e);
-
+      if(live.length){
+        reciters=live;
       }
 
-    });
-
-    reciters=preferred;
+    }
 
   }catch(error){
 
-    console.warn(error);
-
-    /*
-      These are fallback identifiers documented by
-      Al Quran Cloud's CDN.
-    */
-
-    reciters=[
-      {identifier:"ar.alafasy",name:"Mishary Rashid Alafasy"},
-      {identifier:"ar.husary",name:"Mahmoud Khalil Al-Husary"},
-      {identifier:"ar.minshawi",name:"Mohamed Siddiq Al-Minshawi"},
-      {identifier:"ar.minshawimujawwad",name:"Al-Minshawi — Mujawwad"},
-      {identifier:"ar.sudais",name:"Abdul Rahman Al-Sudais"},
-      {identifier:"ar.shuraim",name:"Saud Al-Shuraim"},
-      {identifier:"ar.abdulbasit",name:"Abdul Basit Abdul Samad"},
-      {identifier:"ar.abdulbasitmujawwad",name:"Abdul Basit — Mujawwad"},
-      {identifier:"ar.ajamy",name:"Ahmed Al-Ajmy"},
-      {identifier:"ar.muhammadayoub",name:"Muhammad Ayyoub"},
-      {identifier:"ar.hudhaify",name:"Ali Al-Hudhaify"},
-      {identifier:"ar.muhammadjibreel",name:"Muhammad Jibreel"}
-    ];
+    console.warn("Live reciter list unavailable; using fallback list.",error);
 
   }
 
@@ -2630,6 +2886,21 @@ function renderSurahs(list){
 /* =========================================================
    SEARCH
 ========================================================= */
+
+function openRandomAyah(){
+
+  if(!surahs.length) return;
+
+  const random=
+    surahs[Math.floor(Math.random()*surahs.length)];
+
+  openSurah(random);
+
+  showNotice(
+    `🎲 Random Ayah Challenge: Start reading ${random[1]} and reflect on what you learn.`
+  );
+
+}
 
 function handleSearch(){
 
@@ -3165,11 +3436,38 @@ async function findWorkingAyahAudio(ayah){
     throw new Error("No reciter selected");
   }
 
-  const bitrates=await getAvailableBitrates(
-    selectedReciter.identifier
-  );
+  /*
+    Do not probe six CDN URLs with canplaythrough.
+    On mobile browsers this can cause very long "loading" states.
+    The official API already returns the playable audio URL for
+    the selected audio edition.
+  */
 
-  for(const bitrate of bitrates){
+  try{
+
+    const response=await fetchWithTimeout(
+      `${API}/ayah/${ayah.globalNumber}/${encodeURIComponent(selectedReciter.identifier)}`,
+      {cache:"no-store"}
+    );
+
+    if(response.ok){
+
+      const result=await response.json();
+
+      if(result.data && result.data.audio){
+        return result.data.audio;
+      }
+
+    }
+
+  }catch(error){
+
+    console.warn("API audio lookup failed.",error);
+
+  }
+
+  /* Fast CDN fallbacks. No canplaythrough probing. */
+  for(const bitrate of [64,48,40,32,128,192]){
 
     const url=buildAyahAudioUrl(
       bitrate,
@@ -3177,63 +3475,13 @@ async function findWorkingAyahAudio(ayah){
       ayah.globalNumber
     );
 
-    const works=await testAudioUrl(url);
-
-    if(works){
-
-      currentAudioBitrate=bitrate;
-
-      return url;
-
-    }
+    return url;
 
   }
 
-  /*
-    Final fallback: API audio URL.
-
-    The API can return audio information for audio editions,
-    which gives us another route if the CDN URL cannot be
-    resolved from the metadata.
-  */
-
-  try{
-
-    const response=await fetch(
-      `${API}/ayah/${ayah.globalNumber}/${selectedReciter.identifier}`
-    );
-
-    if(response.ok){
-
-      const result=await response.json();
-
-      if(
-        result.data &&
-        result.data.audio
-      ){
-
-        return result.data.audio;
-
-      }
-
-    }
-
-  }catch(error){
-
-    console.warn(error);
-
-  }
-
-  throw new Error(
-    "No playable audio source was found."
-  );
+  throw new Error("No playable audio source was found.");
 
 }
-
-
-/* =========================================================
-   FIND WORKING SURAH AUDIO
-========================================================= */
 
 async function findWorkingSurahAudio(){
 
@@ -3241,33 +3489,13 @@ async function findWorkingSurahAudio(){
     throw new Error("Missing reciter or Surah");
   }
 
-  const bitrates=await getAvailableBitrates(
-    selectedReciter.identifier
-  );
+  /*
+    Whole-Surah playback is now handled verse-by-verse through
+    playQueueAyah(). This is more reliable than depending on the
+    separate surah-audio CDN file.
+  */
 
-  for(const bitrate of bitrates){
-
-    const url=buildSurahAudioUrl(
-      bitrate,
-      selectedReciter.identifier,
-      currentSurah[0]
-    );
-
-    const works=await testAudioUrl(url);
-
-    if(works){
-
-      currentAudioBitrate=bitrate;
-
-      return url;
-
-    }
-
-  }
-
-  throw new Error(
-    "No playable Surah audio source was found."
-  );
+  return null;
 
 }
 
@@ -3309,92 +3537,42 @@ function changeReciter(){
 async function playWholeSurah(){
 
   if(!currentSurah){
-
     showNotice("Please open a Surah first.");
     return;
-
   }
 
   if(!selectedReciter){
-
     showNotice("Please choose a reciter first.");
     return;
-
   }
-
-  const token=++audioToken;
 
   stopAudio();
 
-  document.getElementById("audioNow")
-    .textContent=
-    "Checking audio — "+
-    selectedReciter.name;
+  audioQueueMode=true;
+
+  document.getElementById("audioNow").textContent=
+    "Starting — "+selectedReciter.name;
+
+  document.getElementById("audioCount").textContent=
+    "1 / "+currentAyahs.length;
 
   try{
 
-    const url=await findWorkingSurahAudio();
-
-    if(token!==audioToken) return;
-
-    currentAudio=new Audio(url);
-
-    currentAudio.preload="auto";
-
-    currentAudio.playbackRate=
-      Number(
-        document.getElementById("audioSpeed").value
-      );
-
-    currentAudio.addEventListener(
-      "timeupdate",
-      updateProgress
-    );
-
-    currentAudio.addEventListener(
-      "ended",
-      handleWholeSurahEnded
-    );
-
-    currentAudio.addEventListener(
-      "error",
-      handleAudioError
-    );
-
-    document.getElementById("audioNow")
-      .textContent=
-      "Playing — "+
-      selectedReciter.name;
-
-    document.getElementById("audioCount")
-      .textContent=
-      currentSurah[3]+
-      " verses";
-
-    currentAudio.play()
-      .then(()=>{
-
-        recordActivity();
-
-      })
-      .catch(()=>{
-
-        showNotice(
-          "The audio is ready. Tap Play Whole Surah again."
-        );
-
-      });
+    await playQueueAyah(0);
+    recordActivity();
 
   }catch(error){
 
     console.error(error);
 
-    showNotice(
-      "This reciter does not currently have a playable Surah audio file for this selection. Try another reciter."
-    );
+    audioQueueMode=false;
 
-    document.getElementById("audioNow")
-      .textContent="Audio unavailable";
+    document.getElementById("audioNow").textContent=
+      "Audio unavailable";
+
+    showNotice(
+      "We could not start this reciter. Please try another reciter."
+    );
 
   }
 
@@ -3427,11 +3605,16 @@ function handleWholeSurahEnded(){
 
 async function playAyah(index){
 
+  if(!selectedReciter){
+    showNotice("Please choose a reciter first.");
+    return;
+  }
+
   if(!currentAyahs[index]) return;
 
-  const token=++audioToken;
-
   stopAudio();
+
+  const token=++audioToken;
 
   const ayah=currentAyahs[index];
 
@@ -3552,9 +3735,9 @@ async function playQueueAyah(index){
 
   }
 
-  const token=++audioToken;
-
   stopAudio();
+
+  const token=++audioToken;
 
   audioQueueMode=true;
   audioIndex=index;
@@ -3658,9 +3841,9 @@ async function repeatAyah(index){
 
   audioQueueMode=false;
 
-  const token=++audioToken;
-
   stopAudio();
+
+  const token=++audioToken;
 
   const ayah=currentAyahs[index];
 
@@ -4903,48 +5086,35 @@ function deleteNote(surah){
 ========================================================= */
 
 let tafsirEditions=[];
+let currentTafsirRequest=0;
+
+/* =========================================================
+   ENGLISH TAFSIR
+========================================================= */
 
 async function loadTafsirEditions(){
 
-  try{
+  /*
+    Al Quran Cloud's edition endpoint is useful for translations,
+    but it can return Arabic Tafsir editions. The new Tafsir
+    implementation therefore uses Quran Foundation's public
+    English Tafsir Ibn Kathir resource (resource 169) and keeps
+    an English Qur'an translation alongside it.
+  */
 
-    const response=await fetch(
-      `${API}/edition`,
-      {cache:"no-store"}
-    );
-
-    if(!response.ok) throw new Error();
-
-    const result=await response.json();
-
-    tafsirEditions=(result.data||[])
-      .filter(e=>
-        e.type==="tafsir" ||
-        e.format==="text" &&
-        /tafsir/i.test(
-          `${e.name||""} ${e.englishName||""} ${e.identifier||""}`
-        )
-      );
-
-  }catch(error){
-
-    console.warn(
-      "Tafsir editions unavailable",
-      error
-    );
-
-    tafsirEditions=[];
-
-  }
+  tafsirEditions=[
+    {
+      identifier:"169",
+      englishName:"Tafsir Ibn Kathir",
+      language:"en"
+    }
+  ];
 
 }
 
 function populateTafsirSelect(){
 
-  const select=
-    document.getElementById(
-      "tafsirSurahSelect"
-    );
+  const select=document.getElementById("tafsirSurahSelect");
 
   if(!select || !surahs.length) return;
 
@@ -4982,194 +5152,373 @@ async function loadTafsirForSurah(number){
 
   if(!surah) return;
 
-  const container=
-    document.getElementById(
-      "tafsirContainer"
-    );
+  const requestId=++currentTafsirRequest;
+
+  const container=document.getElementById("tafsirContainer");
 
   container.innerHTML=`
     <div class="loading">
-      📚 Loading Tafsir resources...
+      📚 Loading English Tafsir for ${escapeHtml(surah[1])}…
     </div>
   `;
 
-  /*
-    We first try to find a text Tafsir edition.
-    If none is available from the public endpoint,
-    we provide a clearly labelled educational framework
-    rather than inventing authoritative Tafsir.
-  */
+  try{
 
-  if(!tafsirEditions.length){
-
-    await loadTafsirEditions();
-
-  }
-
-  const edition=
-    tafsirEditions.find(e=>
-      /ibn kathir|kathir/i.test(
-        `${e.name||""} ${e.englishName||""} ${e.identifier||""}`
+    const [tafsirResponse,translationResponse]=await Promise.all([
+      fetchWithTimeout(
+        `${QURAN_COM_API}/tafsirs/169/by_chapter/${surah[0]}?per_page=50`,
+        {cache:"no-store"}
+      ),
+      fetchWithTimeout(
+        `${API}/surah/${surah[0]}/en.sahih`,
+        {cache:"no-store"}
       )
-    ) ||
-    tafsirEditions.find(e=>
-      /saadi|sa'di/i.test(
-        `${e.name||""} ${e.englishName||""} ${e.identifier||""}`
-      )
-    ) ||
-    tafsirEditions[0];
+    ]);
 
-  if(edition){
+    if(requestId!==currentTafsirRequest) return;
 
-    try{
+    if(!tafsirResponse.ok){
+      throw new Error("English Tafsir service unavailable");
+    }
 
-      const response=await fetch(
-        `${API}/surah/${surah[0]}/${edition.identifier}`
-      );
+    const tafsirJson=await tafsirResponse.json();
 
-      if(response.ok){
+    let translationAyahs=[];
 
-        const result=await response.json();
+    if(translationResponse.ok){
 
-        if(
-          result.data &&
-          result.data.ayahs &&
-          result.data.ayahs.length
-        ){
+      const translationJson=await translationResponse.json();
 
-          renderTafsirResult(
-            surah,
-            edition,
-            result.data.ayahs
-          );
-
-          return;
-
-        }
-
-      }
-
-    }catch(error){
-
-      console.warn(error);
+      translationAyahs=
+        translationJson?.data?.ayahs || [];
 
     }
 
-  }
+    const tafsirAyahs=
+      tafsirJson?.tafsirs || [];
 
-  renderTafsirFallback(surah);
+    if(!tafsirAyahs.length){
+      throw new Error("No Tafsir entries returned");
+    }
+
+    renderEnglishTafsir(
+      surah,
+      tafsirAyahs,
+      translationAyahs
+    );
+
+  }catch(error){
+
+    console.error("English Tafsir error:",error);
+
+    renderTafsirFallbackEnglish(surah);
+
+  }
 
 }
 
-function renderTafsirResult(
+function renderEnglishTafsir(
   surah,
-  edition,
-  ayahs
+  tafsirAyahs,
+  translationAyahs
 ){
 
-  const container=
-    document.getElementById(
-      "tafsirContainer"
-    );
+  const container=document.getElementById("tafsirContainer");
+
+  const translationMap={};
+
+  translationAyahs.forEach(a=>{
+    translationMap[a.numberInSurah]=a.text||"";
+  });
 
   let html=`
 
-    <div class="tafsir-card">
+    <div class="tafsir-card tafsir-intro-card">
 
-      <h3>
-        📚 Tafsir — ${escapeHtml(surah[1])}
-      </h3>
+      <h3>📚 ${escapeHtml(surah[1])} — English Tafsir Study</h3>
 
       <div class="tafsir-source">
-        Source: ${escapeHtml(
-          edition.englishName ||
-          edition.name ||
-          edition.identifier
-        )}
+        Source: Tafsir Ibn Kathir (English)
       </div>
 
-      <p style="color:var(--muted);font-size:12px">
-        This material comes from the selected Tafsir edition.
-        Always consult qualified scholars for detailed religious rulings.
+      <p class="tafsir-text">
+        This section presents an English translation together with
+        English commentary from Tafsir Ibn Kathir. The commentary
+        is educational material from the named source, not a personal
+        AI ruling. For difficult matters of belief, law or interpretation,
+        consult a qualified scholar.
       </p>
+
+      <div class="tafsir-study-tools">
+        <button class="primary-button"
+          onclick="toggleTafsirTranslations()">
+          🌍 Show / Hide English Translation
+        </button>
+
+        <button class="secondary-button"
+          onclick="startTafsirQuiz()">
+          🧠 Start 25-Question Tafsir Quiz
+        </button>
+      </div>
 
     </div>
   `;
 
-  ayahs.slice(0,40).forEach((ayah,index)=>{
+  tafsirAyahs.forEach((item,index)=>{
+
+    const verseNumber=
+      item.verse_number ||
+      Number(String(item.verse_key||"").split(":")[1]) ||
+      index+1;
+
+    const rawTafsir=
+      stripHtml(item.text||"")
+        .replace(/\s+/g," ")
+        .trim();
+
+    const translation=
+      translationMap[verseNumber] || "";
 
     html+=`
 
-    <div class="tafsir-card">
+      <article class="tafsir-card tafsir-verse-card">
 
-      <h3>
-        Ayah ${ayah.numberInSurah||index+1}
-      </h3>
+        <div class="tafsir-verse-heading">
+          <span class="lesson-number">${verseNumber}</span>
+          <div>
+            <h3>Ayah ${verseNumber}</h3>
+            <span class="tafsir-source">English</span>
+          </div>
+        </div>
 
-      <div class="tafsir-text">
-        ${escapeHtml(ayah.text||"")}
-      </div>
+        <div class="tafsir-translation">
+          <div class="label">English Translation</div>
+          <p>${escapeHtml(translation || "Translation unavailable.")}</p>
+        </div>
 
-    </div>
+        <div class="tafsir-explanation">
+          <div class="label">Tafsir Explanation</div>
+          <p>${escapeHtml(rawTafsir || "No commentary was returned for this ayah.")}</p>
+        </div>
+
+        <div class="reflection-prompt">
+          <strong>💭 Think & Reflect</strong>
+          <p>
+            What does this verse teach about faith, worship, character
+            or the way a believer should live?
+          </p>
+          <textarea class="reflection"
+            placeholder="Write your reflection here…"
+            onchange="saveTafsirReflection('${surah[0]}:${verseNumber}',this.value)"></textarea>
+        </div>
+
+      </article>
 
     `;
 
   });
 
-  if(ayahs.length>40){
-
-    html+=`
-      <div class="empty">
-        Showing the first 40 Tafsir entries.
-        The remaining entries can be loaded in a later
-        paginated version.
-      </div>
-    `;
-
-  }
+  html+=`
+    <div class="tafsir-card">
+      <h3>📖 How to Study Tafsir</h3>
+      <p class="tafsir-text">
+        1. Read the verse in Arabic.<br>
+        2. Read the English translation carefully.<br>
+        3. Read the Tafsir explanation.<br>
+        4. Identify the main message and context.<br>
+        5. Ask what practical lesson you can apply.<br>
+        6. Do not turn a personal reflection into a religious ruling.
+      </p>
+    </div>
+  `;
 
   container.innerHTML=html;
 
 }
 
-function renderTafsirFallback(surah){
+function renderTafsirFallbackEnglish(surah){
 
-  const container=
-    document.getElementById(
-      "tafsirContainer"
-    );
+  const container=document.getElementById("tafsirContainer");
 
   container.innerHTML=`
 
-  <div class="tafsir-card">
+    <div class="tafsir-card">
 
-    <div class="tafsir-source">
-      Tafsir source not currently available through the public endpoint
+      <div class="tafsir-source">
+        English Tafsir is temporarily unavailable
+      </div>
+
+      <h3>📖 ${escapeHtml(surah[1])}</h3>
+
+      <p class="tafsir-text">
+        The Tafsir Centre could not reach the English commentary
+        service right now. Your Qur'an Centre will not replace the
+        commentary with invented material.
+      </p>
+
+      <br>
+
+      <h3>📚 Study Framework</h3>
+
+      <p class="tafsir-text">
+        Study the Surah's historical setting, central themes,
+        vocabulary, links between verses, guidance for worship
+        and character, and practical lessons. Try again when
+        you have an internet connection.
+      </p>
+
+      <button class="primary-button"
+        style="margin-top:12px"
+        onclick="loadTafsirForSurah(${surah[0]})">
+        🔄 Try Again
+      </button>
+
     </div>
 
-    <h3>
-      📖 ${escapeHtml(surah[1])}
-    </h3>
-
-    <p class="tafsir-text" style="margin-top:10px">
-      The Tafsir area is ready for a verified Tafsir edition.
-      This version deliberately does not invent or present
-      AI-generated material as authoritative Tafsir.
-    </p>
-
-    <br>
-
-    <h3>💡 Study Framework</h3>
-
-    <p class="tafsir-text">
-      When studying this Surah, examine its historical context,
-      major themes, vocabulary, relationship between verses,
-      guidance for worship and character, and practical lessons.
-    </p>
-
-  </div>
-
   `;
+
+}
+
+function toggleTafsirTranslations(){
+
+  document.querySelectorAll(".tafsir-translation")
+    .forEach(el=>{
+      el.classList.toggle("hidden-content");
+    });
+
+}
+
+function saveTafsirReflection(key,value){
+
+  if(!value.trim()) return;
+
+  savedData.reflections=
+    savedData.reflections.filter(
+      r=>r.key!==key
+    );
+
+  savedData.reflections.push({
+    key,
+    text:value,
+    date:new Date().toISOString()
+  });
+
+  saveData();
+
+}
+
+const TAFSIR_QUIZ=[
+  ["What is Tafsir?","Explanation and interpretation of the Qur'an",["A type of recitation","A prayer time","A writing style"]],
+  ["What should a learner distinguish from source-based Tafsir?","Personal reflection",["Arabic pronunciation","The Surah number","The Juz number"]],
+  ["What is the main purpose of studying Tafsir?","To understand the meanings, guidance and context of the Qur'an",["To memorise only the Arabic letters","To learn calligraphy","To count verses"]],
+  ["Which Surah is known as the Opening of the Book?","Al-Fatihah",["Al-Baqarah","Al-Ikhlas","An-Nas"]],
+  ["Which Surah emphasizes the absolute Oneness of Allah?","Al-Ikhlas",["Al-Fil","Al-Kawthar","Al-Masad"]],
+  ["What does a Tafsir source provide?","Scholarly explanation of Qur'anic verses",["A replacement for the Qur'an","A new revelation","A prayer schedule"]],
+  ["Why is historical context useful in Tafsir?","It can clarify the circumstances and themes surrounding verses",["It changes the Qur'an","It removes the need for Arabic","It makes every verse a story"]],
+  ["What should a student do with difficult legal questions?","Consult a qualified scholar",["Guess the answer","Ignore the Qur'an","Choose the easiest opinion"]],
+  ["What should a learner look for between connected verses?","How the meanings and themes relate",["Only the rhyme","Only the verse numbers","Only the page colour"]],
+  ["What is a practical lesson?","A way to apply Qur'anic guidance in life",["A new verse","A Tajweed symbol","A reciter's name"]],
+  ["Which Surah is commonly associated with seeking refuge from the evil of the night?","Al-Falaq",["Al-Asr","Al-Qadr","Al-Ma'un"]],
+  ["Which Surah is commonly associated with seeking refuge from the whisperer?","An-Nas",["Al-Fil","Al-Quraysh","At-Tin"]],
+  ["What should come before giving a religious ruling from Tafsir?","Careful study and qualified scholarly guidance",["Personal preference","A social-media comment","A guess"]],
+  ["Why are translations not identical to the Arabic Qur'an?","They communicate meanings in another language",["Because the Arabic is incomplete","Because the Qur'an changes","Because Arabic has no meaning"]],
+  ["What is one benefit of reading Tafsir verse by verse?","It connects each verse with its explanation",["It hides the Qur'an","It removes context","It replaces recitation"]],
+  ["What should a reflection question encourage?","Thoughtful application of Qur'anic guidance",["A legal verdict","A new revelation","A pronunciation rule"]],
+  ["What does the Qur'an teach believers to seek through reflection?","Guidance and understanding",["Entertainment only","Competition only","Fame"]],
+  ["What is a safe way to use educational Tafsir content?","Learn from the source and verify difficult matters with scholars",["Treat every note as a fatwa","Change the verse","Ignore evidence"]],
+  ["What is one major theme found across many Qur'anic passages?","Faith and righteous action",["Sports scores","Computer programming","Weather forecasts"]],
+  ["Why can Tafsir mention related verses?","The Qur'an explains and reinforces meanings across passages",["To replace the original verse","To create new revelation","To change the Surah order"]],
+  ["What should a learner do after understanding a lesson?","Consider how to act upon it",["Forget it immediately","Delete the verse","Stop learning"]],
+  ["What is the difference between translation and Tafsir?","Translation conveys meaning in another language; Tafsir provides explanation",["They are always identical","Tafsir is only Arabic","Translation is a recitation"]],
+  ["What is an important habit in Qur'anic study?","Read, understand, reflect and apply",["Read only titles","Skip all explanations","Memorise without understanding"]],
+  ["What should the Qur'an Centre avoid presenting as authoritative?","Unverified AI-generated religious rulings",["English translation","Recitation audio","Study questions"]],
+  ["What is the best attitude toward Qur'anic learning?","Humility, sincerity and willingness to verify knowledge",["Arrogance","Guesswork","Rushing"]]
+];
+
+function startTafsirQuiz(){
+
+  const container=document.getElementById("tafsirContainer");
+
+  let index=0;
+  let score=0;
+
+  function render(){
+
+    if(index>=TAFSIR_QUIZ.length){
+
+      container.innerHTML=`
+        <div class="tafsir-card quiz-final">
+          <h3>🏆 Tafsir Quiz Complete!</h3>
+          <p class="quiz-score">${score} / ${TAFSIR_QUIZ.length}</p>
+          <p class="tafsir-text">
+            Keep studying Tafsir and return to the quiz later to strengthen your understanding.
+          </p>
+          <button class="primary-button"
+            onclick="loadTafsirForSurah(document.getElementById('tafsirSurahSelect').value)">
+            📚 Return to Tafsir
+          </button>
+        </div>
+      `;
+
+      return;
+
+    }
+
+    const q=TAFSIR_QUIZ[index];
+    const options=[q[1],...q[2]].sort(()=>Math.random()-.5);
+
+    container.innerHTML=`
+
+      <div class="tafsir-card">
+
+        <div class="tafsir-source">
+          Question ${index+1} of ${TAFSIR_QUIZ.length}
+        </div>
+
+        <h3>${escapeHtml(q[0])}</h3>
+
+        <div class="practice-options" style="margin-top:15px">
+
+          ${options.map((option,optionIndex)=>`
+            <button class="practice-option"
+              onclick="window.__tafsirQuizAnswer(${optionIndex})">
+              ${escapeHtml(option)}
+            </button>
+          `).join("")}
+
+        </div>
+
+        <div id="tafsirQuizResult" class="practice-result"></div>
+
+      </div>
+    `;
+
+    window.__tafsirQuizAnswer=(optionIndex)=>{
+
+      const result=document.getElementById("tafsirQuizResult");
+      const answer=options[optionIndex];
+      const correct=answer===q[1];
+
+      if(correct){
+        score++;
+        result.textContent="✅ Correct!";
+        result.style.color="var(--green)";
+      }else{
+        result.textContent=
+          "❌ Not quite. Correct answer: "+q[1];
+        result.style.color="#a34700";
+      }
+
+      setTimeout(()=>{
+        index++;
+        render();
+      },900);
+
+    };
+
+  }
+
+  render();
 
 }
 
@@ -5421,6 +5770,241 @@ function renderProgress(){
 /* =========================================================
    TAJWEED
 ========================================================= */
+
+/* =========================================================
+   FULL TAJWEED FOUNDATION COURSE
+========================================================= */
+
+const TAJWEED_FOUNDATION_PAGES=[
+  {
+    title:"1. What Is Tajweed?",
+    html:`
+      <p>
+        Tajweed means reciting the Qur'an correctly by giving each
+        Arabic letter its proper articulation point and characteristics,
+        while observing the rules of recitation.
+      </p>
+      <div class="lesson-example">
+        <div class="arabic">تَرْتِيلًا</div>
+        <p><strong>Core idea:</strong> recite carefully, clearly and with measured pronunciation.</p>
+      </div>
+      <div class="lesson-check">
+        <strong>Remember:</strong> Tajweed is not simply about making the
+        voice beautiful. It protects the correct pronunciation of the Qur'an.
+      </div>
+    `
+  },
+  {
+    title:"2. Arabic Vowel Marks",
+    html:`
+      <p>Begin with the basic signs that control how letters are read.</p>
+      <ul>
+        <li><strong>Fathah</strong> — a short “a” sound.</li>
+        <li><strong>Kasrah</strong> — a short “i” sound.</li>
+        <li><strong>Dammah</strong> — a short “u” sound.</li>
+        <li><strong>Sukoon</strong> — the letter has no short vowel.</li>
+        <li><strong>Shaddah</strong> — the letter is strengthened/doubled.</li>
+        <li><strong>Tanween</strong> — double vowel endings.</li>
+      </ul>
+      <div class="lesson-example">
+        <div class="arabic">بَ • بِ • بُ • بْ • بّ</div>
+      </div>
+    `
+  },
+  {
+    title:"3. Madd Letters",
+    html:`
+      <p>
+        The three basic Madd letters are Alif, Waw and Ya when they meet
+        their required vowel conditions.
+      </p>
+      <div class="lesson-example">
+        <div class="arabic">قَالَ • يَقُولُ • قِيلَ</div>
+        <p>Listen for the natural extension of the vowel sound.</p>
+      </div>
+      <p>
+        Madd Asli (natural Madd) is normally held for two counts.
+        Other Madd types have additional causes and counts that you
+        will study later.
+      </p>
+    `
+  },
+  {
+    title:"4. Makharij — Where Letters Come From",
+    html:`
+      <p>The major articulation areas are:</p>
+      <ul>
+        <li><strong>Al-Jawf:</strong> the empty space of the mouth and throat.</li>
+        <li><strong>Al-Halq:</strong> the throat.</li>
+        <li><strong>Al-Lisan:</strong> the tongue.</li>
+        <li><strong>Ash-Shafatan:</strong> the two lips.</li>
+        <li><strong>Al-Khayshum:</strong> the nasal passage.</li>
+      </ul>
+      <div class="lesson-check">
+        Practise listening to similar letters and make sure each one
+        comes from its correct articulation point.
+      </div>
+    `
+  },
+  {
+    title:"5. Noon Sakinah & Tanween",
+    html:`
+      <p>There are four major rules:</p>
+      <ul>
+        <li><strong>Izhar:</strong> clear pronunciation.</li>
+        <li><strong>Idgham:</strong> merging into the following letter.</li>
+        <li><strong>Iqlab:</strong> changing Noon Sakinah/Tanween toward a Meem sound before Baa.</li>
+        <li><strong>Ikhfa:</strong> concealed pronunciation with Ghunnah.</li>
+      </ul>
+      <div class="lesson-example">
+        <div class="arabic">نْ • ـً • ـٍ • ـٌ</div>
+      </div>
+    `
+  },
+  {
+    title:"6. Meem Sakinah & Ghunnah",
+    html:`
+      <p>
+        Meem Sakinah has three principal rules:
+        Izhar Shafawi, Ikhfa Shafawi and Idgham Shafawi.
+      </p>
+      <p>
+        Ghunnah is a nasal sound. It is especially clear with Noon and
+        Meem carrying Shaddah.
+      </p>
+      <div class="lesson-example">
+        <div class="arabic">إِنَّ • ثُمَّ</div>
+      </div>
+    `
+  },
+  {
+    title:"7. Qalqalah, Heavy & Light Letters",
+    html:`
+      <p>
+        Qalqalah is the echoing quality associated with the letters
+        Qaf, Ta, Ba, Jim and Dal when they have Sukoon.
+      </p>
+      <div class="lesson-example">
+        <div class="arabic">ق ط ب ج د</div>
+      </div>
+      <p>
+        Tafkheem means a heavy quality, while Tarqeeq means a light quality.
+        The letters of Isti'la are important when learning permanent heaviness.
+      </p>
+    `
+  },
+  {
+    title:"8. Waqf, Ibtida & Your Practice",
+    html:`
+      <p>
+        <strong>Waqf</strong> means stopping during recitation.
+        <strong>Ibtida</strong> means beginning or resuming recitation.
+      </p>
+      <p>
+        Stop in places that preserve the intended meaning, and learn the
+        Qur'anic stopping symbols used in your Mushaf.
+      </p>
+      <div class="lesson-check">
+        <strong>Mini challenge:</strong> Read a short Surah slowly,
+        identify one Madd, one Ghunnah and one Qalqalah example,
+        then listen to a trusted reciter and compare your pronunciation.
+      </div>
+      <button class="primary-button" style="margin-top:12px"
+        onclick="closeTajweedLesson(); showSection('tajweedSection',null)">
+        🎨 Continue to Tajweed Practice
+      </button>
+    `
+  }
+];
+
+let tajweedPage=0;
+
+function openTajweedLesson(type){
+
+  if(type!=="foundation") return;
+
+  tajweedPage=0;
+
+  const modal=document.getElementById("tajweedLessonModal");
+
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+
+  document.body.style.overflow="hidden";
+
+  renderTajweedLessonPage();
+
+}
+
+function closeTajweedLesson(){
+
+  const modal=document.getElementById("tajweedLessonModal");
+
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+
+  document.body.style.overflow="";
+
+}
+
+function renderTajweedLessonPage(){
+
+  const page=TAJWEED_FOUNDATION_PAGES[tajweedPage];
+
+  document.getElementById("tajweedModalTitle")
+    .textContent=page.title;
+
+  document.getElementById("tajweedModalContent")
+    .innerHTML=`
+      <div class="lesson-page">
+        ${page.html}
+      </div>
+    `;
+
+  document.getElementById("tajweedPageLabel")
+    .textContent=
+    `${tajweedPage+1} / ${TAJWEED_FOUNDATION_PAGES.length}`;
+
+  document.getElementById("tajweedProgressBar")
+    .style.width=
+      `${((tajweedPage+1)/TAJWEED_FOUNDATION_PAGES.length)*100}%`;
+
+  document.getElementById("tajweedPrev").disabled=
+    tajweedPage===0;
+
+  document.getElementById("tajweedNext").textContent=
+    tajweedPage===TAJWEED_FOUNDATION_PAGES.length-1
+      ?"✓ Finish"
+      :"Next →";
+
+}
+
+function tajweedNext(){
+
+  if(tajweedPage<TAJWEED_FOUNDATION_PAGES.length-1){
+
+    tajweedPage++;
+    renderTajweedLessonPage();
+
+  }else{
+
+    closeTajweedLesson();
+    showNotice("🌟 Foundation lesson completed. Keep practising!");
+
+  }
+
+}
+
+function tajweedPrevious(){
+
+  if(tajweedPage>0){
+
+    tajweedPage--;
+    renderTajweedLessonPage();
+
+  }
+
+}
 
 function toggleLesson(card){
 
