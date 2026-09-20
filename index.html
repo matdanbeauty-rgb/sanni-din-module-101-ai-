@@ -1,32 +1,2018 @@
-USERS
-├── Students (ID, Name, Email, Class, Parent Link, Attendance, GPA)
-├── Parents (ID, Name, Email, Children Links)
-├── Teachers (ID, Name, Email, Subjects, Classes)
-└── Admins (ID, Name, Email, Role)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Anwarul Islam Model College - School Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-ACADEMICS
-├── Classes (ID, Name, Class Teacher, Strength)
-├── Subjects (ID, Name)
-├── Timetable (Class, Day, Time, Subject, Teacher)
-└── Assignments (ID, Subject, Title, Due Date, Status)
+        :root {
+            --primary: #2D5F3F;
+            --primary-light: #3A7C52;
+            --primary-dark: #1e3a28;
+            --accent: #D4AF37;
+            --accent-light: #E8C547;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+            --light: #F9FAFB;
+            --lighter: #F3F4F6;
+            --dark: #1F2937;
+            --gray: #6B7280;
+            --gray-light: #E5E7EB;
+            --bg: #FFFFFF;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --border: #E5E7EB;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
 
-ASSESSMENT
-├── Results (Subject, Score, Grade, Max Score)
-├── CBT/Exams (ID, Subject, Questions, Duration, Results)
-└── Announcements (ID, Title, Content, Priority, Date)
+        [data-theme="dark"] {
+            --bg: #1F2937;
+            --text: #F9FAFB;
+            --text-light: #D1D5DB;
+            --border: #374151;
+            --light: #374151;
+            --lighter: #4B5563;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
 
-FINANCE
-└── Fees (ID, Description, Amount, Paid, Due Date, Status)
-    └── Payment History (ID, Date, Amount, Method)
+        html, body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+        }
 
-ACTIVITIES
-├── Attendance (Student, Date, Status)
-├── Classes (Class Name, Teacher, Students)
-├── Houses (House Name, Points)
-├── Sports & Clubs (Name, Members, Schedule)
-└── Achievements (Student, Badge, Date)
+        #root {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-RESOURCES
-├── Library Books (Title, Author, Status, Quantity)
-├── Digital Materials (Topic, Type, Link)
-└── Learning Resources (Subject, Content, Video Links)
+        .container {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: max(1rem, env(safe-area-inset-top)) 1rem 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .header h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            padding: 0.5rem;
+            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: var(--light);
+        }
+
+        .nav-icon {
+            font-size: 1.3rem;
+        }
+
+        .card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 95, 63, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--lighter);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        .login-box {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+            color: white;
+        }
+
+        .logo-section h1 {
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .logo-section p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 95, 63, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .role-card {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .role-card:hover {
+            border-color: var(--primary);
+            background: var(--light);
+        }
+
+        .role-card.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .role-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .role-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            border-radius: 0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .school-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .welcome-card h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .welcome-card p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .menu-item:hover {
+            border-color: var(--primary);
+            background: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .menu-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .menu-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .menu-item small {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .list-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .list-item:hover {
+            background: var(--light);
+        }
+
+        .list-item-main {
+            flex: 1;
+        }
+
+        .list-item-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+
+        .list-item-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .list-item-value {
+            font-weight: 600;
+            color: var(--primary);
+            text-align: right;
+            margin-left: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+
+        .announcement-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .announcement-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .announcement-icon {
+            font-size: 1.5rem;
+        }
+
+        .announcement-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .announcement-date {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .announcement-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            opacity: 0.95;
+        }
+
+        .progress-bar {
+            background: var(--border);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .grade-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+        }
+
+        .mb-1 { margin-bottom: 1rem; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-2 { margin-bottom: 2rem; }
+
+        @media (min-width: 600px) {
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .quick-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .role-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .school-name {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        // ========== PRODUCTION DATABASE SYSTEM ==========
+        class SchoolDatabase {
+            constructor() {
+                this.storageKey = 'anwarul_school_db_v2';
+                this.loadOrInitialize();
+            }
+
+            loadOrInitialize() {
+                const stored = localStorage.getItem(this.storageKey);
+                if (stored) {
+                    const data = JSON.parse(stored);
+                    Object.assign(this, data);
+                } else {
+                    this.initializeDefaultData();
+                    this.save();
+                }
+            }
+
+            initializeDefaultData() {
+                this.students = [
+                    { id: 'STU001', firstName: 'Chioma', lastName: 'Adeleke', email: 'chioma.adeleke@school.edu', password: 'pass', phone: '08032345678', class: 'SS2A', parentId: 'PAR001', admissionDate: '2022-09-15', status: 'active', avatar: '👩‍🎓', bloodGroup: 'O+', allergies: 'None', nextOfKin: 'Dr. Adeyemi Adeleke', kinPhone: '08032345678', kinRelation: 'Father' },
+                    { id: 'STU002', firstName: 'Emeka', lastName: 'Okafor', email: 'emeka.okafor@school.edu', password: 'pass', phone: '08054567890', class: 'SS1B', parentId: 'PAR002', admissionDate: '2023-09-20', status: 'active', avatar: '👨‍🎓', bloodGroup: 'A+', allergies: 'Peanuts', nextOfKin: 'Mr. Okafor', kinPhone: '08054567890', kinRelation: 'Father' },
+                    { id: 'STU003', firstName: 'Zainab', lastName: 'Ibrahim', email: 'zainab.ibrahim@school.edu', password: 'pass', phone: '08067890123', class: 'SS2A', parentId: 'PAR003', admissionDate: '2022-09-15', status: 'active', avatar: '👩‍🎓', bloodGroup: 'B+', allergies: 'None', nextOfKin: 'Hajia Aisha Ibrahim', kinPhone: '08067890123', kinRelation: 'Mother' },
+                ];
+
+                this.parents = [
+                    { id: 'PAR001', firstName: 'Adeyemi', lastName: 'Adeleke', email: 'adeyemi@email.com', password: 'pass', phone: '08032345678', childrenIds: ['STU001'], occupation: 'Doctor' },
+                    { id: 'PAR002', firstName: 'Linda', lastName: 'Okafor', email: 'linda.okafor@email.com', password: 'pass', phone: '08054567890', childrenIds: ['STU002'], occupation: 'Lawyer' },
+                    { id: 'PAR003', firstName: 'Ibrahim', lastName: 'Hassan', email: 'ibrahim.hassan@email.com', password: 'pass', phone: '08067890123', childrenIds: ['STU003'], occupation: 'Engineer' },
+                ];
+
+                this.teachers = [
+                    { id: 'TCH001', firstName: 'Adebayo', lastName: 'Adekunle', email: 'adebayo@school.edu', password: 'pass', phone: '08098765432', subjects: ['Mathematics', 'Physics'], classes: ['SS2A', 'SS1B'], avatar: '👨‍🏫', qualification: 'B.Sc Mathematics', experience: 10 },
+                    { id: 'TCH002', firstName: 'Folake', lastName: 'Adeniyi', email: 'folake@school.edu', password: 'pass', phone: '08087654321', subjects: ['English Language', 'Literature'], classes: ['SS2A'], avatar: '👩‍🏫', qualification: 'B.A English', experience: 8 },
+                    { id: 'TCH003', firstName: 'Chukwu', lastName: 'Okonkwo', email: 'chukwu@school.edu', password: 'pass', phone: '08076543210', subjects: ['Chemistry', 'Biology'], classes: ['SS1B', 'SS2A'], avatar: '👨‍🏫', qualification: 'B.Sc Chemistry', experience: 12 },
+                ];
+
+                this.admins = [
+                    { id: 'ADM001', firstName: 'Segun', lastName: 'Olanrewaju', email: 'admin@school.edu', password: 'pass', phone: '08012345678', role: 'Principal', avatar: '👔' },
+                    { id: 'ADM002', firstName: 'Funmilayo', lastName: 'Oladele', email: 'registrar@school.edu', password: 'pass', phone: '08023456789', role: 'Registrar', avatar: '👩‍💼' },
+                ];
+
+                this.classes = [
+                    { id: 'SS2A', name: 'Senior Secondary 2A', classTeacherId: 'TCH001', studentCount: 45, capacity: 50 },
+                    { id: 'SS1B', name: 'Senior Secondary 1B', classTeacherId: 'TCH002', studentCount: 42, capacity: 50 },
+                    { id: 'SS3A', name: 'Senior Secondary 3A', classTeacherId: 'TCH003', studentCount: 40, capacity: 50 },
+                ];
+
+                this.subjects = [
+                    { id: 'MAT', name: 'Mathematics', code: 'MAT101' },
+                    { id: 'ENG', name: 'English Language', code: 'ENG101' },
+                    { id: 'PHY', name: 'Physics', code: 'PHY101' },
+                    { id: 'CHM', name: 'Chemistry', code: 'CHM101' },
+                    { id: 'BIO', name: 'Biology', code: 'BIO101' },
+                    { id: 'HIS', name: 'History', code: 'HIS101' },
+                ];
+
+                this.announcements = [
+                    { id: 1, title: 'School Resumption', content: 'All students are expected to resume on September 20th, 2024.', date: new Date(2024, 8, 18), priority: 'high', author: 'ADM001', category: 'general' },
+                    { id: 2, title: 'Sports Day Updated', content: 'Inter-house sports competition rescheduled to October 5th.', date: new Date(2024, 8, 16), priority: 'normal', author: 'TCH001', category: 'sports' },
+                    { id: 3, title: 'Library Access', content: 'Digital library now has 500+ new resources available.', date: new Date(2024, 8, 15), priority: 'normal', author: 'ADM001', category: 'academics' },
+                ];
+
+                this.assignments = [
+                    { id: 1, subject: 'Mathematics', title: 'Chapter 5 - Quadratic Equations', description: 'Solve 15 problems from textbook', dueDate: new Date(2024, 8, 22), teacherId: 'TCH001', classId: 'SS2A', submissions: [] },
+                    { id: 2, subject: 'English', title: 'Essay on Things Fall Apart', description: 'Write 1000 words essay', dueDate: new Date(2024, 8, 24), teacherId: 'TCH002', classId: 'SS2A', submissions: [{ studentId: 'STU001', submittedDate: new Date(2024, 8, 23), status: 'submitted', grade: 'A', feedback: 'Excellent work!' }] },
+                    { id: 3, subject: 'Physics', title: 'Lab Report: Ohms Law', description: 'Complete experimental report', dueDate: new Date(2024, 8, 20), teacherId: 'TCH001', classId: 'SS2A', submissions: [] },
+                ];
+
+                this.attendance = [
+                    { id: 1, studentId: 'STU001', date: new Date(2024, 8, 1), status: 'present', markedBy: 'TCH001' },
+                    { id: 2, studentId: 'STU001', date: new Date(2024, 8, 2), status: 'present', markedBy: 'TCH002' },
+                    { id: 3, studentId: 'STU001', date: new Date(2024, 8, 3), status: 'late', markedBy: 'TCH002' },
+                ];
+
+                this.grades = [
+                    { id: 1, studentId: 'STU001', subject: 'Mathematics', score: 78, maxScore: 100, term: 1, year: 2024, grade: 'B+' },
+                    { id: 2, studentId: 'STU001', subject: 'English Language', score: 85, maxScore: 100, term: 1, year: 2024, grade: 'A' },
+                    { id: 3, studentId: 'STU001', subject: 'Physics', score: 72, maxScore: 100, term: 1, year: 2024, grade: 'B' },
+                    { id: 4, studentId: 'STU001', subject: 'Chemistry', score: 80, maxScore: 100, term: 1, year: 2024, grade: 'B+' },
+                ];
+
+                this.fees = [
+                    { id: 1, studentId: 'STU001', description: 'School Fees (First Term)', amount: 150000, paid: 150000, dueDate: new Date(2024, 8, 30), status: 'paid', paymentDate: new Date(2024, 8, 5), paymentMethod: 'bank_transfer' },
+                    { id: 2, studentId: 'STU001', description: 'Examination Fee', amount: 25000, paid: 0, dueDate: new Date(2024, 8, 25), status: 'pending', paymentDate: null, paymentMethod: null },
+                    { id: 3, studentId: 'STU001', description: 'Development Levy', amount: 20000, paid: 20000, dueDate: new Date(2024, 9, 15), status: 'paid', paymentDate: new Date(2024, 8, 10), paymentMethod: 'online' },
+                ];
+
+                this.exams = [
+                    { id: 1, title: 'Mathematics Mock Exam', subject: 'Mathematics', classId: 'SS2A', date: new Date(2024, 8, 25), duration: 120, totalQuestions: 50, type: 'mock', createdBy: 'TCH001' },
+                    { id: 2, title: 'English Language Test', subject: 'English Language', classId: 'SS2A', date: new Date(2024, 8, 27), duration: 90, totalQuestions: 40, type: 'test', createdBy: 'TCH002' },
+                ];
+
+                this.examResults = [
+                    { id: 1, studentId: 'STU001', examId: 1, score: 78, percentage: 78, grade: 'B+', completedDate: new Date(2024, 8, 25) },
+                    { id: 2, studentId: 'STU001', examId: 2, score: 85, percentage: 85, grade: 'A', completedDate: new Date(2024, 8, 27) },
+                ];
+
+                this.timetable = [
+                    { id: 1, classId: 'SS2A', day: 'Monday', startTime: '08:00', endTime: '09:00', subject: 'Mathematics', teacherId: 'TCH001' },
+                    { id: 2, classId: 'SS2A', day: 'Monday', startTime: '09:00', endTime: '10:00', subject: 'English Language', teacherId: 'TCH002' },
+                    { id: 3, classId: 'SS2A', day: 'Tuesday', startTime: '08:00', endTime: '09:00', subject: 'Physics', teacherId: 'TCH001' },
+                    { id: 4, classId: 'SS2A', day: 'Tuesday', startTime: '10:00', endTime: '11:00', subject: 'Chemistry', teacherId: 'TCH003' },
+                ];
+
+                this.houses = [
+                    { id: 'BLUE', name: 'Blue House', color: '🔵', points: 2450 },
+                    { id: 'RED', name: 'Red House', color: '🔴', points: 2320 },
+                    { id: 'GREEN', name: 'Green House', color: '💚', points: 2180 },
+                    { id: 'YELLOW', name: 'Yellow House', color: '💛', points: 1950 },
+                ];
+
+                this.messages = [
+                    { id: 1, senderId: 'PAR001', receiverId: 'TCH001', subject: 'Chioma\'s Progress', content: 'How is Chioma performing in your class?', date: new Date(2024, 8, 18), read: true, replies: [{ senderId: 'TCH001', content: 'She is doing very well! Top of the class.', date: new Date(2024, 8, 18) }] },
+                ];
+
+                this.feedback = [
+                    { id: 1, studentId: 'STU001', subject: 'Teaching Quality', content: 'The online lessons are very helpful and well-structured.', date: new Date(2024, 8, 15), type: 'suggestion', status: 'new' },
+                ];
+
+                this.events = [
+                    { id: 1, title: 'School Resumption', date: new Date(2024, 8, 20), type: 'academic', description: 'Official school resumption for all students' },
+                    { id: 2, title: 'Sports Day', date: new Date(2024, 9, 5), type: 'sports', description: 'Inter-house sports competition' },
+                    { id: 3, title: 'Examination Period', date: new Date(2024, 9, 28), type: 'academic', description: 'First term examination period begins' },
+                ];
+
+                this.clubs = [
+                    { id: 1, name: 'Football Club', icon: '⚽', members: 45, mentor: 'TCH001', schedule: 'Tue & Thu 4:00 PM' },
+                    { id: 2, name: 'Volleyball Club', icon: '🏐', members: 32, mentor: 'TCH002', schedule: 'Mon & Wed 3:30 PM' },
+                    { id: 3, name: 'Debate Club', icon: '🎤', members: 28, mentor: 'TCH003', schedule: 'Friday 5:00 PM' },
+                    { id: 4, name: 'Art & Culture Club', icon: '🎨', members: 35, mentor: 'ADM001', schedule: 'Saturday 10:00 AM' },
+                ];
+
+                this.achievements = [
+                    { id: 1, studentId: 'STU001', badge: '🏆', name: 'Honor Roll', description: 'Achieved excellent grades in Q2 2024' },
+                    { id: 2, studentId: 'STU001', badge: '📖', name: 'Perfect Attendance', description: 'Perfect attendance for 2 consecutive months' },
+                ];
+
+                this.gallery = [
+                    { id: 1, title: 'School Opening Ceremony', date: new Date(2024, 8, 20), images: 12, category: 'events' },
+                    { id: 2, title: 'Sports Festival 2024', date: new Date(2024, 7, 15), images: 28, category: 'sports' },
+                    { id: 3, title: 'Academic Presentations', date: new Date(2024, 8, 10), images: 8, category: 'academics' },
+                ];
+
+                this.resources = [
+                    { id: 1, title: 'Mathematics Fundamentals', category: 'Mathematics', type: 'video', items: 12, progress: 100 },
+                    { id: 2, title: 'English Literature Series', category: 'English Language', type: 'video', items: 8, progress: 75 },
+                    { id: 3, title: 'Physics Interactive Lab', category: 'Physics', type: 'interactive', items: 15, progress: 50 },
+                ];
+            }
+
+            save() {
+                localStorage.setItem(this.storageKey, JSON.stringify(this));
+            }
+
+            authenticateUser(email, password) {
+                const allUsers = [
+                    ...this.students,
+                    ...this.parents,
+                    ...this.teachers,
+                    ...this.admins
+                ];
+                return allUsers.find(u => u.email === email);
+            }
+
+            getUserType(userId) {
+                if (this.students.find(s => s.id === userId)) return 'student';
+                if (this.parents.find(p => p.id === userId)) return 'parent';
+                if (this.teachers.find(t => t.id === userId)) return 'teacher';
+                if (this.admins.find(a => a.id === userId)) return 'admin';
+                return null;
+            }
+
+            getStudentInfo(studentId) {
+                return this.students.find(s => s.id === studentId);
+            }
+
+            getStudentAttendance(studentId) {
+                return this.attendance.filter(a => a.studentId === studentId);
+            }
+
+            getAttendancePercentage(studentId) {
+                const records = this.getStudentAttendance(studentId);
+                if (!records.length) return 0;
+                const present = records.filter(r => r.status === 'present').length;
+                return Math.round((present / records.length) * 100);
+            }
+
+            getStudentGrades(studentId) {
+                return this.grades.filter(g => g.studentId === studentId);
+            }
+
+            calculateGPA(studentId) {
+                const grades = this.getStudentGrades(studentId);
+                if (!grades.length) return 0;
+                const total = grades.reduce((sum, g) => sum + g.score, 0);
+                return (total / grades.length / 25).toFixed(1);
+            }
+
+            getStudentFees(studentId) {
+                return this.fees.filter(f => f.studentId === studentId);
+            }
+
+            getStudentAssignments(studentId) {
+                const student = this.getStudentInfo(studentId);
+                return this.assignments.filter(a => a.classId === student.class);
+            }
+
+            getTeacherClasses(teacherId) {
+                return this.classes.filter(c => c.classTeacherId === teacherId);
+            }
+
+            getClassStudents(classId) {
+                return this.students.filter(s => s.class === classId);
+            }
+
+            getParentChildren(parentId) {
+                const parent = this.parents.find(p => p.id === parentId);
+                return this.students.filter(s => parent.childrenIds.includes(s.id));
+            }
+
+            calculateLetterGrade(score) {
+                if (score >= 90) return 'A';
+                if (score >= 80) return 'B+';
+                if (score >= 70) return 'B';
+                if (score >= 60) return 'C';
+                return 'F';
+            }
+
+            generateClassReport(classId) {
+                const classInfo = this.classes.find(c => c.id === classId);
+                const students = this.getClassStudents(classId);
+                const averageAttendance = Math.round(
+                    students.reduce((sum, s) => sum + this.getAttendancePercentage(s.id), 0) / students.length
+                );
+
+                return {
+                    classInfo,
+                    studentCount: students.length,
+                    averageAttendance,
+                    averageGPA: (students.reduce((sum, s) => sum + parseFloat(this.calculateGPA(s.id)), 0) / students.length).toFixed(1)
+                };
+            }
+
+            getConversations(userId) {
+                return this.messages.filter(m => m.senderId === userId || m.receiverId === userId);
+            }
+        }
+
+        // ========== APP STATE ==========
+        const APP = {
+            db: new SchoolDatabase(),
+            currentUser: null,
+            currentRole: null,
+            currentPage: 'login',
+            isDark: false,
+
+            init() {
+                this.setupTheme();
+                this.render();
+            },
+
+            setupTheme() {
+                if (this.isDark) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            },
+
+            toggleTheme() {
+                this.isDark = !this.isDark;
+                this.setupTheme();
+            },
+
+            login(email, password, role) {
+                const user = this.db.authenticateUser(email, password);
+                if (user) {
+                    this.currentUser = user;
+                    this.currentRole = this.db.getUserType(user.id);
+                    this.currentPage = 'home';
+                } else {
+                    alert('Invalid credentials. Try: chioma.adeleke@school.edu / adeyemi@email.com / adebayo@school.edu / admin@school.edu');
+                    return false;
+                }
+                return true;
+            },
+
+            logout() {
+                this.currentUser = null;
+                this.currentRole = null;
+                this.currentPage = 'login';
+            },
+
+            navigate(page, data = null) {
+                this.currentPage = page;
+                this.render();
+            },
+
+            render() {
+                const root = document.getElementById('root');
+                root.innerHTML = '';
+
+                if (!this.currentUser) {
+                    root.innerHTML = this.renderLogin();
+                } else {
+                    root.innerHTML = this.renderApp();
+                }
+            },
+
+            renderLogin() {
+                return `
+                    <div class="login-container">
+                        <div class="login-box">
+                            <div class="logo-section">
+                                <div class="logo">🏫</div>
+                                <h1>Anwarul Islam</h1>
+                                <p>Model College • Agege, Lagos</p>
+                            </div>
+
+                            <form onsubmit="handleLogin(event)">
+                                <div class="form-group">
+                                    <label>Select Your Role</label>
+                                    <div class="role-selector">
+                                        <div class="role-card" data-role="student" onclick="selectRole(this, 'student')">
+                                            <span class="role-icon">👨‍🎓</span>
+                                            <span class="role-name">Student</span>
+                                        </div>
+                                        <div class="role-card" data-role="parent" onclick="selectRole(this, 'parent')">
+                                            <span class="role-icon">👨‍👧</span>
+                                            <span class="role-name">Parent</span>
+                                        </div>
+                                        <div class="role-card" data-role="teacher" onclick="selectRole(this, 'teacher')">
+                                            <span class="role-icon">👨‍🏫</span>
+                                            <span class="role-name">Teacher</span>
+                                        </div>
+                                        <div class="role-card" data-role="admin" onclick="selectRole(this, 'admin')">
+                                            <span class="role-icon">👔</span>
+                                            <span class="role-name">Admin</span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="role" name="role" value="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            </form>
+
+                            <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-light);">
+                                <strong>Demo Accounts:</strong><br>
+                                Student: chioma.adeleke@school.edu<br>
+                                Parent: adeyemi@email.com<br>
+                                Teacher: adebayo@school.edu<br>
+                                Admin: admin@school.edu<br>
+                                <em>Password: pass</em>
+                            </p>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderApp() {
+                const pageContent = this.renderPage();
+                return `
+                    <header class="header">
+                        <h1>${this.getPageTitle()}</h1>
+                        <div class="header-actions">
+                            <button class="icon-btn" onclick="APP.toggleTheme()" title="Toggle theme">🌙</button>
+                            <button class="icon-btn" onclick="APP.logout(); APP.render()" title="Logout">🚪</button>
+                        </div>
+                    </header>
+
+                    <main class="container" id="main-content">
+                        ${pageContent}
+                    </main>
+
+                    <nav class="bottom-nav">
+                        <button class="nav-item ${this.currentPage === 'home' ? 'active' : ''}" onclick="APP.navigate('home'); APP.render()">
+                            <span class="nav-icon">🏠</span>
+                            <span>Home</span>
+                        </button>
+                        <button class="nav-item ${this.currentPage === 'learn' ? 'active' : ''}" onclick="APP.navigate('learn'); APP.render()">
+                            <span class="nav-icon">📚</span>
+                            <span>Learn</span>
+                        </button>
+                        <button class="nav-item ${this.currentPage === 'cbt' ? 'active' : ''}" onclick="APP.navigate('cbt'); APP.render()">
+                            <span class="nav-icon">✏️</span>
+                            <span>CBT</span>
+                        </button>
+                        <button class="nav-item ${this.currentPage === 'notices' ? 'active' : ''}" onclick="APP.navigate('notices'); APP.render()">
+                            <span class="nav-icon">📢</span>
+                            <span>Notices</span>
+                        </button>
+                        <button class="nav-item ${this.currentPage === 'profile' ? 'active' : ''}" onclick="APP.navigate('profile'); APP.render()">
+                            <span class="nav-icon">👤</span>
+                            <span>Profile</span>
+                        </button>
+                    </nav>
+                `;
+            },
+
+            getPageTitle() {
+                const titles = {
+                    'home': 'Home',
+                    'learn': 'Learn',
+                    'cbt': 'CBT Exams',
+                    'notices': 'Notices',
+                    'profile': 'Profile',
+                    'attendance': 'Attendance',
+                    'grades': 'Results',
+                    'fees': 'Fees',
+                    'timetable': 'Timetable',
+                    'assignments': 'Assignments',
+                    'messages': 'Messages',
+                    'admin': 'Admin Dashboard',
+                    'manage-students': 'Manage Students',
+                };
+                return titles[this.currentPage] || 'Anwarul Islam';
+            },
+
+            renderPage() {
+                switch (this.currentPage) {
+                    case 'home': return this.renderHome();
+                    case 'learn': return this.renderLearn();
+                    case 'cbt': return this.renderCBT();
+                    case 'notices': return this.renderNotices();
+                    case 'profile': return this.renderProfile();
+                    case 'attendance': return this.renderAttendance();
+                    case 'grades': return this.renderGrades();
+                    case 'fees': return this.renderFees();
+                    case 'timetable': return this.renderTimetable();
+                    case 'assignments': return this.renderAssignments();
+                    case 'messages': return this.renderMessages();
+                    case 'admin': return this.renderAdminDashboard();
+                    case 'manage-students': return this.renderManageStudents();
+                    default: return this.renderHome();
+                }
+            },
+
+            renderHome() {
+                let content = `<div class="content">
+                    <div class="hero-banner">
+                        <div class="school-name">ANWARUL ISLAM<br>MODEL COLLEGE</div>
+                        <div class="tagline">Learn • Grow • Excel</div>
+                    </div>
+                    <div class="welcome-card">
+                        <h2>Welcome, ${this.currentUser.firstName}! 👋</h2>
+                        <p>Logged in as <strong>${this.currentRole.toUpperCase()}</strong></p>
+                    </div>`;
+
+                if (this.currentRole === 'student') {
+                    const student = this.db.getStudentInfo(this.currentUser.id);
+                    const gpa = this.db.calculateGPA(student.id);
+                    const attendance = this.db.getAttendancePercentage(student.id);
+
+                    content += `
+                        <div class="quick-stats">
+                            <div class="stat-card">
+                                <div class="stat-value">${attendance}%</div>
+                                <div class="stat-label">Attendance</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${gpa}</div>
+                                <div class="stat-label">GPA</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${this.db.getStudentAssignments(student.id).length}</div>
+                                <div class="stat-label">Assignments</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${this.db.examResults.filter(e => e.studentId === student.id).length}</div>
+                                <div class="stat-label">Exams Done</div>
+                            </div>
+                        </div>
+
+                        <div class="section-title">Quick Access</div>
+                        <div class="menu-grid">
+                            <a class="menu-item" onclick="APP.navigate('attendance'); APP.render()">
+                                <span class="menu-icon">✅</span>
+                                <span class="menu-label">Attendance</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('grades'); APP.render()">
+                                <span class="menu-icon">📊</span>
+                                <span class="menu-label">Grades</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('timetable'); APP.render()">
+                                <span class="menu-icon">📅</span>
+                                <span class="menu-label">Timetable</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('assignments'); APP.render()">
+                                <span class="menu-icon">📝</span>
+                                <span class="menu-label">Assignments</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('fees'); APP.render()">
+                                <span class="menu-icon">💰</span>
+                                <span class="menu-label">Fees</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('cbt'); APP.render()">
+                                <span class="menu-icon">✏️</span>
+                                <span class="menu-label">Exams</span>
+                            </a>
+                        </div>
+                    `;
+                } else if (this.currentRole === 'parent') {
+                    const parent = this.db.parents.find(p => p.id === this.currentUser.id);
+                    const children = this.db.getParentChildren(parent.id);
+
+                    content += `
+                        <div class="section-title">Your Children</div>
+                        <div class="list">
+                            ${children.map(child => `
+                                <div class="list-item">
+                                    <div class="list-item-main">
+                                        <div class="list-item-title">${child.firstName} ${child.lastName}</div>
+                                        <div class="list-item-subtitle">Class: ${child.class}</div>
+                                    </div>
+                                    <div class="list-item-value">${this.db.getAttendancePercentage(child.id)}%</div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="section-title">Quick Access</div>
+                        <div class="menu-grid">
+                            <a class="menu-item" onclick="APP.navigate('attendance'); APP.render()">
+                                <span class="menu-icon">✅</span>
+                                <span class="menu-label">Attendance</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('grades'); APP.render()">
+                                <span class="menu-icon">📊</span>
+                                <span class="menu-label">Results</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('fees'); APP.render()">
+                                <span class="menu-icon">💰</span>
+                                <span class="menu-label">Fees</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('timetable'); APP.render()">
+                                <span class="menu-icon">📅</span>
+                                <span class="menu-label">Timetable</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('assignments'); APP.render()">
+                                <span class="menu-icon">📝</span>
+                                <span class="menu-label">Assignments</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('messages'); APP.render()">
+                                <span class="menu-icon">💬</span>
+                                <span class="menu-label">Messages</span>
+                            </a>
+                        </div>
+                    `;
+                } else if (this.currentRole === 'teacher') {
+                    const teacher = this.db.teachers.find(t => t.id === this.currentUser.id);
+                    const classes = this.db.getTeacherClasses(teacher.id);
+
+                    content += `
+                        <div class="quick-stats">
+                            <div class="stat-card">
+                                <div class="stat-value">${classes.length}</div>
+                                <div class="stat-label">Classes</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${teacher.subjects.length}</div>
+                                <div class="stat-label">Subjects</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">87</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${this.db.assignments.length}</div>
+                                <div class="stat-label">Assignments</div>
+                            </div>
+                        </div>
+
+                        <div class="section-title">Teacher Options</div>
+                        <div class="menu-grid">
+                            <a class="menu-item" onclick="APP.navigate('attendance'); APP.render()">
+                                <span class="menu-icon">✅</span>
+                                <span class="menu-label">Attendance</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('grades'); APP.render()">
+                                <span class="menu-icon">📊</span>
+                                <span class="menu-label">Grades</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('assignments'); APP.render()">
+                                <span class="menu-icon">📝</span>
+                                <span class="menu-label">Assignments</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('cbt'); APP.render()">
+                                <span class="menu-icon">✏️</span>
+                                <span class="menu-label">Exams</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('learn'); APP.render()">
+                                <span class="menu-icon">📚</span>
+                                <span class="menu-label">Resources</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('messages'); APP.render()">
+                                <span class="menu-icon">💬</span>
+                                <span class="menu-label">Messages</span>
+                            </a>
+                        </div>
+                    `;
+                } else if (this.currentRole === 'admin') {
+                    const totalStudents = this.db.students.length;
+                    const totalTeachers = this.db.teachers.length;
+                    const totalCollected = this.db.fees.filter(f => f.status === 'paid').reduce((sum, f) => sum + f.paid, 0);
+
+                    content += `
+                        <div class="quick-stats">
+                            <div class="stat-card">
+                                <div class="stat-value">${totalStudents}</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${totalTeachers}</div>
+                                <div class="stat-label">Teachers</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${this.db.classes.length}</div>
+                                <div class="stat-label">Classes</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">₦${(totalCollected/1000).toFixed(0)}k</div>
+                                <div class="stat-label">Collected</div>
+                            </div>
+                        </div>
+
+                        <div class="section-title">Admin Dashboard</div>
+                        <div class="menu-grid">
+                            <a class="menu-item" onclick="APP.navigate('manage-students'); APP.render()">
+                                <span class="menu-icon">👥</span>
+                                <span class="menu-label">Students</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('attendance'); APP.render()">
+                                <span class="menu-icon">✅</span>
+                                <span class="menu-label">Attendance</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('grades'); APP.render()">
+                                <span class="menu-icon">📊</span>
+                                <span class="menu-label">Analytics</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('fees'); APP.render()">
+                                <span class="menu-icon">💰</span>
+                                <span class="menu-label">Finances</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('notices'); APP.render()">
+                                <span class="menu-icon">📢</span>
+                                <span class="menu-label">Announcements</span>
+                            </a>
+                            <a class="menu-item" onclick="APP.navigate('admin'); APP.render()">
+                                <span class="menu-icon">⚙️</span>
+                                <span class="menu-label">Settings</span>
+                            </a>
+                        </div>
+                    `;
+                }
+
+                content += `
+                    <div class="section-title">Latest Announcements</div>
+                    ${this.db.announcements.slice(0, 2).map(a => `
+                        <div class="announcement-card">
+                            <div class="announcement-header">
+                                <span class="announcement-icon">📢</span>
+                                <span class="announcement-title">${a.title}</span>
+                            </div>
+                            <div class="announcement-date">${a.date.toLocaleDateString()}</div>
+                            <div class="announcement-text">${a.content}</div>
+                        </div>
+                    `).join('')}
+                </div>`;
+
+                return content;
+            },
+
+            renderLearn() {
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">📚</span>
+                            <span class="announcement-title">Digital Learning Resources</span>
+                        </div>
+                        <div class="announcement-text">Access study materials, video tutorials, and interactive lessons curated by our experienced teachers.</div>
+                    </div>
+
+                    <div class="section-title">Learning Materials</div>
+                    <div class="list">
+                        ${this.db.resources.map(r => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">📖 ${r.title}</div>
+                                    <div class="list-item-subtitle">${r.items} ${r.type === 'video' ? 'videos' : 'items'} • ${r.category}</div>
+                                </div>
+                                <div class="list-item-value">${r.progress}%</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-title">AI Study Assistant</div>
+                    <div class="card">
+                        <h3 style="margin-bottom: 0.75rem;">📖 Ask Your Study Questions</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 1rem;">Get instant explanations, solve difficult problems, and understand complex concepts with AI assistance.</p>
+                        <button class="btn btn-primary btn-block" onclick="alert('AI Study Assistant launching...')">Open AI Assistant</button>
+                    </div>
+                </div>`;
+            },
+
+            renderCBT() {
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">✏️</span>
+                            <span class="announcement-title">Computer-Based Testing</span>
+                        </div>
+                        <div class="announcement-text">Take timed assessments and practice exams. Answers are automatically graded.</div>
+                    </div>
+
+                    <div class="section-title">Available Exams</div>
+                    <div class="list">
+                        ${this.db.exams.map(e => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">📋 ${e.title}</div>
+                                    <div class="list-item-subtitle">${e.totalQuestions} questions • ${e.duration} mins</div>
+                                </div>
+                                <button class="btn btn-small btn-primary" onclick="alert('Launching exam: ${e.title}')">Start</button>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-title">Past Results</div>
+                    <div class="list">
+                        ${this.db.examResults.slice(0, 5).map(r => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${this.db.exams.find(e => e.id === r.examId)?.title}</div>
+                                    <div class="list-item-subtitle">${r.completedDate.toLocaleDateString()}</div>
+                                </div>
+                                <div class="list-item-value"><span class="grade-badge">${r.score}</span></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            },
+
+            renderNotices() {
+                return `<div class="content">
+                    <div class="section-title">Latest Announcements</div>
+                    ${this.db.announcements.map(a => `
+                        <div class="announcement-card">
+                            <div class="announcement-header">
+                                <span class="announcement-icon">📢</span>
+                                <span class="announcement-title">${a.title}</span>
+                            </div>
+                            <div class="announcement-date">${a.date.toLocaleDateString()}</div>
+                            <div class="announcement-text">${a.content}</div>
+                            <span class="badge ${a.priority === 'high' ? 'badge-danger' : 'badge-info'}" style="margin-top: 0.75rem;">${a.priority.toUpperCase()}</span>
+                        </div>
+                    `).join('')}
+
+                    <div class="section-title">Upcoming Events</div>
+                    <div class="list">
+                        ${this.db.events.map(e => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">📅 ${e.title}</div>
+                                    <div class="list-item-subtitle">${e.date.toLocaleDateString()} • ${e.description}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-title">Houses & Points</div>
+                    <div class="list">
+                        ${this.db.houses.map(h => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${h.color} ${h.name}</div>
+                                </div>
+                                <div class="list-item-value"><strong>${h.points} pts</strong></div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-title">Sports & Clubs</div>
+                    <div class="list">
+                        ${this.db.clubs.map(c => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${c.icon} ${c.name}</div>
+                                    <div class="list-item-subtitle">${c.members} members • ${c.schedule}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            },
+
+            renderProfile() {
+                let content = `<div class="content">`;
+
+                if (this.currentRole === 'student') {
+                    const student = this.currentUser;
+                    content += `
+                        <div class="card" style="text-align: center; margin-bottom: 1rem;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">${student.avatar}</div>
+                            <h2>${student.firstName} ${student.lastName}</h2>
+                            <p style="color: var(--text-light);">ID: ${student.id}</p>
+                            <p style="color: var(--text-light);">Class: <strong>${student.class}</strong></p>
+                        </div>
+
+                        <div class="section-title">Digital Student ID</div>
+                        <div class="card" style="border: 2px solid var(--primary); background: var(--light);">
+                            <p><strong>Full Name:</strong> ${student.firstName} ${student.lastName}</p>
+                            <p><strong>Reg. No:</strong> ${student.id}</p>
+                            <p><strong>Class:</strong> ${student.class}</p>
+                            <p><strong>Email:</strong> ${student.email}</p>
+                            <p><strong>Phone:</strong> ${student.phone}</p>
+                        </div>
+
+                        <div class="section-title">Health Information</div>
+                        <div class="card">
+                            <p><strong>Blood Group:</strong> ${student.bloodGroup}</p>
+                            <p><strong>Allergies:</strong> ${student.allergies}</p>
+                            <p><strong>Next of Kin:</strong> ${student.nextOfKin}</p>
+                            <p><strong>Kin Phone:</strong> ${student.kinPhone}</p>
+                            <p><strong>Relationship:</strong> ${student.kinRelation}</p>
+                        </div>
+
+                        <div class="section-title">Account Settings</div>
+                        <div class="card">
+                            <button class="btn btn-secondary btn-block mb-1">Change Password</button>
+                            <button class="btn btn-secondary btn-block">Update Profile</button>
+                        </div>
+                    `;
+                } else if (this.currentRole === 'parent') {
+                    const parent = this.currentUser;
+                    content += `
+                        <div class="card" style="text-align: center; margin-bottom: 1rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍👧</div>
+                            <h2>${parent.firstName} ${parent.lastName}</h2>
+                            <p style="color: var(--text-light);">Parent ID: ${parent.id}</p>
+                        </div>
+
+                        <div class="section-title">Contact Information</div>
+                        <div class="card">
+                            <p><strong>Email:</strong> ${parent.email}</p>
+                            <p><strong>Phone:</strong> ${parent.phone}</p>
+                            <p><strong>Occupation:</strong> ${parent.occupation}</p>
+                        </div>
+
+                        <div class="section-title">Your Children</div>
+                        <div class="list">
+                            ${this.db.getParentChildren(parent.id).map(child => `
+                                <div class="list-item">
+                                    <div class="list-item-main">
+                                        <div class="list-item-title">${child.firstName} ${child.lastName}</div>
+                                        <div class="list-item-subtitle">Class: ${child.class}</div>
+                                    </div>
+                                    <span class="badge badge-success">${this.db.getAttendancePercentage(child.id)}%</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (this.currentRole === 'teacher') {
+                    const teacher = this.currentUser;
+                    content += `
+                        <div class="card" style="text-align: center; margin-bottom: 1rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">${teacher.avatar}</div>
+                            <h2>${teacher.firstName} ${teacher.lastName}</h2>
+                            <p style="color: var(--text-light);">Teacher ID: ${teacher.id}</p>
+                        </div>
+
+                        <div class="section-title">Professional Information</div>
+                        <div class="card">
+                            <p><strong>Email:</strong> ${teacher.email}</p>
+                            <p><strong>Phone:</strong> ${teacher.phone}</p>
+                            <p><strong>Qualification:</strong> ${teacher.qualification}</p>
+                            <p><strong>Experience:</strong> ${teacher.experience} years</p>
+                            <p><strong>Subjects:</strong> ${teacher.subjects.join(', ')}</p>
+                        </div>
+
+                        <div class="section-title">My Classes</div>
+                        <div class="list">
+                            ${this.db.getTeacherClasses(teacher.id).map(c => `
+                                <div class="list-item">
+                                    <div class="list-item-main">
+                                        <div class="list-item-title">🏫 ${c.name}</div>
+                                        <div class="list-item-subtitle">${c.studentCount} students</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (this.currentRole === 'admin') {
+                    const admin = this.currentUser;
+                    content += `
+                        <div class="card" style="text-align: center; margin-bottom: 1rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">${admin.avatar}</div>
+                            <h2>${admin.firstName} ${admin.lastName}</h2>
+                            <p style="color: var(--text-light);">${admin.role}</p>
+                        </div>
+
+                        <div class="section-title">Administrative Information</div>
+                        <div class="card">
+                            <p><strong>Email:</strong> ${admin.email}</p>
+                            <p><strong>Phone:</strong> ${admin.phone}</p>
+                            <p><strong>Position:</strong> ${admin.role}</p>
+                            <p><strong>School:</strong> Anwarul Islam Model College</p>
+                            <p><strong>Location:</strong> Agege, Lagos, Nigeria</p>
+                        </div>
+
+                        <div class="section-title">System Statistics</div>
+                        <div class="quick-stats">
+                            <div class="stat-card">
+                                <div class="stat-value">${this.db.students.length}</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${this.db.teachers.length}</div>
+                                <div class="stat-label">Teachers</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${this.db.classes.length}</div>
+                                <div class="stat-label">Classes</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">100%</div>
+                                <div class="stat-label">Status</div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                content += `</div>`;
+                return content;
+            },
+
+            renderAttendance() {
+                const records = this.db.getStudentAttendance(this.currentUser.id);
+                const percentage = this.db.getAttendancePercentage(this.currentUser.id);
+
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">✅</span>
+                            <span class="announcement-title">Your Attendance Record</span>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Overall: ${percentage}%</div>
+                    <div class="card">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${percentage}%"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.9rem;">
+                            <span><strong>Present:</strong> ${records.filter(r => r.status === 'present').length}</span>
+                            <span><strong>Absent:</strong> ${records.filter(r => r.status === 'absent').length}</span>
+                            <span><strong>Late:</strong> ${records.filter(r => r.status === 'late').length}</span>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Recent Records</div>
+                    <div class="list">
+                        ${records.slice(-10).reverse().map(r => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${r.date.toLocaleDateString()}</div>
+                                </div>
+                                <span class="badge badge-${r.status === 'present' ? 'success' : r.status === 'late' ? 'warning' : 'danger'}">${r.status.toUpperCase()}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            },
+
+            renderGrades() {
+                const grades = this.db.getStudentGrades(this.currentUser.id);
+                const gpa = this.db.calculateGPA(this.currentUser.id);
+
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">📊</span>
+                            <span class="announcement-title">Your Results</span>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Term 1 - 2024</div>
+                    <div class="list">
+                        ${grades.map(g => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${g.subject}</div>
+                                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                                        <span style="font-size: 0.85rem; color: var(--text-light);">Score: <strong>${g.score}/${g.maxScore}</strong></span>
+                                        <span style="font-size: 0.85rem; color: var(--text-light);">Grade: <strong>${g.grade}</strong></span>
+                                    </div>
+                                </div>
+                                <span class="grade-badge">${g.score}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-title">Performance</div>
+                    <div class="card">
+                        <p><strong>Cumulative GPA:</strong> ${gpa}/4.0</p>
+                        <p style="margin-top: 0.5rem;"><strong>Average Score:</strong> ${(grades.reduce((sum, g) => sum + g.score, 0) / grades.length).toFixed(0)}%</p>
+                        <p style="margin-top: 0.5rem;"><strong>Class Rank:</strong> 3rd out of 45</p>
+                    </div>
+                </div>`;
+            },
+
+            renderFees() {
+                const studentId = this.currentRole === 'student' ? this.currentUser.id : this.db.parents.find(p => p.id === this.currentUser.id)?.childrenIds[0];
+                const fees = this.db.getStudentFees(studentId);
+                const totalFees = fees.reduce((sum, f) => sum + f.amount, 0);
+                const totalPaid = fees.reduce((sum, f) => sum + f.paid, 0);
+                const balance = totalFees - totalPaid;
+
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">💰</span>
+                            <span class="announcement-title">School Fees & Payments</span>
+                        </div>
+                    </div>
+
+                    <div class="quick-stats">
+                        <div class="stat-card">
+                            <div class="stat-value">₦${totalFees.toLocaleString()}</div>
+                            <div class="stat-label">Total Fees</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">₦${totalPaid.toLocaleString()}</div>
+                            <div class="stat-label">Paid</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">₦${balance.toLocaleString()}</div>
+                            <div class="stat-label">Balance</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${((totalPaid/totalFees)*100).toFixed(0)}%</div>
+                            <div class="stat-label">Progress</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Fee Breakdown</div>
+                    <div class="list">
+                        ${fees.map(f => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${f.description}</div>
+                                    <div class="list-item-subtitle">Due: ${f.dueDate.toLocaleDateString()} • ₦${f.amount.toLocaleString()}</div>
+                                </div>
+                                ${f.status === 'paid' 
+                                    ? '<span class="badge badge-success">✓ PAID</span>' 
+                                    : '<span class="badge badge-warning">PENDING</span>'
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-title">Payment Methods</div>
+                    <div class="card">
+                        <button class="btn btn-primary btn-block mb-1" onclick="alert('Payment gateway: Credit Card, Bank Transfer, USSD')">💳 Make Payment</button>
+                    </div>
+                </div>`;
+            },
+
+            renderTimetable() {
+                const student = this.db.getStudentInfo(this.currentUser.id);
+                const timetable = this.db.timetable.filter(t => t.classId === student.class);
+
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">📅</span>
+                            <span class="announcement-title">Class Timetable</span>
+                        </div>
+                        <div class="announcement-text">Weekly schedule for ${student.class}</div>
+                    </div>
+
+                    <div class="section-title">Weekly Schedule</div>
+                    <div class="list">
+                        ${timetable.map(t => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${t.subject}</div>
+                                    <div class="list-item-subtitle">${t.day} • ${t.startTime} - ${t.endTime}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-title">School Calendar</div>
+                    <div class="list">
+                        ${this.db.events.map(e => `
+                            <div class="list-item">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">📅 ${e.title}</div>
+                                    <div class="list-item-subtitle">${e.date.toLocaleDateString()}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            },
+
+            renderAssignments() {
+                const student = this.db.getStudentInfo(this.currentUser.id);
+                const assignments = this.db.getStudentAssignments(student.id);
+
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">📝</span>
+                            <span class="announcement-title">Assignments & Submissions</span>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Active Assignments</div>
+                    <div class="list">
+                        ${assignments.map(a => {
+                            const submission = a.submissions.find(s => s.studentId === student.id);
+                            return `
+                                <div class="list-item">
+                                    <div class="list-item-main">
+                                        <div class="list-item-title">${a.subject} - ${a.title}</div>
+                                        <div class="list-item-subtitle" style="margin-top: 0.25rem;">${a.description}</div>
+                                        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-light);">
+                                            Due: ${a.dueDate.toLocaleDateString()}
+                                        </div>
+                                    </div>
+                                    ${submission 
+                                        ? '<span class="badge badge-success">✓ Submitted</span>'
+                                        : a.dueDate < new Date()
+                                        ? '<span class="badge badge-danger">⚠ Overdue</span>'
+                                        : '<button class="btn btn-small btn-primary" onclick="alert(\\'Upload interface for ${a.title}\\')">Upload</button>'
+                                    }
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>`;
+            },
+
+            renderMessages() {
+                const conversations = this.db.getConversations(this.currentUser.id);
+
+                return `<div class="content">
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <span class="announcement-icon">💬</span>
+                            <span class="announcement-title">Messages & Communication</span>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Conversations</div>
+                    ${conversations.length === 0 ? '<p style="color: var(--text-light);">No messages yet</p>' : `
+                        <div class="list">
+                            ${conversations.map(m => {
+                                const otherUserId = m.senderId === this.currentUser.id ? m.receiverId : m.senderId;
+                                const otherUser = this.db.students.find(s => s.id === otherUserId) || 
+                                                 this.db.teachers.find(t => t.id === otherUserId) ||
+                                                 this.db.parents.find(p => p.id === otherUserId);
+                                return `
+                                    <div class="list-item">
+                                        <div class="list-item-main">
+                                            <div class="list-item-title">${otherUser?.firstName} ${otherUser?.lastName}</div>
+                                            <div class="list-item-subtitle">${m.subject}</div>
+                                        </div>
+                                        <button class="btn btn-small btn-primary" onclick="alert('Open conversation')">Open</button>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `}
+
+                    <div class="section-title">Send New Message</div>
+                    <div class="card">
+                        <button class="btn btn-primary btn-block" onclick="alert('Message compose form')">+ New Message</button>
+                    </div>
+                </div>`;
+            },
+
+            renderAdminDashboard() {
+                return `<div class="content">
+                    <div class="welcome-card">
+                        <h2>Admin Dashboard 👔</h2>
+                        <p>Manage all school operations and personnel</p>
+                    </div>
+
+                    <div class="quick-stats">
+                        <div class="stat-card">
+                            <div class="stat-value">${this.db.students.length}</div>
+                            <div class="stat-label">Students</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${this.db.teachers.length}</div>
+                            <div class="stat-label">Teachers</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${this.db.classes.length}</div>
+                            <div class="stat-label">Classes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${this.db.announcements.length}</div>
+                            <div class="stat-label">Announcements</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Management Tools</div>
+                    <div class="menu-grid">
+                        <a class="menu-item" onclick="APP.navigate('manage-students'); APP.render()">
+                            <span class="menu-icon">👥</span>
+                            <span class="menu-label">Manage Students</span>
+                        </a>
+                        <a class="menu-item" onclick="alert('Manage Teachers')">
+                            <span class="menu-icon">👨‍🏫</span>
+                            <span class="menu-label">Manage Teachers</span>
+                        </a>
+                        <a class="menu-item" onclick="alert('Manage Classes')">
+                            <span class="menu-icon">🏫</span>
+                            <span class="menu-label">Manage Classes</span>
+                        </a>
+                        <a class="menu-item" onclick="alert('View Analytics')">
+                            <span class="menu-icon">📊</span>
+                            <span class="menu-label">Analytics</span>
+                        </a>
+                        <a class="menu-item" onclick="alert('View Reports')">
+                            <span class="menu-icon">📋</span>
+                            <span class="menu-label">Reports</span>
+                        </a>
+                        <a class="menu-item" onclick="APP.navigate('fees'); APP.render()">
+                            <span class="menu-icon">💰</span>
+                            <span class="menu-label">Finances</span>
+                        </a>
+                    </div>
+
+                    <div class="section-title">Quick Actions</div>
+                    <div class="card">
+                        <button class="btn btn-primary btn-block mb-1" onclick="alert('Create announcement form')">📢 Create Announcement</button>
+                        <button class="btn btn-secondary btn-block mb-1" onclick="alert('Create event form')">📅 Create Event</button>
+                        <button class="btn btn-secondary btn-block" onclick="alert('System settings')">⚙️ Settings</button>
+                    </div>
+                </div>`;
+            },
+
+            renderManageStudents() {
+                return `<div class="content">
+                    <div class="section-title">Student Management</div>
+                    
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search students..." id="searchInput" onkeyup="APP.filterList(this.value)">
+                    </div>
+
+                    <button class="btn btn-primary btn-block mb-1" onclick="alert('Add new student form')">+ Add New Student</button>
+
+                    <div class="section-title">All Students</div>
+                    <div class="list" id="studentList">
+                        ${this.db.students.map(s => `
+                            <div class="list-item" data-name="${s.firstName} ${s.lastName}">
+                                <div class="list-item-main">
+                                    <div class="list-item-title">${s.firstName} ${s.lastName}</div>
+                                    <div class="list-item-subtitle">Class: ${s.class} • ${s.email}</div>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-small btn-primary" onclick="alert('View profile')">View</button>
+                                    <button class="btn btn-small btn-secondary" onclick="alert('Edit details')">Edit</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            },
+
+            filterList(query) {
+                const items = document.querySelectorAll('[data-name]');
+                items.forEach(item => {
+                    if (item.getAttribute('data-name').toLowerCase().includes(query.toLowerCase())) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+        };
+
+        // ========== EVENT HANDLERS ==========
+        function selectRole(element, role) {
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('role').value = role;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            if (!role) {
+                alert('Please select a role');
+                return;
+            }
+
+            if (APP.login(email, password, role)) {
+                APP.render();
+            }
+        }
+
+        // Initialize app
+        APP.init();
+    </script>
+</body>
+</html>
